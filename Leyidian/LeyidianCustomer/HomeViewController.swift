@@ -221,7 +221,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         normChose = NormChoseView(frame: CGRect(x: 0, y: 0, width: app_width, height: app_height), goodsInfo: goodsInfo)
         self.view.addSubview(normChose)
     }
-    
+    // test
     /*******************************************************************************
      //////////////////////////////各种点击事件处理/////////////////////////////////////
      *********************************************************************************/
