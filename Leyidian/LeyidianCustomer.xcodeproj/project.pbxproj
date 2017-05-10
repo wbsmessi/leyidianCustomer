@@ -1,0 +1,1222 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		190066351EB890EE008E3FA4 /* DECAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190066341EB890EE008E3FA4 /* DECAlertView.swift */; };
+		1900663E1EBAD258008E3FA4 /* city.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1900663B1EBAD258008E3FA4 /* city.plist */; };
+		1900663F1EBAD258008E3FA4 /* PSCityPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1900663D1EBAD258008E3FA4 /* PSCityPickerView.m */; };
+		190066411EBC2844008E3FA4 /* SearchListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190066401EBC2844008E3FA4 /* SearchListViewController.swift */; };
+		191C32751E77808900255E0B /* NoStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191C32741E77808900255E0B /* NoStoreView.swift */; };
+		193BF3361EB8164500F19EA2 /* GoodsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193BF3351EB8164500F19EA2 /* GoodsListViewController.swift */; };
+		193BF3391EB8187600F19EA2 /* GoodsListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193BF3371EB8187600F19EA2 /* GoodsListTableViewCell.swift */; };
+		1941EEDB1E84C94F00848174 /* OrderDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1941EEDA1E84C94F00848174 /* OrderDetailViewController.swift */; };
+		1941EEDD1E84CCE700848174 /* orderStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1941EEDC1E84CCE700848174 /* orderStatusView.swift */; };
+		1941EEE01E84F7BC00848174 /* orderDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1941EEDF1E84F7BC00848174 /* orderDetailView.swift */; };
+		19456A2E1EA9D9BF00A54C32 /* UMSocialSwiftInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19456A2D1EA9D9BF00A54C32 /* UMSocialSwiftInterface.swift */; };
+		19456A351EAA12C100A54C32 /* libUMessage_Sdk_1.5.0a.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19456A331EAA12C100A54C32 /* libUMessage_Sdk_1.5.0a.a */; };
+		19456A381EAA12F800A54C32 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19456A371EAA12F800A54C32 /* UserNotifications.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		19456A3A1EADDA1C00A54C32 /* SingleChose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19456A391EADDA1C00A54C32 /* SingleChose.swift */; };
+		19456A441EAF3F3700A54C32 /* AddressModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19456A431EAF3F3700A54C32 /* AddressModel.swift */; };
+		194981B71E80B4A2004F1252 /* ScoreDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194981B61E80B4A2004F1252 /* ScoreDetailViewController.swift */; };
+		194981BA1E80C2D8004F1252 /* ConponTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194981B81E80C2D8004F1252 /* ConponTableViewCell.swift */; };
+		194981BF1E80DAF3004F1252 /* AddressTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194981BE1E80DAF3004F1252 /* AddressTableViewCell.swift */; };
+		194981C21E8101D7004F1252 /* AddNewAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194981C11E8101D7004F1252 /* AddNewAddressViewController.swift */; };
+		194981C71E82101B004F1252 /* WaitPayOrderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194981C61E82101B004F1252 /* WaitPayOrderTableViewCell.swift */; };
+		194981C91E824FFD004F1252 /* DECChoseAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194981C81E824FFD004F1252 /* DECChoseAlertView.swift */; };
+		194F81B41E6CF0A20011B59A /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F81B31E6CF0A20011B59A /* SignUpViewController.swift */; };
+		194F81BE1E6D49F70011B59A /* LeftTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F81BD1E6D49F70011B59A /* LeftTypeView.swift */; };
+		194F81C01E6D563B0011B59A /* LeftTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F81BF1E6D563B0011B59A /* LeftTypeTableViewCell.swift */; };
+		194F81C21E6E415D0011B59A /* MessageCenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F81C11E6E415D0011B59A /* MessageCenterViewController.swift */; };
+		194F81C51E6E496A0011B59A /* SystemMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F81C31E6E496A0011B59A /* SystemMessageTableViewCell.swift */; };
+		194F81C61E6E496A0011B59A /* SystemMessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 194F81C41E6E496A0011B59A /* SystemMessageTableViewCell.xib */; };
+		194F81C91E6E50B80011B59A /* PlatformNoticeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F81C71E6E50B80011B59A /* PlatformNoticeTableViewCell.swift */; };
+		194F81CA1E6E50B80011B59A /* PlatformNoticeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 194F81C81E6E50B80011B59A /* PlatformNoticeTableViewCell.xib */; };
+		194F81CC1E6E5B460011B59A /* CategoryGoodsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F81CB1E6E5B460011B59A /* CategoryGoodsView.swift */; };
+		194F81D11E6F95D90011B59A /* DES.m in Sources */ = {isa = PBXBuildFile; fileRef = 194F81D01E6F95D90011B59A /* DES.m */; };
+		194F81D51E6F9D2D0011B59A /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 194F81D31E6F9D2D0011B59A /* GTMBase64.m */; };
+		194F81D71E6FE2C40011B59A /* shopDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F81D61E6FE2C40011B59A /* shopDetailView.swift */; };
+		194F81D91E6FED590011B59A /* goodsTableListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F81D81E6FED590011B59A /* goodsTableListTableViewCell.swift */; };
+		194F81DB1E7006010011B59A /* GoodsTypeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F81DA1E7006010011B59A /* GoodsTypeListViewController.swift */; };
+		194F81DF1E71586C0011B59A /* AddressChoseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F81DE1E71586C0011B59A /* AddressChoseViewController.swift */; };
+		194F81E11E7235CE0011B59A /* GoodsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F81E01E7235CE0011B59A /* GoodsDetailViewController.swift */; };
+		194F81E31E724E9B0011B59A /* HomeAdvertisingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F81E21E724E9B0011B59A /* HomeAdvertisingView.swift */; };
+		194F81E91E7688A20011B59A /* EnumFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F81E81E7688A20011B59A /* EnumFile.swift */; };
+		194F81EB1E7690EE0011B59A /* ShopModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F81EA1E7690EE0011B59A /* ShopModel.swift */; };
+		197C97E91E66C91A000C075D /* RecommendCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197C97E81E66C91A000C075D /* RecommendCategoryView.swift */; };
+		197C97EB1E67EC89000C075D /* GoodsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197C97EA1E67EC89000C075D /* GoodsCollectionViewCell.swift */; };
+		197C97ED1E6816D8000C075D /* SectionHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197C97EC1E6816D8000C075D /* SectionHeaderCollectionReusableView.swift */; };
+		197C97EF1E681BDE000C075D /* SectionFooterCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197C97EE1E681BDE000C075D /* SectionFooterCollectionReusableView.swift */; };
+		197C97F31E6913A3000C075D /* HomeScrollTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197C97F21E6913A3000C075D /* HomeScrollTableViewCell.swift */; };
+		197C97F61E6942EE000C075D /* LoginAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197C97F51E6942EE000C075D /* LoginAppViewController.swift */; };
+		197C97FB1E6952D9000C075D /* DECSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197C97FA1E6952D9000C075D /* DECSegment.swift */; };
+		1996D2EE1E77D7FC00E5368A /* StoreIntroductionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1996D2EC1E77D7FC00E5368A /* StoreIntroductionTableViewCell.swift */; };
+		1996D2EF1E77D7FC00E5368A /* StoreIntroductionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1996D2ED1E77D7FC00E5368A /* StoreIntroductionTableViewCell.xib */; };
+		1996D2F11E77E1F300E5368A /* StoreInfomationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1996D2F01E77E1F300E5368A /* StoreInfomationViewController.swift */; };
+		1996D2F91E78EA0600E5368A /* StoreEvaluationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1996D2F81E78EA0600E5368A /* StoreEvaluationTableViewCell.swift */; };
+		1996D2FB1E78EA2700E5368A /* StoreAllEvaluationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1996D2FA1E78EA2700E5368A /* StoreAllEvaluationTableViewCell.swift */; };
+		1996D2FD1E7A28DF00E5368A /* ConfigFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1996D2FC1E7A28DF00E5368A /* ConfigFile.swift */; };
+		1996D2FF1E7A2CE700E5368A /* CarHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1996D2FE1E7A2CE700E5368A /* CarHomeViewController.swift */; };
+		1996D3031E7A38BE00E5368A /* LZCartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1996D3001E7A38BE00E5368A /* LZCartModel.swift */; };
+		1996D3041E7A38BE00E5368A /* LZCartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1996D3011E7A38BE00E5368A /* LZCartTableViewCell.swift */; };
+		1996D3051E7A38BE00E5368A /* LZCartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1996D3021E7A38BE00E5368A /* LZCartViewController.swift */; };
+		1996D3071E7A3EE300E5368A /* AddAndCutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1996D3061E7A3EE300E5368A /* AddAndCutView.swift */; };
+		1996D30B1E7F80E900E5368A /* adminItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1996D30A1E7F80E900E5368A /* adminItemView.swift */; };
+		1996D30D1E7FAEB400E5368A /* OrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1996D30C1E7FAEB400E5368A /* OrderViewController.swift */; };
+		1996D30F1E7FBEFA00E5368A /* MyScoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1996D30E1E7FBEFA00E5368A /* MyScoreViewController.swift */; };
+		1996D3111E7FC04700E5368A /* ConvertScoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1996D3101E7FC04700E5368A /* ConvertScoreViewController.swift */; };
+		1996D3131E7FC1B200E5368A /* CouponViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1996D3121E7FC1B200E5368A /* CouponViewController.swift */; };
+		1996D3151E7FC2C400E5368A /* AddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1996D3141E7FC2C400E5368A /* AddressViewController.swift */; };
+		1996D3171E7FC33A00E5368A /* CooperationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1996D3161E7FC33A00E5368A /* CooperationViewController.swift */; };
+		1996D3191E7FC42B00E5368A /* ShopGuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1996D3181E7FC42B00E5368A /* ShopGuideViewController.swift */; };
+		1996D31B1E7FC52C00E5368A /* FeedBackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1996D31A1E7FC52C00E5368A /* FeedBackViewController.swift */; };
+		1996D31D1E7FC56400E5368A /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1996D31C1E7FC56400E5368A /* SettingViewController.swift */; };
+		1996D3201E7FE0D000E5368A /* MyScoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1996D31E1E7FE0D000E5368A /* MyScoreTableViewCell.swift */; };
+		1996D3211E7FE0D000E5368A /* MyScoreTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1996D31F1E7FE0D000E5368A /* MyScoreTableViewCell.xib */; };
+		19DEA13F1E8516DB004BC988 /* OrderDetailGoodsInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DEA13E1E8516DB004BC988 /* OrderDetailGoodsInfoTableViewCell.swift */; };
+		19DEA1411E851D26004BC988 /* orderInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DEA1401E851D26004BC988 /* orderInfoView.swift */; };
+		19E044201E9B63D000DFF097 /* EvaluationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0441F1E9B63D000DFF097 /* EvaluationViewController.swift */; };
+		19E044221E9B974B00DFF097 /* CWStarRateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 19E044211E9B974B00DFF097 /* CWStarRateView.m */; };
+		19EA90D41E88BCB70094BF23 /* SafeSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EA90D31E88BCB70094BF23 /* SafeSettingViewController.swift */; };
+		19EA90D61E88C0EC0094BF23 /* LYDWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EA90D51E88C0EC0094BF23 /* LYDWebViewController.swift */; };
+		19EA90DE1E8911E00094BF23 /* EditPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EA90DD1E8911E00094BF23 /* EditPasswordViewController.swift */; };
+		19EA90E01E89F5590094BF23 /* EditUserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EA90DF1E89F5590094BF23 /* EditUserInfoViewController.swift */; };
+		19EA90EA1E8A3D3E0094BF23 /* AliPay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EA90E11E8A3D3D0094BF23 /* AliPay.swift */; };
+		19EA90EB1E8A3D3E0094BF23 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19EA90E21E8A3D3D0094BF23 /* libcrypto.a */; };
+		19EA90EC1E8A3D3E0094BF23 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19EA90E31E8A3D3D0094BF23 /* libssl.a */; };
+		19EA90ED1E8A3D3E0094BF23 /* Util in Resources */ = {isa = PBXBuildFile; fileRef = 19EA90E41E8A3D3E0094BF23 /* Util */; };
+		19EA90EE1E8A3D3E0094BF23 /* openssl in Resources */ = {isa = PBXBuildFile; fileRef = 19EA90E51E8A3D3E0094BF23 /* openssl */; };
+		19EA90EF1E8A3D3E0094BF23 /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = 19EA90E71E8A3D3E0094BF23 /* Order.m */; };
+		19EA90F01E8A3D3E0094BF23 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 19EA90E81E8A3D3E0094BF23 /* AlipaySDK.bundle */; };
+		19EA90F11E8A3D3E0094BF23 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19EA90E91E8A3D3E0094BF23 /* AlipaySDK.framework */; };
+		19EA90F31E8A3E110094BF23 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 19EA90F21E8A3E110094BF23 /* libc++.tbd */; };
+		19EA90F51E8A3E1D0094BF23 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 19EA90F41E8A3E1D0094BF23 /* libz.tbd */; };
+		19EA90F71E8A3E220094BF23 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19EA90F61E8A3E220094BF23 /* SystemConfiguration.framework */; };
+		19EA90F91E8A3E2F0094BF23 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19EA90F81E8A3E2F0094BF23 /* CoreTelephony.framework */; };
+		19EA90FB1E8A3E3B0094BF23 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19EA90FA1E8A3E3B0094BF23 /* QuartzCore.framework */; };
+		19EA90FD1E8A3E440094BF23 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19EA90FC1E8A3E440094BF23 /* CoreText.framework */; };
+		19EA90FF1E8A3E510094BF23 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19EA90FE1E8A3E510094BF23 /* CoreGraphics.framework */; };
+		19EA91011E8A3E5F0094BF23 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19EA91001E8A3E5F0094BF23 /* CFNetwork.framework */; };
+		19EA91031E8A3E6A0094BF23 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19EA91021E8A3E6A0094BF23 /* UIKit.framework */; };
+		19EA91051E8A3E740094BF23 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19EA91041E8A3E740094BF23 /* CoreMotion.framework */; };
+		19EA910A1E8A3FD70094BF23 /* wechatPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EA91061E8A3FD70094BF23 /* wechatPayment.swift */; };
+		19EA910B1E8A3FD70094BF23 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19EA91091E8A3FD70094BF23 /* libWeChatSDK.a */; };
+		19EA910D1E8A41A20094BF23 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 19EA910C1E8A41A20094BF23 /* libsqlite3.tbd */; };
+		19EA910F1E8A47DC0094BF23 /* PrePayOrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EA910E1E8A47DC0094BF23 /* PrePayOrderViewController.swift */; };
+		19EA91111E8A49FA0094BF23 /* ChangePhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EA91101E8A49FA0094BF23 /* ChangePhoneViewController.swift */; };
+		19EA91151E8CB0710094BF23 /* ItemInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EA91141E8CB0710094BF23 /* ItemInfoView.swift */; };
+		19EA91171E8CF25C0094BF23 /* AddressChoseAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EA91161E8CF25C0094BF23 /* AddressChoseAlert.swift */; };
+		19EA91191E8E0A280094BF23 /* GoodsSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EA91181E8E0A280094BF23 /* GoodsSearchViewController.swift */; };
+		19EA911B1E8F8E0A0094BF23 /* PayWayChoseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EA911A1E8F8E0A0094BF23 /* PayWayChoseViewController.swift */; };
+		19EA911D1E9497180094BF23 /* GuidePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EA911C1E9497180094BF23 /* GuidePageViewController.swift */; };
+		19EA91251E95F4860094BF23 /* PaySuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EA91241E95F4850094BF23 /* PaySuccessViewController.swift */; };
+		19EA912B1E972A460094BF23 /* NormChoseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EA912A1E972A460094BF23 /* NormChoseView.swift */; };
+		19EA912D1E98D4EF0094BF23 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 19EA912C1E98D4EF0094BF23 /* libresolv.tbd */; };
+		19FEB19D1E656FC200883097 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FEB19C1E656FC200883097 /* AppDelegate.swift */; };
+		19FEB19F1E656FC200883097 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FEB19E1E656FC200883097 /* HomeViewController.swift */; };
+		19FEB1A21E656FC200883097 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19FEB1A01E656FC200883097 /* Main.storyboard */; };
+		19FEB1A41E656FC200883097 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19FEB1A31E656FC200883097 /* Assets.xcassets */; };
+		19FEB1A71E656FC200883097 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19FEB1A51E656FC200883097 /* LaunchScreen.storyboard */; };
+		19FEB1B31E65725C00883097 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FEB1B21E65725C00883097 /* CategoryViewController.swift */; };
+		19FEB1B51E65726B00883097 /* CarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FEB1B41E65726B00883097 /* CarViewController.swift */; };
+		19FEB1B71E6572A200883097 /* UserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FEB1B61E6572A200883097 /* UserInfoViewController.swift */; };
+		19FEB1BB1E65764200883097 /* CommonParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FEB1B91E65764200883097 /* CommonParameters.swift */; };
+		19FEB1BC1E65764200883097 /* Methods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FEB1BA1E65764200883097 /* Methods.swift */; };
+		19FEB1BE1E65769600883097 /* SwiftNotice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FEB1BD1E65769600883097 /* SwiftNotice.swift */; };
+		19FEB1D21E65795D00883097 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 19FEB1D11E65795D00883097 /* Podfile */; };
+		19FEB1D41E6654F000883097 /* NavigationTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FEB1D31E6654F000883097 /* NavigationTitleView.swift */; };
+		19FEB1D61E666B1A00883097 /* TypeChoseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FEB1D51E666B1A00883097 /* TypeChoseView.swift */; };
+		19FEB1D81E66714700883097 /* HttpTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FEB1D71E66714700883097 /* HttpTool.swift */; };
+		19FEB1DE1E66A9B400883097 /* DECMaBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FEB1DD1E66A9B400883097 /* DECMaBannerView.swift */; };
+		4F09C09960D89EE5FA55CA17 /* Pods_LeyidianCustomer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA93A239EAD857B66023A675 /* Pods_LeyidianCustomer.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		190066341EB890EE008E3FA4 /* DECAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DECAlertView.swift; sourceTree = "<group>"; };
+		1900663B1EBAD258008E3FA4 /* city.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = city.plist; sourceTree = "<group>"; };
+		1900663C1EBAD258008E3FA4 /* PSCityPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSCityPickerView.h; sourceTree = "<group>"; };
+		1900663D1EBAD258008E3FA4 /* PSCityPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSCityPickerView.m; sourceTree = "<group>"; };
+		190066401EBC2844008E3FA4 /* SearchListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchListViewController.swift; sourceTree = "<group>"; };
+		191C32741E77808900255E0B /* NoStoreView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoStoreView.swift; sourceTree = "<group>"; };
+		193BF3351EB8164500F19EA2 /* GoodsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoodsListViewController.swift; sourceTree = "<group>"; };
+		193BF3371EB8187600F19EA2 /* GoodsListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoodsListTableViewCell.swift; sourceTree = "<group>"; };
+		1941EEDA1E84C94F00848174 /* OrderDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderDetailViewController.swift; sourceTree = "<group>"; };
+		1941EEDC1E84CCE700848174 /* orderStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = orderStatusView.swift; sourceTree = "<group>"; };
+		1941EEDF1E84F7BC00848174 /* orderDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = orderDetailView.swift; sourceTree = "<group>"; };
+		19456A2D1EA9D9BF00A54C32 /* UMSocialSwiftInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UMSocialSwiftInterface.swift; sourceTree = "<group>"; };
+		19456A331EAA12C100A54C32 /* libUMessage_Sdk_1.5.0a.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMessage_Sdk_1.5.0a.a; sourceTree = "<group>"; };
+		19456A341EAA12C100A54C32 /* UMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMessage.h; sourceTree = "<group>"; };
+		19456A371EAA12F800A54C32 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		19456A391EADDA1C00A54C32 /* SingleChose.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleChose.swift; sourceTree = "<group>"; };
+		19456A3C1EAEF55B00A54C32 /* LeyidianCustomer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LeyidianCustomer.entitlements; sourceTree = "<group>"; };
+		19456A431EAF3F3700A54C32 /* AddressModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressModel.swift; sourceTree = "<group>"; };
+		194981B61E80B4A2004F1252 /* ScoreDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreDetailViewController.swift; sourceTree = "<group>"; };
+		194981B81E80C2D8004F1252 /* ConponTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConponTableViewCell.swift; sourceTree = "<group>"; };
+		194981BE1E80DAF3004F1252 /* AddressTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressTableViewCell.swift; sourceTree = "<group>"; };
+		194981C11E8101D7004F1252 /* AddNewAddressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewAddressViewController.swift; sourceTree = "<group>"; };
+		194981C61E82101B004F1252 /* WaitPayOrderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaitPayOrderTableViewCell.swift; sourceTree = "<group>"; };
+		194981C81E824FFD004F1252 /* DECChoseAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DECChoseAlertView.swift; sourceTree = "<group>"; };
+		194F81B31E6CF0A20011B59A /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		194F81BD1E6D49F70011B59A /* LeftTypeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftTypeView.swift; sourceTree = "<group>"; };
+		194F81BF1E6D563B0011B59A /* LeftTypeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftTypeTableViewCell.swift; sourceTree = "<group>"; };
+		194F81C11E6E415D0011B59A /* MessageCenterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCenterViewController.swift; sourceTree = "<group>"; };
+		194F81C31E6E496A0011B59A /* SystemMessageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemMessageTableViewCell.swift; sourceTree = "<group>"; };
+		194F81C41E6E496A0011B59A /* SystemMessageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SystemMessageTableViewCell.xib; sourceTree = "<group>"; };
+		194F81C71E6E50B80011B59A /* PlatformNoticeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlatformNoticeTableViewCell.swift; sourceTree = "<group>"; };
+		194F81C81E6E50B80011B59A /* PlatformNoticeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlatformNoticeTableViewCell.xib; sourceTree = "<group>"; };
+		194F81CB1E6E5B460011B59A /* CategoryGoodsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryGoodsView.swift; sourceTree = "<group>"; };
+		194F81CF1E6F95D90011B59A /* DES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DES.h; sourceTree = "<group>"; };
+		194F81D01E6F95D90011B59A /* DES.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DES.m; sourceTree = "<group>"; };
+		194F81D21E6F9D2D0011B59A /* GTMBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMBase64.h; sourceTree = "<group>"; };
+		194F81D31E6F9D2D0011B59A /* GTMBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMBase64.m; sourceTree = "<group>"; };
+		194F81D41E6F9D2D0011B59A /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
+		194F81D61E6FE2C40011B59A /* shopDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = shopDetailView.swift; sourceTree = "<group>"; };
+		194F81D81E6FED590011B59A /* goodsTableListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = goodsTableListTableViewCell.swift; sourceTree = "<group>"; };
+		194F81DA1E7006010011B59A /* GoodsTypeListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoodsTypeListViewController.swift; sourceTree = "<group>"; };
+		194F81DE1E71586C0011B59A /* AddressChoseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressChoseViewController.swift; sourceTree = "<group>"; };
+		194F81E01E7235CE0011B59A /* GoodsDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoodsDetailViewController.swift; sourceTree = "<group>"; };
+		194F81E21E724E9B0011B59A /* HomeAdvertisingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeAdvertisingView.swift; sourceTree = "<group>"; };
+		194F81E81E7688A20011B59A /* EnumFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnumFile.swift; sourceTree = "<group>"; };
+		194F81EA1E7690EE0011B59A /* ShopModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShopModel.swift; sourceTree = "<group>"; };
+		197C97E81E66C91A000C075D /* RecommendCategoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecommendCategoryView.swift; sourceTree = "<group>"; };
+		197C97EA1E67EC89000C075D /* GoodsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoodsCollectionViewCell.swift; sourceTree = "<group>"; };
+		197C97EC1E6816D8000C075D /* SectionHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
+		197C97EE1E681BDE000C075D /* SectionFooterCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionFooterCollectionReusableView.swift; sourceTree = "<group>"; };
+		197C97F21E6913A3000C075D /* HomeScrollTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeScrollTableViewCell.swift; sourceTree = "<group>"; };
+		197C97F51E6942EE000C075D /* LoginAppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginAppViewController.swift; sourceTree = "<group>"; };
+		197C97FA1E6952D9000C075D /* DECSegment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DECSegment.swift; sourceTree = "<group>"; };
+		1996D2EC1E77D7FC00E5368A /* StoreIntroductionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreIntroductionTableViewCell.swift; sourceTree = "<group>"; };
+		1996D2ED1E77D7FC00E5368A /* StoreIntroductionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreIntroductionTableViewCell.xib; sourceTree = "<group>"; };
+		1996D2F01E77E1F300E5368A /* StoreInfomationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreInfomationViewController.swift; sourceTree = "<group>"; };
+		1996D2F61E78D8E600E5368A /* CWStarRateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWStarRateView.h; sourceTree = "<group>"; };
+		1996D2F81E78EA0600E5368A /* StoreEvaluationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreEvaluationTableViewCell.swift; sourceTree = "<group>"; };
+		1996D2FA1E78EA2700E5368A /* StoreAllEvaluationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreAllEvaluationTableViewCell.swift; sourceTree = "<group>"; };
+		1996D2FC1E7A28DF00E5368A /* ConfigFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigFile.swift; sourceTree = "<group>"; };
+		1996D2FE1E7A2CE700E5368A /* CarHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarHomeViewController.swift; sourceTree = "<group>"; };
+		1996D3001E7A38BE00E5368A /* LZCartModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LZCartModel.swift; sourceTree = "<group>"; };
+		1996D3011E7A38BE00E5368A /* LZCartTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LZCartTableViewCell.swift; sourceTree = "<group>"; };
+		1996D3021E7A38BE00E5368A /* LZCartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LZCartViewController.swift; sourceTree = "<group>"; };
+		1996D3061E7A3EE300E5368A /* AddAndCutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAndCutView.swift; sourceTree = "<group>"; };
+		1996D30A1E7F80E900E5368A /* adminItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = adminItemView.swift; sourceTree = "<group>"; };
+		1996D30C1E7FAEB400E5368A /* OrderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderViewController.swift; sourceTree = "<group>"; };
+		1996D30E1E7FBEFA00E5368A /* MyScoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyScoreViewController.swift; sourceTree = "<group>"; };
+		1996D3101E7FC04700E5368A /* ConvertScoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConvertScoreViewController.swift; sourceTree = "<group>"; };
+		1996D3121E7FC1B200E5368A /* CouponViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CouponViewController.swift; sourceTree = "<group>"; };
+		1996D3141E7FC2C400E5368A /* AddressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressViewController.swift; sourceTree = "<group>"; };
+		1996D3161E7FC33A00E5368A /* CooperationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CooperationViewController.swift; sourceTree = "<group>"; };
+		1996D3181E7FC42B00E5368A /* ShopGuideViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShopGuideViewController.swift; sourceTree = "<group>"; };
+		1996D31A1E7FC52C00E5368A /* FeedBackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedBackViewController.swift; sourceTree = "<group>"; };
+		1996D31C1E7FC56400E5368A /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		1996D31E1E7FE0D000E5368A /* MyScoreTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyScoreTableViewCell.swift; sourceTree = "<group>"; };
+		1996D31F1E7FE0D000E5368A /* MyScoreTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyScoreTableViewCell.xib; sourceTree = "<group>"; };
+		19DEA13E1E8516DB004BC988 /* OrderDetailGoodsInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderDetailGoodsInfoTableViewCell.swift; sourceTree = "<group>"; };
+		19DEA1401E851D26004BC988 /* orderInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = orderInfoView.swift; sourceTree = "<group>"; };
+		19E0441F1E9B63D000DFF097 /* EvaluationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvaluationViewController.swift; sourceTree = "<group>"; };
+		19E044211E9B974B00DFF097 /* CWStarRateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWStarRateView.m; sourceTree = "<group>"; };
+		19EA90D31E88BCB70094BF23 /* SafeSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SafeSettingViewController.swift; sourceTree = "<group>"; };
+		19EA90D51E88C0EC0094BF23 /* LYDWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LYDWebViewController.swift; sourceTree = "<group>"; };
+		19EA90DD1E8911E00094BF23 /* EditPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditPasswordViewController.swift; sourceTree = "<group>"; };
+		19EA90DF1E89F5590094BF23 /* EditUserInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditUserInfoViewController.swift; sourceTree = "<group>"; };
+		19EA90E11E8A3D3D0094BF23 /* AliPay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AliPay.swift; sourceTree = "<group>"; };
+		19EA90E21E8A3D3D0094BF23 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
+		19EA90E31E8A3D3D0094BF23 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssl.a; sourceTree = "<group>"; };
+		19EA90E41E8A3D3E0094BF23 /* Util */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Util; sourceTree = "<group>"; };
+		19EA90E51E8A3D3E0094BF23 /* openssl */ = {isa = PBXFileReference; lastKnownFileType = folder; path = openssl; sourceTree = "<group>"; };
+		19EA90E61E8A3D3E0094BF23 /* Order.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Order.h; sourceTree = "<group>"; };
+		19EA90E71E8A3D3E0094BF23 /* Order.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Order.m; sourceTree = "<group>"; };
+		19EA90E81E8A3D3E0094BF23 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
+		19EA90E91E8A3D3E0094BF23 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
+		19EA90F21E8A3E110094BF23 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		19EA90F41E8A3E1D0094BF23 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		19EA90F61E8A3E220094BF23 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		19EA90F81E8A3E2F0094BF23 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		19EA90FA1E8A3E3B0094BF23 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		19EA90FC1E8A3E440094BF23 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		19EA90FE1E8A3E510094BF23 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		19EA91001E8A3E5F0094BF23 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		19EA91021E8A3E6A0094BF23 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		19EA91041E8A3E740094BF23 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		19EA91061E8A3FD70094BF23 /* wechatPayment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = wechatPayment.swift; sourceTree = "<group>"; };
+		19EA91071E8A3FD70094BF23 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		19EA91081E8A3FD70094BF23 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		19EA91091E8A3FD70094BF23 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		19EA910C1E8A41A20094BF23 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		19EA910E1E8A47DC0094BF23 /* PrePayOrderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrePayOrderViewController.swift; sourceTree = "<group>"; };
+		19EA91101E8A49FA0094BF23 /* ChangePhoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePhoneViewController.swift; sourceTree = "<group>"; };
+		19EA91141E8CB0710094BF23 /* ItemInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemInfoView.swift; sourceTree = "<group>"; };
+		19EA91161E8CF25C0094BF23 /* AddressChoseAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressChoseAlert.swift; sourceTree = "<group>"; };
+		19EA91181E8E0A280094BF23 /* GoodsSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoodsSearchViewController.swift; sourceTree = "<group>"; };
+		19EA911A1E8F8E0A0094BF23 /* PayWayChoseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayWayChoseViewController.swift; sourceTree = "<group>"; };
+		19EA911C1E9497180094BF23 /* GuidePageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuidePageViewController.swift; sourceTree = "<group>"; };
+		19EA91241E95F4850094BF23 /* PaySuccessViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaySuccessViewController.swift; sourceTree = "<group>"; };
+		19EA912A1E972A460094BF23 /* NormChoseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NormChoseView.swift; sourceTree = "<group>"; };
+		19EA912C1E98D4EF0094BF23 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
+		19FEB1991E656FC200883097 /* LeyidianCustomer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LeyidianCustomer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		19FEB19C1E656FC200883097 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		19FEB19E1E656FC200883097 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		19FEB1A11E656FC200883097 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		19FEB1A31E656FC200883097 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		19FEB1A61E656FC200883097 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		19FEB1A81E656FC200883097 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		19FEB1B21E65725C00883097 /* CategoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
+		19FEB1B41E65726B00883097 /* CarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarViewController.swift; sourceTree = "<group>"; };
+		19FEB1B61E6572A200883097 /* UserInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoViewController.swift; sourceTree = "<group>"; };
+		19FEB1B91E65764200883097 /* CommonParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonParameters.swift; sourceTree = "<group>"; };
+		19FEB1BA1E65764200883097 /* Methods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Methods.swift; sourceTree = "<group>"; };
+		19FEB1BD1E65769600883097 /* SwiftNotice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftNotice.swift; sourceTree = "<group>"; };
+		19FEB1CE1E65790300883097 /* LeyidianCustomer-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LeyidianCustomer-Bridging-Header.h"; sourceTree = "<group>"; };
+		19FEB1D11E65795D00883097 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		19FEB1D31E6654F000883097 /* NavigationTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationTitleView.swift; sourceTree = "<group>"; };
+		19FEB1D51E666B1A00883097 /* TypeChoseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeChoseView.swift; sourceTree = "<group>"; };
+		19FEB1D71E66714700883097 /* HttpTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpTool.swift; sourceTree = "<group>"; };
+		19FEB1DD1E66A9B400883097 /* DECMaBannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DECMaBannerView.swift; sourceTree = "<group>"; };
+		C1F8B1740970383A4E251C08 /* Pods-LeyidianCustomer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeyidianCustomer.release.xcconfig"; path = "Pods/Target Support Files/Pods-LeyidianCustomer/Pods-LeyidianCustomer.release.xcconfig"; sourceTree = "<group>"; };
+		CA93A239EAD857B66023A675 /* Pods_LeyidianCustomer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LeyidianCustomer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FD0BAFFB191B4F8938657E0B /* Pods-LeyidianCustomer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeyidianCustomer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LeyidianCustomer/Pods-LeyidianCustomer.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		19FEB1961E656FC200883097 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				19456A381EAA12F800A54C32 /* UserNotifications.framework in Frameworks */,
+				19EA912D1E98D4EF0094BF23 /* libresolv.tbd in Frameworks */,
+				19EA910D1E8A41A20094BF23 /* libsqlite3.tbd in Frameworks */,
+				19EA91051E8A3E740094BF23 /* CoreMotion.framework in Frameworks */,
+				19EA91031E8A3E6A0094BF23 /* UIKit.framework in Frameworks */,
+				19EA91011E8A3E5F0094BF23 /* CFNetwork.framework in Frameworks */,
+				19EA90FF1E8A3E510094BF23 /* CoreGraphics.framework in Frameworks */,
+				19EA90FD1E8A3E440094BF23 /* CoreText.framework in Frameworks */,
+				19EA90FB1E8A3E3B0094BF23 /* QuartzCore.framework in Frameworks */,
+				19EA90F91E8A3E2F0094BF23 /* CoreTelephony.framework in Frameworks */,
+				19EA90F71E8A3E220094BF23 /* SystemConfiguration.framework in Frameworks */,
+				19EA90F51E8A3E1D0094BF23 /* libz.tbd in Frameworks */,
+				19EA90F31E8A3E110094BF23 /* libc++.tbd in Frameworks */,
+				19EA90EB1E8A3D3E0094BF23 /* libcrypto.a in Frameworks */,
+				19EA90F11E8A3D3E0094BF23 /* AlipaySDK.framework in Frameworks */,
+				4F09C09960D89EE5FA55CA17 /* Pods_LeyidianCustomer.framework in Frameworks */,
+				19456A351EAA12C100A54C32 /* libUMessage_Sdk_1.5.0a.a in Frameworks */,
+				19EA90EC1E8A3D3E0094BF23 /* libssl.a in Frameworks */,
+				19EA910B1E8A3FD70094BF23 /* libWeChatSDK.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		190066301EB88D98008E3FA4 /* alertview */ = {
+			isa = PBXGroup;
+			children = (
+				190066341EB890EE008E3FA4 /* DECAlertView.swift */,
+			);
+			name = alertview;
+			sourceTree = "<group>";
+		};
+		1900663A1EBAD22F008E3FA4 /* cityChose */ = {
+			isa = PBXGroup;
+			children = (
+				1900663B1EBAD258008E3FA4 /* city.plist */,
+				1900663C1EBAD258008E3FA4 /* PSCityPickerView.h */,
+				1900663D1EBAD258008E3FA4 /* PSCityPickerView.m */,
+			);
+			name = cityChose;
+			sourceTree = "<group>";
+		};
+		1941EEDE1E84CF0B00848174 /* 订单相关 */ = {
+			isa = PBXGroup;
+			children = (
+				1996D30C1E7FAEB400E5368A /* OrderViewController.swift */,
+				1941EEDA1E84C94F00848174 /* OrderDetailViewController.swift */,
+				19E0441F1E9B63D000DFF097 /* EvaluationViewController.swift */,
+				193BF3351EB8164500F19EA2 /* GoodsListViewController.swift */,
+			);
+			name = "订单相关";
+			sourceTree = "<group>";
+		};
+		19456A2F1EA9D9C500A54C32 /* UMengshare */ = {
+			isa = PBXGroup;
+			children = (
+				19456A2D1EA9D9BF00A54C32 /* UMSocialSwiftInterface.swift */,
+			);
+			name = UMengshare;
+			sourceTree = "<group>";
+		};
+		19456A321EAA12B100A54C32 /* UMessage */ = {
+			isa = PBXGroup;
+			children = (
+				19456A331EAA12C100A54C32 /* libUMessage_Sdk_1.5.0a.a */,
+				19456A341EAA12C100A54C32 /* UMessage.h */,
+			);
+			name = UMessage;
+			sourceTree = "<group>";
+		};
+		194981C01E8101B9004F1252 /* 收获地址 */ = {
+			isa = PBXGroup;
+			children = (
+				1996D3141E7FC2C400E5368A /* AddressViewController.swift */,
+				194981C11E8101D7004F1252 /* AddNewAddressViewController.swift */,
+			);
+			name = "收获地址";
+			sourceTree = "<group>";
+		};
+		194981C51E820CE9004F1252 /* 订单 */ = {
+			isa = PBXGroup;
+			children = (
+				194981C61E82101B004F1252 /* WaitPayOrderTableViewCell.swift */,
+				1941EEDC1E84CCE700848174 /* orderStatusView.swift */,
+				1941EEDF1E84F7BC00848174 /* orderDetailView.swift */,
+				19DEA13E1E8516DB004BC988 /* OrderDetailGoodsInfoTableViewCell.swift */,
+				19DEA1401E851D26004BC988 /* orderInfoView.swift */,
+				193BF3371EB8187600F19EA2 /* GoodsListTableViewCell.swift */,
+			);
+			name = "订单";
+			sourceTree = "<group>";
+		};
+		194981CA1E825001004F1252 /* toolView */ = {
+			isa = PBXGroup;
+			children = (
+				191C32741E77808900255E0B /* NoStoreView.swift */,
+				194981C81E824FFD004F1252 /* DECChoseAlertView.swift */,
+				19EA90D51E88C0EC0094BF23 /* LYDWebViewController.swift */,
+				19EA911C1E9497180094BF23 /* GuidePageViewController.swift */,
+				19EA912A1E972A460094BF23 /* NormChoseView.swift */,
+			);
+			name = toolView;
+			sourceTree = "<group>";
+		};
+		194F81BC1E6D45C70011B59A /* DES */ = {
+			isa = PBXGroup;
+			children = (
+				194F81D21E6F9D2D0011B59A /* GTMBase64.h */,
+				194F81D31E6F9D2D0011B59A /* GTMBase64.m */,
+				194F81D41E6F9D2D0011B59A /* GTMDefines.h */,
+				194F81CF1E6F95D90011B59A /* DES.h */,
+				194F81D01E6F95D90011B59A /* DES.m */,
+			);
+			name = DES;
+			sourceTree = "<group>";
+		};
+		197C97F41E6942B3000C075D /* 注册登录 */ = {
+			isa = PBXGroup;
+			children = (
+				197C97F81E695269000C075D /* Controller */,
+				197C97F91E69526F000C075D /* Model */,
+				197C97F71E69525E000C075D /* View */,
+			);
+			name = "注册登录";
+			sourceTree = "<group>";
+		};
+		197C97F71E69525E000C075D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				197C97FA1E6952D9000C075D /* DECSegment.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		197C97F81E695269000C075D /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				197C97F51E6942EE000C075D /* LoginAppViewController.swift */,
+				194F81B31E6CF0A20011B59A /* SignUpViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		197C97F91E69526F000C075D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		1996D2F41E78D8CE00E5368A /* starView */ = {
+			isa = PBXGroup;
+			children = (
+				1996D2F61E78D8E600E5368A /* CWStarRateView.h */,
+				19E044211E9B974B00DFF097 /* CWStarRateView.m */,
+			);
+			name = starView;
+			sourceTree = "<group>";
+		};
+		19EA90D21E88BC7C0094BF23 /* 设置 */ = {
+			isa = PBXGroup;
+			children = (
+				1996D31C1E7FC56400E5368A /* SettingViewController.swift */,
+				19EA90D31E88BCB70094BF23 /* SafeSettingViewController.swift */,
+				19EA90DD1E8911E00094BF23 /* EditPasswordViewController.swift */,
+				19EA91101E8A49FA0094BF23 /* ChangePhoneViewController.swift */,
+			);
+			name = "设置";
+			sourceTree = "<group>";
+		};
+		19FEB1901E656FC200883097 = {
+			isa = PBXGroup;
+			children = (
+				19FEB1D11E65795D00883097 /* Podfile */,
+				19FEB19B1E656FC200883097 /* LeyidianCustomer */,
+				19FEB19A1E656FC200883097 /* Products */,
+				C305B8582E6009D4A7E573FD /* Pods */,
+				2075C9343E2994937EB5085C /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		19FEB19A1E656FC200883097 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				19FEB1991E656FC200883097 /* LeyidianCustomer.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		19FEB19B1E656FC200883097 /* LeyidianCustomer */ = {
+			isa = PBXGroup;
+			children = (
+				19456A3C1EAEF55B00A54C32 /* LeyidianCustomer.entitlements */,
+				19FEB19C1E656FC200883097 /* AppDelegate.swift */,
+				19FEB1B81E65746B00883097 /* tool */,
+				197C97F41E6942B3000C075D /* 注册登录 */,
+				19FEB1AE1E6571E200883097 /* 主页 */,
+				19FEB1B11E6571FB00883097 /* 分类 */,
+				19FEB1B01E6571F500883097 /* 购物车 */,
+				19FEB1AF1E6571EF00883097 /* 我的 */,
+				19FEB1A01E656FC200883097 /* Main.storyboard */,
+				19FEB1A31E656FC200883097 /* Assets.xcassets */,
+				19FEB1A51E656FC200883097 /* LaunchScreen.storyboard */,
+				19FEB1A81E656FC200883097 /* Info.plist */,
+			);
+			path = LeyidianCustomer;
+			sourceTree = "<group>";
+		};
+		19FEB1AE1E6571E200883097 /* 主页 */ = {
+			isa = PBXGroup;
+			children = (
+				19FEB1C01E65779D00883097 /* Controller */,
+				19FEB1C21E6577AD00883097 /* Model */,
+				19FEB1C11E6577A700883097 /* View */,
+			);
+			name = "主页";
+			sourceTree = "<group>";
+		};
+		19FEB1AF1E6571EF00883097 /* 我的 */ = {
+			isa = PBXGroup;
+			children = (
+				19FEB1CB1E65783300883097 /* Controller */,
+				19FEB1CA1E65782D00883097 /* Model */,
+				19FEB1C91E65782800883097 /* View */,
+			);
+			name = "我的";
+			sourceTree = "<group>";
+		};
+		19FEB1B01E6571F500883097 /* 购物车 */ = {
+			isa = PBXGroup;
+			children = (
+				19FEB1C81E65782100883097 /* Controller */,
+				19FEB1C71E65781B00883097 /* Model */,
+				19FEB1C61E65781600883097 /* View */,
+			);
+			name = "购物车";
+			sourceTree = "<group>";
+		};
+		19FEB1B11E6571FB00883097 /* 分类 */ = {
+			isa = PBXGroup;
+			children = (
+				19FEB1C51E6577CD00883097 /* Controller */,
+				19FEB1C41E6577C800883097 /* Model */,
+				19FEB1C31E6577C100883097 /* View */,
+			);
+			name = "分类";
+			sourceTree = "<group>";
+		};
+		19FEB1B81E65746B00883097 /* tool */ = {
+			isa = PBXGroup;
+			children = (
+				19456A321EAA12B100A54C32 /* UMessage */,
+				19FEB1CD1E65786100883097 /* Alipay */,
+				19FEB1CC1E65785500883097 /* Wechat */,
+				19FEB1BF1E65778B00883097 /* mytool */,
+			);
+			name = tool;
+			sourceTree = "<group>";
+		};
+		19FEB1BF1E65778B00883097 /* mytool */ = {
+			isa = PBXGroup;
+			children = (
+				1900663A1EBAD22F008E3FA4 /* cityChose */,
+				190066301EB88D98008E3FA4 /* alertview */,
+				19456A2F1EA9D9C500A54C32 /* UMengshare */,
+				194981CA1E825001004F1252 /* toolView */,
+				1996D2F41E78D8CE00E5368A /* starView */,
+				194F81BC1E6D45C70011B59A /* DES */,
+				19FEB1D91E66A68000883097 /* scrollView */,
+				19FEB1D71E66714700883097 /* HttpTool.swift */,
+				19FEB1D31E6654F000883097 /* NavigationTitleView.swift */,
+				19FEB1BD1E65769600883097 /* SwiftNotice.swift */,
+				19FEB1B91E65764200883097 /* CommonParameters.swift */,
+				19FEB1BA1E65764200883097 /* Methods.swift */,
+				19FEB1CE1E65790300883097 /* LeyidianCustomer-Bridging-Header.h */,
+				194F81E81E7688A20011B59A /* EnumFile.swift */,
+				1996D2FC1E7A28DF00E5368A /* ConfigFile.swift */,
+			);
+			name = mytool;
+			sourceTree = "<group>";
+		};
+		19FEB1C01E65779D00883097 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				19FEB19E1E656FC200883097 /* HomeViewController.swift */,
+				194F81C11E6E415D0011B59A /* MessageCenterViewController.swift */,
+				194F81DA1E7006010011B59A /* GoodsTypeListViewController.swift */,
+				194F81DE1E71586C0011B59A /* AddressChoseViewController.swift */,
+				19EA91181E8E0A280094BF23 /* GoodsSearchViewController.swift */,
+				190066401EBC2844008E3FA4 /* SearchListViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		19FEB1C11E6577A700883097 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				19FEB1D51E666B1A00883097 /* TypeChoseView.swift */,
+				197C97E81E66C91A000C075D /* RecommendCategoryView.swift */,
+				197C97EA1E67EC89000C075D /* GoodsCollectionViewCell.swift */,
+				197C97EC1E6816D8000C075D /* SectionHeaderCollectionReusableView.swift */,
+				197C97EE1E681BDE000C075D /* SectionFooterCollectionReusableView.swift */,
+				197C97F21E6913A3000C075D /* HomeScrollTableViewCell.swift */,
+				194F81C31E6E496A0011B59A /* SystemMessageTableViewCell.swift */,
+				194F81C41E6E496A0011B59A /* SystemMessageTableViewCell.xib */,
+				194F81C71E6E50B80011B59A /* PlatformNoticeTableViewCell.swift */,
+				194F81C81E6E50B80011B59A /* PlatformNoticeTableViewCell.xib */,
+				194F81D61E6FE2C40011B59A /* shopDetailView.swift */,
+				194F81E21E724E9B0011B59A /* HomeAdvertisingView.swift */,
+				19EA91161E8CF25C0094BF23 /* AddressChoseAlert.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		19FEB1C21E6577AD00883097 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				194F81EA1E7690EE0011B59A /* ShopModel.swift */,
+				19456A431EAF3F3700A54C32 /* AddressModel.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		19FEB1C31E6577C100883097 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				194F81BD1E6D49F70011B59A /* LeftTypeView.swift */,
+				194F81BF1E6D563B0011B59A /* LeftTypeTableViewCell.swift */,
+				194F81CB1E6E5B460011B59A /* CategoryGoodsView.swift */,
+				194F81D81E6FED590011B59A /* goodsTableListTableViewCell.swift */,
+				1996D2EC1E77D7FC00E5368A /* StoreIntroductionTableViewCell.swift */,
+				1996D2ED1E77D7FC00E5368A /* StoreIntroductionTableViewCell.xib */,
+				1996D2F81E78EA0600E5368A /* StoreEvaluationTableViewCell.swift */,
+				1996D2FA1E78EA2700E5368A /* StoreAllEvaluationTableViewCell.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		19FEB1C41E6577C800883097 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		19FEB1C51E6577CD00883097 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				19FEB1B21E65725C00883097 /* CategoryViewController.swift */,
+				194F81E01E7235CE0011B59A /* GoodsDetailViewController.swift */,
+				1996D2F01E77E1F300E5368A /* StoreInfomationViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		19FEB1C61E65781600883097 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1996D3011E7A38BE00E5368A /* LZCartTableViewCell.swift */,
+				1996D3061E7A3EE300E5368A /* AddAndCutView.swift */,
+				19EA91141E8CB0710094BF23 /* ItemInfoView.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		19FEB1C71E65781B00883097 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1996D3001E7A38BE00E5368A /* LZCartModel.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		19FEB1C81E65782100883097 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				1996D3021E7A38BE00E5368A /* LZCartViewController.swift */,
+				19FEB1B41E65726B00883097 /* CarViewController.swift */,
+				1996D2FE1E7A2CE700E5368A /* CarHomeViewController.swift */,
+				19EA910E1E8A47DC0094BF23 /* PrePayOrderViewController.swift */,
+				19EA911A1E8F8E0A0094BF23 /* PayWayChoseViewController.swift */,
+				19EA91241E95F4850094BF23 /* PaySuccessViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		19FEB1C91E65782800883097 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				194981C51E820CE9004F1252 /* 订单 */,
+				1996D30A1E7F80E900E5368A /* adminItemView.swift */,
+				1996D31E1E7FE0D000E5368A /* MyScoreTableViewCell.swift */,
+				1996D31F1E7FE0D000E5368A /* MyScoreTableViewCell.xib */,
+				194981B81E80C2D8004F1252 /* ConponTableViewCell.swift */,
+				194981BE1E80DAF3004F1252 /* AddressTableViewCell.swift */,
+				19456A391EADDA1C00A54C32 /* SingleChose.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		19FEB1CA1E65782D00883097 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		19FEB1CB1E65783300883097 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				19FEB1B61E6572A200883097 /* UserInfoViewController.swift */,
+				19EA90D21E88BC7C0094BF23 /* 设置 */,
+				1941EEDE1E84CF0B00848174 /* 订单相关 */,
+				194981C01E8101B9004F1252 /* 收获地址 */,
+				1996D30E1E7FBEFA00E5368A /* MyScoreViewController.swift */,
+				194981B61E80B4A2004F1252 /* ScoreDetailViewController.swift */,
+				1996D3101E7FC04700E5368A /* ConvertScoreViewController.swift */,
+				1996D3121E7FC1B200E5368A /* CouponViewController.swift */,
+				1996D3161E7FC33A00E5368A /* CooperationViewController.swift */,
+				1996D3181E7FC42B00E5368A /* ShopGuideViewController.swift */,
+				1996D31A1E7FC52C00E5368A /* FeedBackViewController.swift */,
+				19EA90DF1E89F5590094BF23 /* EditUserInfoViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		19FEB1CC1E65785500883097 /* Wechat */ = {
+			isa = PBXGroup;
+			children = (
+				19EA91061E8A3FD70094BF23 /* wechatPayment.swift */,
+				19EA91071E8A3FD70094BF23 /* WXApi.h */,
+				19EA91081E8A3FD70094BF23 /* WXApiObject.h */,
+				19EA91091E8A3FD70094BF23 /* libWeChatSDK.a */,
+			);
+			name = Wechat;
+			sourceTree = "<group>";
+		};
+		19FEB1CD1E65786100883097 /* Alipay */ = {
+			isa = PBXGroup;
+			children = (
+				19EA90E11E8A3D3D0094BF23 /* AliPay.swift */,
+				19EA90E21E8A3D3D0094BF23 /* libcrypto.a */,
+				19EA90E31E8A3D3D0094BF23 /* libssl.a */,
+				19EA90E41E8A3D3E0094BF23 /* Util */,
+				19EA90E51E8A3D3E0094BF23 /* openssl */,
+				19EA90E61E8A3D3E0094BF23 /* Order.h */,
+				19EA90E71E8A3D3E0094BF23 /* Order.m */,
+				19EA90E81E8A3D3E0094BF23 /* AlipaySDK.bundle */,
+				19EA90E91E8A3D3E0094BF23 /* AlipaySDK.framework */,
+			);
+			name = Alipay;
+			sourceTree = "<group>";
+		};
+		19FEB1D91E66A68000883097 /* scrollView */ = {
+			isa = PBXGroup;
+			children = (
+				19FEB1DD1E66A9B400883097 /* DECMaBannerView.swift */,
+			);
+			name = scrollView;
+			sourceTree = "<group>";
+		};
+		2075C9343E2994937EB5085C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				19456A371EAA12F800A54C32 /* UserNotifications.framework */,
+				19EA912C1E98D4EF0094BF23 /* libresolv.tbd */,
+				19EA910C1E8A41A20094BF23 /* libsqlite3.tbd */,
+				19EA91041E8A3E740094BF23 /* CoreMotion.framework */,
+				19EA91021E8A3E6A0094BF23 /* UIKit.framework */,
+				19EA91001E8A3E5F0094BF23 /* CFNetwork.framework */,
+				19EA90FE1E8A3E510094BF23 /* CoreGraphics.framework */,
+				19EA90FC1E8A3E440094BF23 /* CoreText.framework */,
+				19EA90FA1E8A3E3B0094BF23 /* QuartzCore.framework */,
+				19EA90F81E8A3E2F0094BF23 /* CoreTelephony.framework */,
+				19EA90F61E8A3E220094BF23 /* SystemConfiguration.framework */,
+				19EA90F41E8A3E1D0094BF23 /* libz.tbd */,
+				19EA90F21E8A3E110094BF23 /* libc++.tbd */,
+				CA93A239EAD857B66023A675 /* Pods_LeyidianCustomer.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C305B8582E6009D4A7E573FD /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				FD0BAFFB191B4F8938657E0B /* Pods-LeyidianCustomer.debug.xcconfig */,
+				C1F8B1740970383A4E251C08 /* Pods-LeyidianCustomer.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		19FEB1981E656FC200883097 /* LeyidianCustomer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 19FEB1AB1E656FC200883097 /* Build configuration list for PBXNativeTarget "LeyidianCustomer" */;
+			buildPhases = (
+				CC03095D4C257C0ECE0019EB /* [CP] Check Pods Manifest.lock */,
+				19FEB1951E656FC200883097 /* Sources */,
+				19FEB1961E656FC200883097 /* Frameworks */,
+				19FEB1971E656FC200883097 /* Resources */,
+				CC9C15D8CB69D7A1FB57B58E /* [CP] Embed Pods Frameworks */,
+				50C1B238F01EE709065804A4 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LeyidianCustomer;
+			productName = LeyidianCustomer;
+			productReference = 19FEB1991E656FC200883097 /* LeyidianCustomer.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		19FEB1911E656FC200883097 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0820;
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = DEC.MA;
+				TargetAttributes = {
+					19FEB1981E656FC200883097 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 99B64FQDW3;
+						LastSwiftMigration = 0820;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
+					};
+				};
+			};
+			buildConfigurationList = 19FEB1941E656FC200883097 /* Build configuration list for PBXProject "LeyidianCustomer" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 19FEB1901E656FC200883097;
+			productRefGroup = 19FEB19A1E656FC200883097 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				19FEB1981E656FC200883097 /* LeyidianCustomer */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		19FEB1971E656FC200883097 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				194F81C61E6E496A0011B59A /* SystemMessageTableViewCell.xib in Resources */,
+				19EA90F01E8A3D3E0094BF23 /* AlipaySDK.bundle in Resources */,
+				19FEB1A71E656FC200883097 /* LaunchScreen.storyboard in Resources */,
+				19FEB1A41E656FC200883097 /* Assets.xcassets in Resources */,
+				19EA90EE1E8A3D3E0094BF23 /* openssl in Resources */,
+				19FEB1D21E65795D00883097 /* Podfile in Resources */,
+				194F81CA1E6E50B80011B59A /* PlatformNoticeTableViewCell.xib in Resources */,
+				1996D2EF1E77D7FC00E5368A /* StoreIntroductionTableViewCell.xib in Resources */,
+				1996D3211E7FE0D000E5368A /* MyScoreTableViewCell.xib in Resources */,
+				1900663E1EBAD258008E3FA4 /* city.plist in Resources */,
+				19FEB1A21E656FC200883097 /* Main.storyboard in Resources */,
+				19EA90ED1E8A3D3E0094BF23 /* Util in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		50C1B238F01EE709065804A4 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LeyidianCustomer/Pods-LeyidianCustomer-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CC03095D4C257C0ECE0019EB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		CC9C15D8CB69D7A1FB57B58E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LeyidianCustomer/Pods-LeyidianCustomer-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		19FEB1951E656FC200883097 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				194F81C01E6D563B0011B59A /* LeftTypeTableViewCell.swift in Sources */,
+				1996D3071E7A3EE300E5368A /* AddAndCutView.swift in Sources */,
+				197C97FB1E6952D9000C075D /* DECSegment.swift in Sources */,
+				197C97ED1E6816D8000C075D /* SectionHeaderCollectionReusableView.swift in Sources */,
+				19EA90DE1E8911E00094BF23 /* EditPasswordViewController.swift in Sources */,
+				194F81C51E6E496A0011B59A /* SystemMessageTableViewCell.swift in Sources */,
+				194F81DF1E71586C0011B59A /* AddressChoseViewController.swift in Sources */,
+				19FEB19F1E656FC200883097 /* HomeViewController.swift in Sources */,
+				19EA911D1E9497180094BF23 /* GuidePageViewController.swift in Sources */,
+				190066351EB890EE008E3FA4 /* DECAlertView.swift in Sources */,
+				197C97EF1E681BDE000C075D /* SectionFooterCollectionReusableView.swift in Sources */,
+				1996D3131E7FC1B200E5368A /* CouponViewController.swift in Sources */,
+				19FEB1BC1E65764200883097 /* Methods.swift in Sources */,
+				1996D3051E7A38BE00E5368A /* LZCartViewController.swift in Sources */,
+				194981C21E8101D7004F1252 /* AddNewAddressViewController.swift in Sources */,
+				19456A441EAF3F3700A54C32 /* AddressModel.swift in Sources */,
+				1941EEDD1E84CCE700848174 /* orderStatusView.swift in Sources */,
+				1996D2FD1E7A28DF00E5368A /* ConfigFile.swift in Sources */,
+				194981B71E80B4A2004F1252 /* ScoreDetailViewController.swift in Sources */,
+				1996D30F1E7FBEFA00E5368A /* MyScoreViewController.swift in Sources */,
+				197C97E91E66C91A000C075D /* RecommendCategoryView.swift in Sources */,
+				193BF3361EB8164500F19EA2 /* GoodsListViewController.swift in Sources */,
+				19FEB1B31E65725C00883097 /* CategoryViewController.swift in Sources */,
+				197C97F61E6942EE000C075D /* LoginAppViewController.swift in Sources */,
+				19FEB1BE1E65769600883097 /* SwiftNotice.swift in Sources */,
+				194F81C91E6E50B80011B59A /* PlatformNoticeTableViewCell.swift in Sources */,
+				19EA91151E8CB0710094BF23 /* ItemInfoView.swift in Sources */,
+				1996D2EE1E77D7FC00E5368A /* StoreIntroductionTableViewCell.swift in Sources */,
+				19EA910F1E8A47DC0094BF23 /* PrePayOrderViewController.swift in Sources */,
+				194F81DB1E7006010011B59A /* GoodsTypeListViewController.swift in Sources */,
+				19FEB1B71E6572A200883097 /* UserInfoViewController.swift in Sources */,
+				191C32751E77808900255E0B /* NoStoreView.swift in Sources */,
+				194F81EB1E7690EE0011B59A /* ShopModel.swift in Sources */,
+				19EA90EA1E8A3D3E0094BF23 /* AliPay.swift in Sources */,
+				1996D30D1E7FAEB400E5368A /* OrderViewController.swift in Sources */,
+				19EA91251E95F4860094BF23 /* PaySuccessViewController.swift in Sources */,
+				19FEB1D81E66714700883097 /* HttpTool.swift in Sources */,
+				19FEB1DE1E66A9B400883097 /* DECMaBannerView.swift in Sources */,
+				1900663F1EBAD258008E3FA4 /* PSCityPickerView.m in Sources */,
+				1996D3151E7FC2C400E5368A /* AddressViewController.swift in Sources */,
+				19FEB19D1E656FC200883097 /* AppDelegate.swift in Sources */,
+				1996D31D1E7FC56400E5368A /* SettingViewController.swift in Sources */,
+				194F81E31E724E9B0011B59A /* HomeAdvertisingView.swift in Sources */,
+				19FEB1D41E6654F000883097 /* NavigationTitleView.swift in Sources */,
+				194F81B41E6CF0A20011B59A /* SignUpViewController.swift in Sources */,
+				1996D2F11E77E1F300E5368A /* StoreInfomationViewController.swift in Sources */,
+				194F81E91E7688A20011B59A /* EnumFile.swift in Sources */,
+				19EA91111E8A49FA0094BF23 /* ChangePhoneViewController.swift in Sources */,
+				1996D2FF1E7A2CE700E5368A /* CarHomeViewController.swift in Sources */,
+				19456A2E1EA9D9BF00A54C32 /* UMSocialSwiftInterface.swift in Sources */,
+				194F81D71E6FE2C40011B59A /* shopDetailView.swift in Sources */,
+				194981BF1E80DAF3004F1252 /* AddressTableViewCell.swift in Sources */,
+				194981BA1E80C2D8004F1252 /* ConponTableViewCell.swift in Sources */,
+				1996D3111E7FC04700E5368A /* ConvertScoreViewController.swift in Sources */,
+				1996D31B1E7FC52C00E5368A /* FeedBackViewController.swift in Sources */,
+				1996D30B1E7F80E900E5368A /* adminItemView.swift in Sources */,
+				193BF3391EB8187600F19EA2 /* GoodsListTableViewCell.swift in Sources */,
+				1996D3031E7A38BE00E5368A /* LZCartModel.swift in Sources */,
+				194F81D51E6F9D2D0011B59A /* GTMBase64.m in Sources */,
+				19FEB1BB1E65764200883097 /* CommonParameters.swift in Sources */,
+				1996D3201E7FE0D000E5368A /* MyScoreTableViewCell.swift in Sources */,
+				1941EEDB1E84C94F00848174 /* OrderDetailViewController.swift in Sources */,
+				194F81D91E6FED590011B59A /* goodsTableListTableViewCell.swift in Sources */,
+				19EA91171E8CF25C0094BF23 /* AddressChoseAlert.swift in Sources */,
+				19EA90EF1E8A3D3E0094BF23 /* Order.m in Sources */,
+				19EA911B1E8F8E0A0094BF23 /* PayWayChoseViewController.swift in Sources */,
+				19EA912B1E972A460094BF23 /* NormChoseView.swift in Sources */,
+				19EA90D61E88C0EC0094BF23 /* LYDWebViewController.swift in Sources */,
+				19E044221E9B974B00DFF097 /* CWStarRateView.m in Sources */,
+				19EA90E01E89F5590094BF23 /* EditUserInfoViewController.swift in Sources */,
+				197C97EB1E67EC89000C075D /* GoodsCollectionViewCell.swift in Sources */,
+				19EA90D41E88BCB70094BF23 /* SafeSettingViewController.swift in Sources */,
+				190066411EBC2844008E3FA4 /* SearchListViewController.swift in Sources */,
+				194F81C21E6E415D0011B59A /* MessageCenterViewController.swift in Sources */,
+				194981C91E824FFD004F1252 /* DECChoseAlertView.swift in Sources */,
+				19EA91191E8E0A280094BF23 /* GoodsSearchViewController.swift in Sources */,
+				19DEA13F1E8516DB004BC988 /* OrderDetailGoodsInfoTableViewCell.swift in Sources */,
+				194F81E11E7235CE0011B59A /* GoodsDetailViewController.swift in Sources */,
+				1996D3041E7A38BE00E5368A /* LZCartTableViewCell.swift in Sources */,
+				19E044201E9B63D000DFF097 /* EvaluationViewController.swift in Sources */,
+				19456A3A1EADDA1C00A54C32 /* SingleChose.swift in Sources */,
+				1996D2F91E78EA0600E5368A /* StoreEvaluationTableViewCell.swift in Sources */,
+				1996D3191E7FC42B00E5368A /* ShopGuideViewController.swift in Sources */,
+				194F81CC1E6E5B460011B59A /* CategoryGoodsView.swift in Sources */,
+				194981C71E82101B004F1252 /* WaitPayOrderTableViewCell.swift in Sources */,
+				197C97F31E6913A3000C075D /* HomeScrollTableViewCell.swift in Sources */,
+				19EA910A1E8A3FD70094BF23 /* wechatPayment.swift in Sources */,
+				1996D3171E7FC33A00E5368A /* CooperationViewController.swift in Sources */,
+				19DEA1411E851D26004BC988 /* orderInfoView.swift in Sources */,
+				1941EEE01E84F7BC00848174 /* orderDetailView.swift in Sources */,
+				1996D2FB1E78EA2700E5368A /* StoreAllEvaluationTableViewCell.swift in Sources */,
+				194F81D11E6F95D90011B59A /* DES.m in Sources */,
+				194F81BE1E6D49F70011B59A /* LeftTypeView.swift in Sources */,
+				19FEB1D61E666B1A00883097 /* TypeChoseView.swift in Sources */,
+				19FEB1B51E65726B00883097 /* CarViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		19FEB1A01E656FC200883097 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				19FEB1A11E656FC200883097 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		19FEB1A51E656FC200883097 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				19FEB1A61E656FC200883097 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		19FEB1A91E656FC200883097 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		19FEB1AA1E656FC200883097 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		19FEB1AC1E656FC200883097 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FD0BAFFB191B4F8938657E0B /* Pods-LeyidianCustomer.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = LeyidianCustomer/LeyidianCustomer.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Shaojun Liu (G8DSVX2Z4P)";
+				DEVELOPMENT_TEAM = 99B64FQDW3;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/LeyidianCustomer",
+				);
+				INFOPLIST_FILE = LeyidianCustomer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/LeyidianCustomer",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.Leyidian.customer;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "8de2de81-d4d9-4f02-88f0-94561130d90c";
+				PROVISIONING_PROFILE_SPECIFIER = leyidiancustomerdeveloper;
+				SWIFT_OBJC_BRIDGING_HEADER = "LeyidianCustomer/LeyidianCustomer-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		19FEB1AD1E656FC200883097 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C1F8B1740970383A4E251C08 /* Pods-LeyidianCustomer.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = LeyidianCustomer/LeyidianCustomer.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Shaojun Liu (G8DSVX2Z4P)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Shaojun Liu (G8DSVX2Z4P)";
+				DEVELOPMENT_TEAM = 99B64FQDW3;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/LeyidianCustomer",
+				);
+				INFOPLIST_FILE = LeyidianCustomer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/LeyidianCustomer",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.Leyidian.customer;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "8de2de81-d4d9-4f02-88f0-94561130d90c";
+				PROVISIONING_PROFILE_SPECIFIER = leyidiancustomerdeveloper;
+				SWIFT_OBJC_BRIDGING_HEADER = "LeyidianCustomer/LeyidianCustomer-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		19FEB1941E656FC200883097 /* Build configuration list for PBXProject "LeyidianCustomer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				19FEB1A91E656FC200883097 /* Debug */,
+				19FEB1AA1E656FC200883097 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		19FEB1AB1E656FC200883097 /* Build configuration list for PBXNativeTarget "LeyidianCustomer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				19FEB1AC1E656FC200883097 /* Debug */,
+				19FEB1AD1E656FC200883097 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 19FEB1911E656FC200883097 /* Project object */;
+}

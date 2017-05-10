@@ -1,0 +1,37 @@
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '8.0'
+use_frameworks!
+
+target 'LeyidianCustomer' do
+#pod 'SQLite.swift','0.11.0'
+pod 'Just','0.5.7'
+pod 'SDWebImage','3.8.2'
+pod 'MJRefresh','3.1.12'
+pod 'SwiftyJSON','3.1.1'
+pod 'AMap2DMap','4.6.0'
+pod 'AMapSearch','5.0.0' #搜索功能
+pod 'AMapLocation','2.1.1'
+pod 'IQKeyboardManagerSwift','4.0.7'
+pod 'DKImagePickerController','3.4.2'
+pod 'AliyunOSSiOS','2.5.3'
+#pod 'BaiduMapKit','3.1.0'
+pod 'UMengUShare/UI'
+# 集成微信(精简版0.2M)
+pod 'UMengUShare/Social/ReducedWeChat'
+
+# 集成微信(完整版14.4M)
+#pod 'UMengUShare/Social/WeChat'
+
+# 集成QQ(精简版0.5M)
+pod 'UMengUShare/Social/ReducedQQ'
+
+# 集成QQ(完整版7.6M)
+#pod 'UMengUShare/Social/QQ'
+
+# 集成新浪微博(精简版1M)
+pod 'UMengUShare/Social/ReducedSina'
+
+# 集成新浪微博(完整版25.3M)
+#pod 'UMengUShare/Social/Sina'
+#pod 'SwiftLoader',
+end

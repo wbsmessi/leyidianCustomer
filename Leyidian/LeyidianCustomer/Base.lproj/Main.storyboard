@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Q8c-S0-XUz">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Home View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="HomeViewController" customModule="LeyidianCustomer" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Ion-0P-ddd"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1727.2" y="-991.75412293853083"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="4GH-hI-rXo">
+            <objects>
+                <tabBarController storyboardIdentifier="homePage" automaticallyAdjustsScrollViewInsets="NO" id="Q8c-S0-XUz" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="NYP-l9-6An">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="MXc-Xj-TtA" kind="relationship" relationship="viewControllers" id="fyB-sU-hAc"/>
+                        <segue destination="bGH-HY-E8n" kind="relationship" relationship="viewControllers" id="mAm-vB-o3m"/>
+                        <segue destination="gte-2a-zhY" kind="relationship" relationship="viewControllers" id="DMh-3z-Lt2"/>
+                        <segue destination="0RV-Uy-xBr" kind="relationship" relationship="viewControllers" id="7rB-CT-Lvt"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Hs9-zx-Gpi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-538" y="19"/>
+        </scene>
+        <!--Category View Controller-->
+        <scene sceneID="jL3-2q-hMb">
+            <objects>
+                <viewController id="Dmq-If-L3Q" customClass="CategoryViewController" customModule="LeyidianCustomer" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="KR1-qf-q2J"/>
+                        <viewControllerLayoutGuide type="bottom" id="IKJ-6k-6I9"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Dfr-gh-vSC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="0HQ-TF-br2"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oIf-UL-Toz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1727.2" y="-314.39280359820094"/>
+        </scene>
+        <!--User Info View Controller-->
+        <scene sceneID="hnK-5z-Adw">
+            <objects>
+                <viewController id="Jeu-UF-gAv" customClass="UserInfoViewController" customModule="LeyidianCustomer" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="tVN-bp-Rzm"/>
+                        <viewControllerLayoutGuide type="bottom" id="okm-Gd-Yuv"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="IhA-iC-i8s">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="SJL-bD-W9D"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2vw-o1-cSV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1727.2" y="1035.832083958021"/>
+        </scene>
+        <!--Cart View Controller-->
+        <scene sceneID="IbE-42-43L">
+            <objects>
+                <viewController id="tDQ-Zx-pBz" customClass="LZCartViewController" customModule="LeyidianCustomer" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="RWO-QO-f8l"/>
+                        <viewControllerLayoutGuide type="bottom" id="YJW-VR-UdR"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="g3t-XI-kVp">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Rju-mS-ZIy"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qBD-jR-d6E" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1727" y="352"/>
+        </scene>
+        <!--主页-->
+        <scene sceneID="MYb-2Z-7iN">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="MXc-Xj-TtA" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="主页" image="首页-未选中" selectedImage="首页-选中" id="O2U-1f-lnk"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="j46-N2-yY9">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="O2g-Sb-59i"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rqk-I0-htn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="788" y="-991.75412293853083"/>
+        </scene>
+        <!--分类-->
+        <scene sceneID="I3V-Gs-K9j">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="bGH-HY-E8n" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="分类" image="分类-未选中" selectedImage="分类-选中" id="J99-Ap-i9Z"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="eos-Gn-fCK">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Dmq-If-L3Q" kind="relationship" relationship="rootViewController" id="g1S-wn-gcN"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="L3E-O8-p8c" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="788" y="-314.39280359820094"/>
+        </scene>
+        <!--我的-->
+        <scene sceneID="py5-fi-1Ft">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0RV-Uy-xBr" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="我的" image="wo--wei" selectedImage="woe-xuanz" id="WR8-km-tK4"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="6FD-Va-t8s">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Jeu-UF-gAv" kind="relationship" relationship="rootViewController" id="rc6-nt-d5r"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tac-8X-DAd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="788" y="1035.832083958021"/>
+        </scene>
+        <!--购物车-->
+        <scene sceneID="3ng-Le-wcZ">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="gte-2a-zhY" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="购物车" image="gouwuche-wei" selectedImage="gouwuche-xuanz" id="ZwX-M3-ggF"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="0nH-rT-j0J">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="tDQ-Zx-pBz" kind="relationship" relationship="rootViewController" id="iPS-Pw-8Fl"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xiz-pA-dGg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="788" y="365"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="gouwuche-wei" width="29" height="29"/>
+        <image name="gouwuche-xuanz" width="29" height="29"/>
+        <image name="wo--wei" width="29" height="29"/>
+        <image name="woe-xuanz" width="29" height="29"/>
+        <image name="分类-未选中" width="29" height="29"/>
+        <image name="分类-选中" width="29" height="29"/>
+        <image name="首页-未选中" width="29" height="29"/>
+        <image name="首页-选中" width="29" height="29"/>
+    </resources>
+</document>
