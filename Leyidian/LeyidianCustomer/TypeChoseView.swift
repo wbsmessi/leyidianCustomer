@@ -29,7 +29,7 @@ class TypeChoseView: UIView {
     func reloadWithArray(array: [String]) {
         DispatchQueue.main.async {
             for item in self.scroll.subviews{
-                //移除原有的
+                //。。。移除原有的
                 item.removeFromSuperview()
             }
             self.scroll.contentSize = CGSize(width: self.item_width * CGFloat(array.count), height: self.scroll.frame.height)
