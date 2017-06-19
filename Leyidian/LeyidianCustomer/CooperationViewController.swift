@@ -12,8 +12,14 @@ import SwiftyJSON
 class CooperationViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,DECChoseAlertViewDelegate,SingleChoseDelegate,PSCityPickerViewDelegate {
 
     var method = Methods()
+    
+    var row_height:CGFloat = 40
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(app_height)
+        if app_height < 600.0{
+            row_height = 35
+        }
         self.setTitleView(title: "申请合作", canBack: true)
         creatView()
         loadShopType()
@@ -31,17 +37,18 @@ class CooperationViewController: UIViewController,UITableViewDelegate,UITableVie
         method.creatLabel(lab: title, x: 15, y: nav_height, wid: app_width - 15, hei: 30, textString: "请完整填写申请资料，以便我们了解你的情况", textcolor: UIColor.gray, textFont: 10, superView: self.view)
         
         let infoTable = UITableView()
-        infoTable.frame = CGRect(x: 0, y: title.bottomPosition(), width: app_width, height: 350 + 10)
+        infoTable.frame = CGRect(x: 0, y: title.bottomPosition(), width: app_width, height: 10 * row_height + 10)
         infoTable.dataSource = self
         infoTable.delegate = self
-        infoTable.rowHeight = 35
+        infoTable.rowHeight = row_height
+        infoTable.bounces = false
 //        infoTable.allowsSelection = false
         infoTable.showsVerticalScrollIndicator = false
 //        infoTable.tableFooterView = UIView()
         self.view.addSubview(infoTable)
         
         let submit = UIButton()
-        method.creatButton(btn: submit, x: 15, y: infoTable.bottomPosition() + 20, wid: app_width - 30, hei: 40, title: "提交申请", titlecolor: UIColor.white, titleFont: 16, bgColor: UIColor.clear, superView: self.view)
+        method.creatButton(btn: submit, x: 15, y: infoTable.bottomPosition() + 20, wid: app_width - 30, hei: (app_width - 30)/7.73, title: "提交申请", titlecolor: UIColor.white, titleFont: 16, bgColor: UIColor.clear, superView: self.view)
         submit.setBackgroundImage(UIImage(named:"anniu"), for: .normal)
         submit.addTarget(self, action: #selector(submitClick), for: .touchUpInside)
         
@@ -61,7 +68,7 @@ class CooperationViewController: UIViewController,UITableViewDelegate,UITableVie
     
     lazy var username:UITextField={
         var text = UITextField()
-        text.frame = CGRect(x: 90, y: 0, width: app_width - 100, height: 35)
+        text.frame = CGRect(x: 90, y: 0, width: app_width - 100, height: self.row_height)
         text.delegate = self
         text.placeholder = "请输入你的姓名"
         text.font = UIFont.systemFont(ofSize: 12)
@@ -70,7 +77,7 @@ class CooperationViewController: UIViewController,UITableViewDelegate,UITableVie
     }()
     lazy var userphone:UITextField={
         var text = UITextField()
-        text.frame = CGRect(x: 90, y: 0, width: app_width - 100, height: 35)
+        text.frame = CGRect(x: 90, y: 0, width: app_width - 100, height: self.row_height)
         text.delegate = self
         text.placeholder = "请输入你的联系电话"
         text.font = UIFont.systemFont(ofSize: 12)
@@ -80,7 +87,7 @@ class CooperationViewController: UIViewController,UITableViewDelegate,UITableVie
     }()
     lazy var storeName:UITextField={
         var text = UITextField()
-        text.frame = CGRect(x: 90, y: 0, width: app_width - 100, height: 35)
+        text.frame = CGRect(x: 90, y: 0, width: app_width - 100, height: self.row_height)
         text.delegate = self
         text.placeholder = "请输入你的店铺名称"
         text.font = UIFont.systemFont(ofSize: 12)
@@ -89,7 +96,7 @@ class CooperationViewController: UIViewController,UITableViewDelegate,UITableVie
     }()
     lazy var storeType:UITextField={
         var text = UITextField()
-        text.frame = CGRect(x: 90, y: 0, width: app_width - 120, height: 35)
+        text.frame = CGRect(x: 90, y: 0, width: app_width - 120, height: self.row_height)
         text.delegate = self
         text.placeholder = "请选择你的店铺类型"
         text.font = UIFont.systemFont(ofSize: 12)
@@ -99,7 +106,7 @@ class CooperationViewController: UIViewController,UITableViewDelegate,UITableVie
     }()
     lazy var openTime:UITextField={
         var text = UITextField()
-        text.frame = CGRect(x: 90, y: 0, width: app_width - 120, height: 35)
+        text.frame = CGRect(x: 90, y: 0, width: app_width - 120, height: self.row_height)
         text.delegate = self
         text.placeholder = "请选择营业时间"
         text.font = UIFont.systemFont(ofSize: 12)
@@ -114,7 +121,7 @@ class CooperationViewController: UIViewController,UITableViewDelegate,UITableVie
     }()
     lazy var City:UITextField={
         var text = UITextField()
-        text.frame = CGRect(x: 90, y: 0, width: app_width - 120, height: 35)
+        text.frame = CGRect(x: 90, y: 0, width: app_width - 120, height: self.row_height)
         text.delegate = self
 //        text.isUserInteractionEnabled = false
         text.placeholder = "所在地"
@@ -127,7 +134,7 @@ class CooperationViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     lazy var address:UITextField={
         var text = UITextField()
-        text.frame = CGRect(x: 90, y: 0, width: app_width - 100, height: 35)
+        text.frame = CGRect(x: 90, y: 0, width: app_width - 100, height: 40)
         text.delegate = self
         text.placeholder = "请输入详细地址"
         text.font = UIFont.systemFont(ofSize: 12)
@@ -137,10 +144,10 @@ class CooperationViewController: UIViewController,UITableViewDelegate,UITableVie
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         let title = UILabel()
-        method.creatLabel(lab: title, x: 15, y: 0, wid: 65, hei: 35, textString: titleArr[indexPath.section][indexPath.row], textcolor: UIColor.black, textFont: 11, superView: cell.contentView)
+        method.creatLabel(lab: title, x: 15, y: 0, wid: 65, hei: 40, textString: titleArr[indexPath.section][indexPath.row], textcolor: UIColor.black, textFont: 11, superView: cell.contentView)
         
         if indexPath.section == 1{
-            title.frame = CGRect(x: 15, y: 0, width: app_width/2 - 15, height: 35)
+            title.frame = CGRect(x: 15, y: 0, width: app_width/2 - 15, height: row_height)
             let single = SingleChose(frame: CGRect(x: app_width - 150, y: 0, width: 130, height: 35))
             single.delegate = self
             single.tag = indexPath.row
@@ -157,16 +164,16 @@ class CooperationViewController: UIViewController,UITableViewDelegate,UITableVie
                 
                 cell.contentView.addSubview(storeType)
                 let img = UIImageView()
-                method.creatImage(img: img, x: app_width - 30, y: 0, wid: 30, hei: 35, imgName: "jiantou-up", imgMode: .center, superView: cell.contentView)
+                method.creatImage(img: img, x: app_width - 30, y: 0, wid: 30, hei: row_height, imgName: "jiantou-up", imgMode: .center, superView: cell.contentView)
             case 4:
                 cell.contentView.addSubview(openTime)
                 let img = UIImageView()
-                method.creatImage(img: img, x: app_width - 30, y: 0, wid: 30, hei: 35, imgName: "jiantou-up", imgMode: .center, superView: cell.contentView)
+                method.creatImage(img: img, x: app_width - 30, y: 0, wid: 30, hei: row_height, imgName: "jiantou-up", imgMode: .center, superView: cell.contentView)
             case 5:
                 cell.contentView.addSubview(City)
                 City.inputView = cityPick
                 let img = UIImageView()
-                method.creatImage(img: img, x: app_width - 30, y: 0, wid: 30, hei: 35, imgName: "jiantou-up", imgMode: .center, superView: cell.contentView)
+                method.creatImage(img: img, x: app_width - 30, y: 0, wid: 30, hei: row_height, imgName: "jiantou-up", imgMode: .center, superView: cell.contentView)
             case 6:
                 cell.contentView.addSubview(address)
             default:
@@ -297,6 +304,11 @@ class CooperationViewController: UIViewController,UITableViewDelegate,UITableVie
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField == City{
+            City.text = "北京市北京市东城区"
+        }
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         closeKeybord()

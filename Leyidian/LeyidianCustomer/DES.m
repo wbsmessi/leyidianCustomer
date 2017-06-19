@@ -59,7 +59,7 @@
 + (NSString *) decryptUseDES:(NSString*)cipherText key:(NSString*)key
 {
     NSData* cipherData = [GTMBase64 decodeString:cipherText];
-    unsigned char buffer[10240];
+    unsigned char buffer[102400];
     memset(buffer, 0, sizeof(char));
     size_t numBytesDecrypted = 0;
     Byte iv[] = { 12, 22, 32, 43, 51, 64, 57, 98 };
@@ -72,7 +72,7 @@
                                           [cipherData bytes],
                                           [cipherData length],
                                           buffer,
-                                          10240,
+                                          102400,
                                           &numBytesDecrypted);
     NSString* plainText = nil;
     if (cryptStatus == kCCSuccess) {

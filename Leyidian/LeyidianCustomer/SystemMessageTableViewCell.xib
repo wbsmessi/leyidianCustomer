@@ -20,7 +20,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="【订单详情】" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qeE-Iy-qlE">
-                        <rect key="frame" x="15" y="0.0" width="296" height="20"/>
+                        <rect key="frame" x="15" y="5" width="296" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="TOd-LP-VtY"/>
                         </constraints>
@@ -29,7 +29,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RsF-xD-BcS">
-                        <rect key="frame" x="23" y="20" width="280" height="20"/>
+                        <rect key="frame" x="23" y="25" width="280" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="jGa-bZ-i7V"/>
                         </constraints>
@@ -51,7 +51,7 @@
                     <constraint firstItem="RsF-xD-BcS" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="15" id="0sM-IN-KJx"/>
                     <constraint firstAttribute="bottom" secondItem="wLo-01-n16" secondAttribute="bottom" id="BPb-sZ-f66"/>
                     <constraint firstAttribute="trailing" secondItem="qeE-Iy-qlE" secondAttribute="trailing" constant="15" id="EjS-63-IZa"/>
-                    <constraint firstItem="qeE-Iy-qlE" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Lgs-Fu-Du0"/>
+                    <constraint firstItem="qeE-Iy-qlE" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="Lgs-Fu-Du0"/>
                     <constraint firstItem="qeE-Iy-qlE" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="OpT-XC-VSn"/>
                     <constraint firstItem="RsF-xD-BcS" firstAttribute="top" secondItem="qeE-Iy-qlE" secondAttribute="bottom" id="P7J-ED-oEX"/>
                     <constraint firstItem="wLo-01-n16" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="h68-f4-BQv"/>

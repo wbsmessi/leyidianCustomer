@@ -59,7 +59,7 @@ class LZCartTableViewCell: UITableViewCell {
         self.addSubview(backgroundView)
     
         let selectButton = UIButton(type: .custom)
-        selectButton.frame = CGRect(x: 10, y: 40, width: 20, height: 20)
+        selectButton.frame = CGRect(x: 0, y: 10, width: 40, height: 80)
         selectButton.setImage(UIImage(named: "xuanze-1"), for: UIControlState.selected)
         selectButton.setImage(UIImage(named: "weixuanze"), for: UIControlState())
         selectButton.addTarget(self, action: #selector(selectButtonClick), for: UIControlEvents.touchUpInside)
@@ -68,13 +68,13 @@ class LZCartTableViewCell: UITableViewCell {
         
         //头像背景view
         let headerBg = UIView()
-        headerBg.frame = CGRect(x: selectButton.rightPosition() + 10, y: 10, width: row_height - 20, height: row_height - 20)
+        headerBg.frame = CGRect(x: selectButton.rightPosition(), y: 10, width: row_height - 20, height: row_height - 20)
 //        headerBg.backgroundColor = LZColorTool.colorFromHex(0xf3f3f3)
         backgroundView.addSubview(headerBg)
         
         
         //商品图片
-        lzImageView = UIImageView(image: UIImage(named: "40fe711f9b754b596159f3a6.jpg"))
+        lzImageView = UIImageView()
         lzImageView.frame = headerBg.frame
         lzImageView.contentMode = UIViewContentMode.scaleAspectFill
         backgroundView.addSubview(lzImageView)
@@ -90,7 +90,7 @@ class LZCartTableViewCell: UITableViewCell {
         let goodDetail = UILabel()
         goodDetail.frame = CGRect(x: title.frame.origin.x, y: title.bottomPosition(), width: title.frame.width, height: 25)
         goodDetail.font = UIFont.systemFont(ofSize: 12)
-//        goodDetail.textColor = LZColorTool.colorFromRGB(132, G: 132, B: 132)
+        goodDetail.textColor = myAppGryaColor()
         backgroundView.addSubview(goodDetail)
         lzDetailLabel = goodDetail
         
@@ -109,7 +109,7 @@ class LZCartTableViewCell: UITableViewCell {
         method.creatLabel(lab: oldPriceLabel, x: price.rightPosition() + 5, y: price.frame.origin.y + 7, wid: 100, hei: 15, textString: "", textcolor: UIColor.gray, textFont: 11, superView: backgroundView)
         
         
-        addAndCut = AddAndCutView(frame: CGRect(x: app_width * 4/5 - 15, y: 60, width: app_width/5, height: 25))
+        addAndCut = AddAndCutView(frame: CGRect(x: app_width * 4/5 - 25, y: 60, width: app_width/5, height: 25))
         addAndCut.addBtn.addTarget(self, action: #selector(addButtonClick), for: .touchUpInside)
         addAndCut.cutBtn.addTarget(self, action: #selector(cutButtonClick), for: .touchUpInside)
         lzNumberLabel = addAndCut.number
@@ -204,9 +204,11 @@ class LZCartTableViewCell: UITableViewCell {
         let oldpri = (model.oldprice! == model.price!) ? "" : "¥" + model.oldprice!
         oldPriceLabel.text = oldpri
         oldPriceLabel.sizeToFit()
-        
-        method.drawLine(startX: 0, startY: oldPriceLabel.frame.height/2, wid: oldPriceLabel.frame.width, hei: 0.8, add: oldPriceLabel)
-        
+        if model.oldprice! == ""{
+            oldPriceLabel.isHidden = true
+        }
+//        method.drawLine(startX: 0, startY: oldPriceLabel.frame.height/2, wid: oldPriceLabel.frame.width, hei: 0.8, add: oldPriceLabel)
+        method.drawLineWithColor(startX: 0, startY: oldPriceLabel.frame.height/2, wid: oldPriceLabel.frame.width, hei: 0.8, lineColor: UIColor.gray, add: oldPriceLabel)
         if let sel = model.select {
             lzSelectButton.isSelected = sel
         } else {

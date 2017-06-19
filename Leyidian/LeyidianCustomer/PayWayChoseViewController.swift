@@ -18,6 +18,7 @@ class PayWayChoseViewController: UIViewController,UITableViewDelegate,UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setTitleView(title: "支付", canBack: false)
+        
         creatView()
         NotificationCenter.default.addObserver(self, selector: #selector(getPayResult(noti:)), name: NSNotification.Name(rawValue: "payResult"), object: nil)
         // Do any additional setup after loading the view.
@@ -43,7 +44,7 @@ class PayWayChoseViewController: UIViewController,UITableViewDelegate,UITableVie
 
         self.view.backgroundColor = MyGlobalColor()
         let table = UITableView()
-        table.frame = CGRect(x: 0, y: 80, width: app_width, height: app_height - 80)
+        table.frame = CGRect(x: 0, y: 80, width: app_width, height: 200)
         table.delegate = self
         table.dataSource = self
         table.bounces = false
@@ -90,7 +91,7 @@ class PayWayChoseViewController: UIViewController,UITableViewDelegate,UITableVie
         return section == 0 ? 15:0
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return indexPath.section == 0 ? 35:50
+        return indexPath.section == 0 ? 35:60
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return section == 1 ? 30:0
@@ -110,7 +111,7 @@ class PayWayChoseViewController: UIViewController,UITableViewDelegate,UITableVie
             let title = UILabel()
             method.creatLabel(lab: title, x: 15, y: 0, wid: 100, hei: 35, textString: "请支付", textcolor: UIColor.black, textFont: 13, superView: cell.contentView)
             let money = UILabel()
-            method.creatLabel(lab: money, x: app_width - 170, y: 0, wid: 150, hei: 35, textString: "¥\(payMoney)", textcolor: MyAppColor(), textFont: 14, superView: cell.contentView)
+            method.creatLabel(lab: money, x: app_width - 170, y: 0, wid: 150, hei: 35, textString: "¥\(payMoney)", textcolor: MyMoneyColor(), textFont: 14, superView: cell.contentView)
             money.textAlignment = .right
         }else{
             cell.accessoryType = .disclosureIndicator
@@ -119,13 +120,13 @@ class PayWayChoseViewController: UIViewController,UITableViewDelegate,UITableVie
             }
             
             let img = UIImageView()
-            method.creatImage(img: img, x: 15, y: 5, wid: 40, hei: 40, imgName: imgArr[indexPath.row], imgMode: .scaleAspectFit, superView: cell.contentView)
+            method.creatImage(img: img, x: 15, y: 10, wid: 40, hei: 40, imgName: imgArr[indexPath.row], imgMode: .scaleAspectFit, superView: cell.contentView)
             
             let title = UILabel()
-            method.creatLabel(lab: title, x: img.rightPosition() + 10, y: 5, wid: 200, hei: 20, textString: titleArr[indexPath.row], textcolor: UIColor.black, textFont: 14, superView: cell.contentView)
+            method.creatLabel(lab: title, x: img.rightPosition() + 10, y: 10, wid: 200, hei: 20, textString: titleArr[indexPath.row], textcolor: UIColor.black, textFont: 14, superView: cell.contentView)
             
             let detail = UILabel()
-            method.creatLabel(lab: detail, x: img.rightPosition() + 10, y: 25, wid: 200, hei: 20, textString: "使用\(titleArr[indexPath.row])安全支付", textcolor: UIColor.gray, textFont: 12, superView: cell.contentView)
+            method.creatLabel(lab: detail, x: img.rightPosition() + 10, y: 30, wid: 200, hei: 20, textString: "使用\(titleArr[indexPath.row])安全支付", textcolor: UIColor.gray, textFont: 12, superView: cell.contentView)
             
         }
         return cell

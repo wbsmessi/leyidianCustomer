@@ -12,10 +12,22 @@ let app_width = UIScreen.main.bounds.width
 let app_height = UIScreen.main.bounds.height
 let nav_height:CGFloat = 64.0
 let tab_height:CGFloat = 49.0
-//外网
-//let headerUrl = "http://m.sinata.cn:8889/lydShop/app/server.api?key="
-//内网
-let headerUrl = "http://192.168.3.155:8080/lydShop/app/server.api?key="
+//m.loedo.net:8080/lydShop
+
+//////外网
+let headerUrl = "http://m.loedo.net:8080/lydShop/app/server.api?key="
+
+//兑吧
+let headerUrlShot = "http://m.loedo.net:8080/lydShop/app/server?"
+//分享地址用
+let shareHeaderUrl = "http://m.loedo.net:8080/lydShop"
+
+//////内网
+//let headerUrl = "http://192.168.3.155:8080/lydShop/app/server.api?key="
+////兑吧
+//let headerUrlShot = "http://192.168.3.155:8080/lydShop/app/server?"
+////分享地址用
+//let shareHeaderUrl = "http://192.168.3.155:8080/lydShop"
 //数据存储
 let MyUserInfo = UserDefaults.standard
 //当前店铺信息，每次首页加载都会更新成最新
@@ -42,3 +54,7 @@ let wechatShareKey = "wxfe304c0cc3d4469b"
 let wechatShareAppSecret = "98bd21560e34d8902b3e1fe62510350f"
 
 let tencentKey = "1106110338"
+
+
+let weiboAppKey = "313151502"
+let weiboAppSecket = "570232e280a30674f81506ce5d358387"

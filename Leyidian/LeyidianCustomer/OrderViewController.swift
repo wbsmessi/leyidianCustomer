@@ -32,7 +32,9 @@ class OrderViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         case orderTypeEnum.waitPay.rawValue:
             nav_title = "待付款"
         case orderTypeEnum.send.rawValue:
-            nav_title = "待收货"
+            nav_title = "待签收"
+        case orderTypeEnum.arrived.rawValue:
+            nav_title = "待签收"
         case orderTypeEnum.waitEnv.rawValue:
             nav_title = "待评价"
         default:
@@ -49,11 +51,16 @@ class OrderViewController: UIViewController,UITableViewDelegate,UITableViewDataS
 //        print(statusStr)
         HttpTool.shareHttpTool.Http_GetOrderList(status: statusStr, startIndex: pageIndex) { (data) in
             print(data)
-            if data.arrayValue.count == 0{
-                self.myNoticeNodata()
-            }
             self.orderTable.mj_header.endRefreshing()
             self.orderTable.mj_footer.endRefreshing()
+            if data.arrayValue.count == 0{
+                if self.pageIndex > 0{
+                    self.myNoticeError(title: "没有更多了")
+                }else{
+                    self.myNoticeNodata()
+                }
+                
+            }
             self.infoArr += data.arrayValue
         }
     }
@@ -74,7 +81,7 @@ class OrderViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         orderTable.delegate = self
         orderTable.dataSource = self
         orderTable.tableFooterView = UIView()
-        orderTable.rowHeight = 180
+        orderTable.rowHeight = 200
         orderTable.separatorStyle = .none
         orderTable.showsVerticalScrollIndicator = false
         self.view.addSubview(orderTable)
@@ -83,53 +90,38 @@ class OrderViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             self.infoArr = []
             self.loadData()
         })
-        self.orderTable.mj_footer = MJRefreshAutoNormalFooter(refreshingBlock: { 
-//            print("ososososo")
+        self.orderTable.mj_footer = MJRefreshAutoNormalFooter(refreshingBlock: {
             self.pageIndex += 1
             self.loadData()
         })
-        self.orderTable.mj_header.beginRefreshing()
+        
+        
     }
-//    case orderTypeEnum.waitPay.rawValue:
-//    timerBtn.isHidden = false
-//    startTimer(orderDate:Goods["createDate"].intValue)
-//    rightBtn.setTitle("立即支付", for: .normal)
-//    leftBtn.isHidden = false
-//    leftBtn.setTitle("取消订单", for: .normal)
-//    case orderTypeEnum.paid.rawValue:
-//    timerBtn.isHidden = true
-//    rightBtn.setTitle("取消订单", for: .normal)
-//    case orderTypeEnum.send.rawValue:
-//    timerBtn.isHidden = true
-//    rightBtn.setTitle("立即签收", for: .normal)
-//    case orderTypeEnum.waitEnv.rawValue:
-//    timerBtn.isHidden = true
-//    rightBtn.setTitle("立即评价", for: .normal)
-//    case orderTypeEnum.refund.rawValue:
-//    timerBtn.isHidden = true
-//    rightBtn.setTitle("删除订单", for: .normal)
-//    default:
-//    timerBtn.isHidden = true
-//    rightBtn.setTitle("删除订单", for: .normal)
+    
+    
     func rightBtnClick(orderType: orderTypeEnum, indexpath: IndexPath) {
         //根据订单的类型来判断醉右键应该执行什么操作
         switch orderType.rawValue {
         case orderTypeEnum.waitPay.rawValue://待支付
             print(indexpath)
-            let vc = EvaluationViewController()
-            vc.orderInfo = self.infoArr[indexpath.row]
+            let vc = PayWayChoseViewController()
+            vc.payMoney = self.infoArr[indexpath.row]["orderFee"].doubleValue.getMoney()
+            vc.orderNo = self.infoArr[indexpath.row]["orderNo"].stringValue
             self.pushToNext(vc: vc)
             
         case orderTypeEnum.paid.rawValue://待发货
             //取消订单
             self.cancleOrder(index: indexpath.row)
         case orderTypeEnum.send.rawValue://待收货
-//            签收
+            //=签收
+            self.receiptOrder(index: indexpath.row)
+        case orderTypeEnum.arrived.rawValue://待收货
+            //签收
             self.receiptOrder(index: indexpath.row)
             
         case orderTypeEnum.waitEnv.rawValue://待评价
             print(indexpath)
-//            评价
+            //评价
             let vc = EvaluationViewController()
             vc.orderInfo = self.infoArr[indexpath.row]
             self.pushToNext(vc: vc)
@@ -161,30 +153,43 @@ class OrderViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             print(indexpath)
         }
     }
-    
+    func orderOverTime() {
+        self.pageIndex = 0
+        self.infoArr = []
+        self.loadData()
+    }
     //返回根目录
     func back_btnClick(){
         self.backToRootPage()
     }
 //    删除订单
     func deleteOrder(index:Int){
-        let orderId = self.infoArr[index]["orderID"].stringValue
-        HttpTool.shareHttpTool.Http_DeleteOrder(orderID: orderId) { (data) in
-            print(data)
-            if data["code"].stringValue == "SUCCESS"{
-                self.myNoticeSuccess(title: "删除订单成功")
+        let alert = UIAlertController(title: "提示", message: "你确定要删除此订单吗？", preferredStyle: .alert)
+        let act1 = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        let act2 = UIAlertAction(title: "确定", style: .default) { (alert) in
+            let orderId = self.infoArr[index]["orderID"].stringValue
+            HttpTool.shareHttpTool.Http_DeleteOrder(orderID: orderId) { (data) in
+                print(data)
+                if data["code"].stringValue == "SUCCESS"{
+                    self.myNoticeSuccess(title: "删除订单成功")
+                    self.infoArr.remove(at: index)
+                }else{
+                    self.myNoticeError(title: data["msg"].stringValue)
+                }
             }
         }
+        alert.addAction(act1)
+        alert.addAction(act2)
+        self.present(alert, animated: true, completion: nil)
+        
+        
     }
 //    取消订单
     func cancleOrder(index:Int){
-        let orderNo = self.infoArr[index]["orderNo"].stringValue
-        HttpTool.shareHttpTool.Http_CancelOrder(remark: "管不着", orderNo: orderNo) { (data) in
-            print(data)
-            if data["code"].stringValue == "SUCCESS"{
-                self.myNoticeSuccess(title: "取消订单成功")
-            }
-        }
+        let vc = CancleReasonViewController()
+        vc.orderNo = self.infoArr[index]["orderNo"].stringValue
+        self.pushToNext(vc: vc)
+        
     }
 //    签收订单
     func receiptOrder(index:Int){
@@ -193,8 +198,14 @@ class OrderViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             print(data)
             if data["code"].stringValue == "SUCCESS"{
                 self.myNoticeSuccess(title: "订单签收成功")
+                self.infoArr.remove(at: index)
+            }else{
+                self.myNoticeError(title: data["msg"].stringValue)
             }
         }
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        self.orderTable.mj_header.beginRefreshing()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

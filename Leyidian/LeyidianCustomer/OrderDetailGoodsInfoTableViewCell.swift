@@ -22,7 +22,7 @@ class OrderDetailGoodsInfoTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.backgroundColor = MyGlobalColor()
     }
-    var item_height:CGFloat = 40 + 80.0
+    var item_height:CGFloat = 40 + 100.0
     func creatViewWithGoods(Goods:[JSON]) {
         let bgview = UIView()
         bgview.frame = CGRect(x: 0, y: 0, width: app_width, height: item_height)
@@ -48,7 +48,7 @@ class OrderDetailGoodsInfoTableViewCell: UITableViewCell {
         if Goods.count == 1{
             //只有一件商品时的UI
             let goodsImg = UIImageView()
-            goodsImg.frame = CGRect(x: 15, y: storeName.bottomPosition() + 10, width: 60, height: 60)
+            goodsImg.frame = CGRect(x: 15, y: storeName.bottomPosition() + 10, width: 80, height: 80)
             goodsImg.contentMode = .scaleAspectFit
             method.loadImage(imgUrl: Goods[0]["commodityImg"].stringValue, Img_View: goodsImg)
             goodsImg.layer.borderColor = setMyColor(r: 240, g: 240, b: 240, a: 1).cgColor
@@ -56,32 +56,32 @@ class OrderDetailGoodsInfoTableViewCell: UITableViewCell {
             bgview.addSubview(goodsImg)
             
             let goodsName = UILabel()
-            method.creatLabel(lab: goodsName, x: goodsImg.rightPosition() + 10, y: goodsImg.frame.origin.y, wid: app_width - goodsImg.rightPosition() - 30, hei: 20, textString: Goods[0]["commodityName"].stringValue, textcolor: UIColor.black, textFont: 12, superView: bgview)
+            method.creatLabel(lab: goodsName, x: goodsImg.rightPosition() + 10, y: goodsImg.frame.origin.y, wid: app_width - goodsImg.rightPosition() - 30, hei: 30, textString: Goods[0]["commodityName"].stringValue, textcolor: UIColor.black, textFont: 12, superView: bgview)
             
             let goodsDetail = UILabel()
             method.creatLabel(lab: goodsDetail, x: goodsName.frame.origin.x, y: goodsName.bottomPosition(), wid: goodsName.frame.width, hei: 20, textString: Goods[0]["norm"].stringValue, textcolor: UIColor.gray, textFont: 10, superView: bgview)
             
             let price = UILabel()
-            method.creatLabel(lab: price, x: goodsName.frame.origin.x, y: goodsDetail.bottomPosition(), wid: 150, hei: 20, textString: "¥"+Goods[0]["price"].doubleValue.getMoney(), textcolor: MyMoneyColor(), textFont: 12, superView: bgview)
+            method.creatLabel(lab: price, x: goodsName.frame.origin.x, y: goodsDetail.bottomPosition(), wid: 150, hei: 30, textString: "¥"+Goods[0]["price"].doubleValue.getMoney(), textcolor: MyMoneyColor(), textFont: 12, superView: bgview)
             
             let goodsCount = UILabel()
-            method.creatLabel(lab: goodsCount, x: price.rightPosition(), y: goodsDetail.bottomPosition(), wid: app_width - price.rightPosition() - 15, hei: 20, textString: "x\(Goods[0]["num"].intValue)", textcolor: UIColor.gray, textFont: 11, superView: bgview)
+            method.creatLabel(lab: goodsCount, x: price.rightPosition(), y: goodsDetail.bottomPosition(), wid: app_width - price.rightPosition() - 15, hei: 30, textString: "x\(Goods[0]["num"].intValue)", textcolor: UIColor.gray, textFont: 11, superView: bgview)
             goodsCount.textAlignment = .right
         }else{
             //多件商品时的UI
             //            img尺寸为60
             let goodsScroll = UIScrollView()
-            goodsScroll.frame = CGRect(x: 0, y: 40, width: app_width, height: 80)
+            goodsScroll.frame = CGRect(x: 0, y: 40, width: app_width, height: 100)
             goodsScroll.showsHorizontalScrollIndicator = false
             //false的时候，点击scroll区域响应的是cell点击行，true的，可以滑动，但是不能点击，
             goodsScroll.isUserInteractionEnabled = false
             let scroll_width = CGFloat(Goods.count * 75) > app_width ? CGFloat(Goods.count * 75) : app_width
             print("keyidongjuli\(scroll_width)")
-            goodsScroll.contentSize = CGSize(width: scroll_width, height: 80)
+            goodsScroll.contentSize = CGSize(width: scroll_width, height: 100)
             bgview.addSubview(goodsScroll)
             
             for i in 0..<Goods.count{
-                let orgin_x:CGFloat = CGFloat((15 + 60) * i) + 15
+                let orgin_x:CGFloat = CGFloat((10 + 80) * i) + 10
                 
                 creatGoodsItem(x: orgin_x, y: 10, goodsInfo: Goods[i], superView: goodsScroll)
             }
@@ -91,7 +91,7 @@ class OrderDetailGoodsInfoTableViewCell: UITableViewCell {
     func creatGoodsItem(x:CGFloat,y:CGFloat,goodsInfo:JSON,superView:UIView){
         let goodsImg = UIImageView()
         goodsImg.isUserInteractionEnabled = false
-        goodsImg.frame = CGRect(x: x, y: y, width: 60, height: 60)
+        goodsImg.frame = CGRect(x: x, y: y, width: 80, height: 80)
         method.loadImage(imgUrl: goodsInfo["commodityImg"].stringValue, Img_View: goodsImg)
         goodsImg.layer.borderColor = setMyColor(r: 240, g: 240, b: 240, a: 1).cgColor
         goodsImg.layer.borderWidth = 0.6
@@ -99,12 +99,13 @@ class OrderDetailGoodsInfoTableViewCell: UITableViewCell {
         superView.addSubview(goodsImg)
         
         let count = UILabel()
-        method.creatLabel(lab: count, x: goodsImg.rightPosition() - 5, y: goodsImg.frame.origin.y - 5, wid: 10, hei: 10, textString: "\(goodsInfo["num"].intValue)", textcolor: MyAppColor(), textFont: 8, superView: superView)
+        method.creatLabel(lab: count, x: goodsImg.rightPosition() - 15, y: goodsImg.frame.origin.y - 5, wid: 20, hei: 20, textString: "\(goodsInfo["num"].intValue)", textcolor: MyAppColor(), textFont: 10, superView: superView)
         count.textAlignment = .center
         count.backgroundColor = MyGlobalColor()
         count.layer.cornerRadius = count.frame.width/2
         count.layer.borderColor = UIColor.lightGray.cgColor
         count.layer.borderWidth = 0.4
+        count.clipsToBounds = true
         
     }
     required init?(coder aDecoder: NSCoder) {

@@ -9,6 +9,7 @@
 import UIKit
 import SwiftyJSON
 
+//自定义banner
 protocol DECMaBannerViewDelegate {
     func DECMaBannerClick(BannerView:DECMaBannerView,index:Int)
 }
@@ -60,7 +61,7 @@ class DECMaBannerView: UIView,UIScrollViewDelegate{
             self.addSubview(radiusView)
         }
         //创建分页效果
-        _pageControl = UIPageControl.init(frame: CGRect(x:0,y:self.frame.height - 70,width:ScreenWidth,height:CGFloat(pageControlHeight)))
+        _pageControl = UIPageControl.init(frame: CGRect(x:0,y:self.frame.height - 80,width:ScreenWidth,height:CGFloat(pageControlHeight)))
         _pageControl?.backgroundColor = UIColor.clear
         _pageControl?.pageIndicatorTintColor = UIColor.white
         _pageControl?.currentPageIndicatorTintColor = MyAppColor()
@@ -69,9 +70,14 @@ class DECMaBannerView: UIView,UIScrollViewDelegate{
     var imgJSON:[JSON] = []{
         didSet{
             var imgArr:[String] = []
-            for item in imgJSON{
-                imgArr.append(item["imgUrl"].stringValue)
+            if imgJSON.count == 0{
+                imgArr.append("noimage")
+            }else{
+                for item in imgJSON{
+                    imgArr.append(item["imgUrl"].stringValue)
+                }
             }
+            
             titleArray = imgArr
         }
     }

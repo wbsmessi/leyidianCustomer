@@ -11,6 +11,7 @@ import UIKit
 class AddAndCutView: UIView {
 
     var method = Methods()
+    
     var nowCount:Int = 1{
         didSet{
 //            print("not work?")
@@ -24,9 +25,9 @@ class AddAndCutView: UIView {
     var number:UILabel!
     override init(frame:CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = setMyColor(r: 248, g: 248, b: 248, a: 1)
+        self.backgroundColor = setMyColor(r: 255, g: 186, b: 1, a: 1)
         self.layer.cornerRadius=self.frame.height/2
-        self.layer.borderColor = UIColor.lightGray.cgColor
+        self.layer.borderColor = setMyColor(r: 51, g: 51, b: 51, a: 1).cgColor
         self.layer.borderWidth=0.6
         creatView()
     }
@@ -40,7 +41,7 @@ class AddAndCutView: UIView {
         
         number = UILabel()
         number.frame = CGRect(x: cutBtn.rightPosition(), y: 0, width: self.frame.width - 2*(self.frame.height), height: self.frame.height)
-        number.textColor = MyAppColor()
+        number.textColor = setMyColor(r: 255, g: 109, b: 1, a: 1)
         number.text = "1"
         number.font = UIFont.systemFont(ofSize: 12)
         number.textAlignment = .center

@@ -59,6 +59,7 @@ extension UIViewController{
             }
         }
     }
+    
     func myNoticeNodata(){
         DispatchQueue.global().async {
             DispatchQueue.main.async {
@@ -90,7 +91,7 @@ func MyAppColor() -> UIColor {
 }
 /// 背景灰色
 func MyGlobalColor() -> UIColor {
-    return setMyColor(r: 247, g: 248, b: 249, a: 1)
+    return setMyColor(r: 240, g: 240, b: 240, a: 1)
 }
 
 /// 按钮高亮色
@@ -102,7 +103,14 @@ func MyBtnCanSelectColor() -> UIColor {
 func MyMoneyColor() -> UIColor {
     return setMyColor(r: 255, g: 109, b: 2, a: 1)
 }
-
+/// 黑色
+func myAppBlackColor() -> UIColor {
+    return setMyColor(r: 51, g: 51, b: 51, a: 1)
+}
+/// 灰色
+func myAppGryaColor() -> UIColor {
+    return setMyColor(r: 102, g: 102, b: 102, a: 1)
+}
 //MD5加密算法   桥文件加此string扩展
 extension String{
     func md5() ->String!{

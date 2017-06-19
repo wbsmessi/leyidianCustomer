@@ -8,6 +8,7 @@
 
 import UIKit
 
+//自定义页面title
 class NavigationTitleView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -32,7 +33,7 @@ class NavigationTitleView: UIView {
         vc.navigationController?.navigationBar.isHidden = true
         self.backgroundColor = UIColor.white
         navi_title.textAlignment = .center
-        method.creatLabel(lab: navi_title, x: app_width/4, y: 20, wid: app_width/2, hei: 44, textString: title, textcolor: setMyColor(r: 74, g: 74, b: 74, a: 1), textFont: 18, superView: self)
+        method.creatLabel(lab: navi_title, x: app_width/4, y: 20, wid: app_width/2, hei: 44, textString: title, textcolor: setMyColor(r: 51, g: 51, b: 51, a: 1), textFont: 18, superView: self)
         
         if canBack{
             back_btn.setImage(UIImage(named:"fanhui"), for: .normal)

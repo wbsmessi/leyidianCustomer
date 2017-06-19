@@ -12,7 +12,41 @@ import AliyunOSSiOS
 //import b
 
 class Methods: NSObject {
-    
+    var locationManager : AMapLocationManager?
+    func getAddressInfoBy(succesce:@escaping (_ value:(String,CLLocation)?)->(Void)){
+//        AMapLocations
+//        AMapServices.shared().apiKey = gaodeMapAppkey
+        locationManager = AMapLocationManager()
+        locationManager!.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        locationManager!.locationTimeout = 2
+        locationManager!.reGeocodeTimeout = 2
+        locationManager!.requestLocation(withReGeocode: true) { (location, regeocode, error) in
+            guard error == nil else{
+                print(error!)
+                succesce(nil)
+                return
+            }
+            
+            guard regeocode != nil else{
+                succesce(nil)
+                return
+            }
+            
+            guard location != nil else{
+                succesce(nil)
+                //self.myNoticeError(title: "定位失败")
+                return
+            }
+            
+            //            街道信息
+            if let address = regeocode?.district,let street = regeocode?.street,let loca = location{
+                
+//                streetInfo = (address + street,loca)
+                succesce((address + street,loca))
+            }
+            
+        }
+    }
     //造lab
     func creatLabel(lab:UILabel,x:CGFloat,y:CGFloat,wid:CGFloat,hei:CGFloat,textString:String,textcolor:UIColor,textFont:CGFloat,superView:UIView) {
         lab.frame = CGRect(x: x, y: y, width: wid, height: hei)
@@ -97,6 +131,15 @@ class Methods: NSObject {
 //        Img_View.contentMode = .scaleAspectFill
         Img_View.clipsToBounds = true
     }
+    func loadImageWithDefault(imgUrl:String,Img_View:UIImageView,defaultImage:String){
+        if let url = URL(string: imgUrl){
+            Img_View.sd_setImage(with: url, placeholderImage: UIImage(named: defaultImage))
+        }else{
+            Img_View.image = UIImage(named: defaultImage)
+        }
+        //        Img_View.contentMode = .scaleAspectFill
+        Img_View.clipsToBounds = true
+    }
     func drawLine(startX:CGFloat,startY:CGFloat,wid:CGFloat,hei:CGFloat,add:UIView){
         let leftLine = CALayer()
         leftLine.frame = CGRect(x: startX, y: startY, width: wid, height: hei)
@@ -117,6 +160,19 @@ class Methods: NSObject {
             }
         }
         return false
+    }
+    //判断商品是否为限时活着折扣
+    func hasStringInArr(arrStr:String)->Bool{
+        if arrStr == ""{
+            return false
+        }
+        let arr = arrStr.components(separatedBy: ",")
+        if isItemInArray(item: "X", arr: arr) || isItemInArray(item: "Z", arr: arr){
+            return true
+        }else{
+            return false
+        }
+        
     }
     func removeItemFromArr(item:String,arr:[String])->[String] {
         var newArr = arr
@@ -184,11 +240,21 @@ class Methods: NSObject {
         
     }
     func getStatusName(type:orderTypeEnum)->String{
+//        case waitPay        = "0"//待付款
+//        case paid           = "1"//待收货
+//        case send           = "2"//待发货
+//        case waitEnv        = "3"//待评价 已签收
+//        case finish         = "4"//已完成
+//        case cancle         = "5"//已取消
+//        case refund         = "9"//退款中
+//        case refunded       = "7"//已退款
+//        case refundFaild    = "10"//退款失败
+//        case allOrder       = "100"//
         switch type {
         case orderTypeEnum.waitPay:
             return "待付款"
         case orderTypeEnum.paid:
-            return "待发货"
+            return "待配送"
         case orderTypeEnum.send:
             return "待签收"
         case orderTypeEnum.waitEnv:
@@ -196,16 +262,30 @@ class Methods: NSObject {
         case orderTypeEnum.finish:
             return "已完成"
         case orderTypeEnum.cancle:
-            return "取消"
+            return "已取消"
         case orderTypeEnum.refund:
             return "退款中"
+        case orderTypeEnum.arrived:
+            return "待签收"
         case orderTypeEnum.refunded:
             return "已退款"
+        case orderTypeEnum.refundFaild:
+            return "退款失败"
         default:
             return "状态未知"
         }
     }
     //0待付款 1 已付款 2 已发货 3 已签收 4 已完成 5 取消 6 申请退款 7 已退款）
+    //        case waitPay        = "0"//待付款
+    //        case paid           = "1"//待收货
+    //        case send           = "2"//待发货
+    //        case waitEnv        = "3"//待评价 已签收
+    //        case finish         = "4"//已完成
+    //        case cancle         = "5"//已取消
+    //        case refund         = "9"//退款中
+    //        case refunded       = "7"//已退款
+    //        case refundFaild    = "10"//退款失败
+    //        case allOrder       = "100"//
     func statusConvert(status:String)->orderTypeEnum{
         switch status {
         case "0":
@@ -221,9 +301,13 @@ class Methods: NSObject {
         case "5":
             return orderTypeEnum.cancle
         case "6":
+            return orderTypeEnum.arrived
+        case "9":
             return orderTypeEnum.refund
         case "7":
             return orderTypeEnum.refunded
+        case "10":
+            return orderTypeEnum.refundFaild
         default:
             return orderTypeEnum.allOrder
         }
@@ -250,9 +334,36 @@ class Methods: NSObject {
         formatter.dateFormat = "YYYY-MM-dd HH:mm:ss"
         let date = NSDate(timeIntervalSince1970: time/1000)
         let timeStr = formatter.string(from: date as Date)
-//        print("------------------")
-//        print(timeStr)
         return timeStr
+    }
+    func convertTimeYMD(time:Double)->String{
+        let formatter = DateFormatter()
+        formatter.dateFormat = "YYYY-MM-dd"
+        let date = NSDate(timeIntervalSince1970: time/1000)
+        let timeStr = formatter.string(from: date as Date)
+        return timeStr
+    }
+    func getNowTimeStamp()->Int{
+        let now = NSDate()
+        print(now)
+//        NSString*timeString = [NSString stringWithFormat:@"%0.f", a];//转为字符型
+        let timestamp = now.timeIntervalSince1970
+//        print(Int(timestamp))
+        return Int(timestamp)
+        
+    }
+    func getGoodsActiveType(types:String)->String{
+        let arr = types.components(separatedBy: ",")
+        print(arr)
+        if isItemInArray(item: ActivitieGoods.Timelimit.rawValue, arr: arr) || isItemInArray(item: ActivitieGoods.BargainPrice.rawValue, arr: arr){
+            return ActivitieGoods.BargainPrice.rawValue
+        }else if isItemInArray(item: ActivitieGoods.PreferredGoods.rawValue, arr: arr){
+            return ActivitieGoods.PreferredGoods.rawValue
+        }else  if isItemInArray(item: ActivitieGoods.Recommend.rawValue, arr: arr){
+            return ActivitieGoods.Recommend.rawValue
+        }else{
+            return ""
+        }
     }
     func isLoginApp()->Bool{
         if let _ = MyUserInfo.value(forKey: userInfoKey.userID.rawValue) as? String{

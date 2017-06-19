@@ -31,22 +31,23 @@ class shopDetailView: UIView {
             for item in self.scroll.subviews{
                 item.removeFromSuperview()
             }
+//            height = 80
             let count = data.count
-            let hei = self.frame.height - 30
+            let hei = self.frame.height - 40
             let wid = hei
             self.scroll.contentSize = CGSize(width: CGFloat(count) * (10 + wid), height: self.frame.height)
             
             for i in 0..<count{
                 let img = UIImageView()
 //                img.backgroundColor = UIColor.red
-                img.frame = CGRect(x: 10 + (10 + wid) * CGFloat(i), y: 10, width: wid, height: hei)
+                img.frame = CGRect(x: 10 + (20 + wid) * CGFloat(i), y: 10, width: wid, height: hei)
                 self.method.loadImage(imgUrl: data[i]["img"].stringValue, Img_View: img)
                 img.contentMode = .scaleAspectFit
                 self.scroll.addSubview(img)
                 
                 let lab=UILabel()
                 lab.textAlignment = .center
-                self.method.creatLabel(lab: lab, x: img.frame.origin.x, y: hei + 10, wid: wid, hei: 20, textString: data[i]["storeName"].stringValue, textcolor: UIColor.gray, textFont: 10, superView: self.scroll)
+                self.method.creatLabel(lab: lab, x: img.frame.origin.x - 10, y: hei + 10, wid: img.frame.width + 20, hei: 20, textString: data[i]["storeName"].stringValue, textcolor: UIColor.gray, textFont: 10, superView: self.scroll)
             }
         }
     }

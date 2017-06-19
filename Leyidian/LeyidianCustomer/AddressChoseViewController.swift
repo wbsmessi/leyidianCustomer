@@ -13,7 +13,7 @@ import SwiftyJSON
 protocol AddressChoseDelegate {
     func addressChose(coordinate:CLLocationCoordinate2D,addressInfo:String)
 }
-class AddressChoseViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,AMapSearchDelegate,MAMapViewDelegate {
+class AddressChoseViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,DECChoseAlertViewDelegate,AMapSearchDelegate,MAMapViewDelegate {
 
     var method = Methods()
     var showMyAddress:Bool = true
@@ -23,11 +23,16 @@ class AddressChoseViewController: UIViewController,UITableViewDelegate,UITableVi
     var nowDataArr:[AddressModel] = []
     var streetInfo:String = ""
 //    搜索
-    
+    //后台返回的城市数据。
+    var cityArr:[String] = []
+    //当前选择的城市显示
     var cityName:String = ""{
         didSet{
             DispatchQueue.main.async {
-                self.cityNameLab.text = self.cityName
+                self.cityNameTite.setTitle(self.cityName, for: .normal)
+                self.cityNameTite.setImage(UIImage(named:"jiantou-up"), for: .normal)
+                self.cityNameTite.titleEdgeInsets = UIEdgeInsets(top: 0, left: -self.cityNameTite.imageView!.frame.width, bottom: 0, right: self.cityNameTite.imageView!.frame.width)
+                self.cityNameTite.imageEdgeInsets = UIEdgeInsets(top: 0, left: self.cityNameTite.titleLabel!.frame.width, bottom: 0, right: -self.cityNameTite.titleLabel!.frame.width)
             }
         }
     }
@@ -46,14 +51,22 @@ class AddressChoseViewController: UIViewController,UITableViewDelegate,UITableVi
         // Do any additional setup after loading the view.
         reloadData()
     }
+    
     func reloadData(){
-        HttpTool.shareHttpTool.Http_getAddressList { (data) in
+        HttpTool.shareHttpTool.Http_getAddressList(storeID: "") { (data) in
             print(data)
             self.addressList = data.arrayValue
         }
+//        cityArr 
+        HttpTool.shareHttpTool.Http_getCityList { (data) -> (Void) in
+            print(data)
+            for item in data["resultData"].arrayValue{
+                self.cityArr.append(item["city"].stringValue)
+            }
+        }
     }
 //    顶部城市名字
-    let cityNameLab = UILabel()
+    let cityNameTite = UIButton()
     //我的地址
     let myAddressBtn = UIButton()
     //定位当前地址
@@ -66,23 +79,31 @@ class AddressChoseViewController: UIViewController,UITableViewDelegate,UITableVi
         search!.delegate = self
         return search!
     }()
+    var mapView:MAMapView!
+    
+    var alertView:DECChoseAlertView!
     func creatView(){
         
-        cityNameLab.textAlignment = .center
-        method.creatLabel(lab: cityNameLab, x: app_width/3, y: 30, wid: app_width/3, hei: 30, textString: "", textcolor: UIColor.black, textFont: 18, superView: self.view)
+//        cityNameLab.textAlignment = .center
+//        method.creatLabel(lab: cityNameLab, x: app_width/3, y: 30, wid: app_width/3, hei: 30, textString: "", textcolor: UIColor.black, textFont: 18, superView: self.view)
+        method.creatButton(btn: cityNameTite, x: app_width/3, y: 30, wid: app_width/3, hei: 30, title: "", titlecolor: myAppBlackColor(), titleFont: 18, bgColor: UIColor.clear, superView: self.view)
+        cityNameTite.addTarget(self, action: #selector(cityChose), for: .touchUpInside)
 //        self.requestLocation()
         
-        let mapView = MAMapView(frame: CGRect(x: 0, y: 64, width: app_width, height: app_height/2-nav_height))
+        mapView = MAMapView(frame: CGRect(x: 0, y: 64, width: app_width, height: app_height/2-nav_height))
         mapView.isShowsUserLocation = true
         mapView.userTrackingMode = .follow
-        mapView.zoomLevel = 17
+        mapView.zoomLevel = 15
         mapView.delegate = self
         self.view.addSubview(mapView)
         
-        
+        let dingweiIcon = UIImageView(image: UIImage(named: "dingweichose"))
+        dingweiIcon.frame = CGRect(x: app_width/2 - 20, y: mapView.frame.height/2 - 20, width: 40, height: 40)
+        dingweiIcon.contentMode = .scaleAspectFill
+        mapView.addSubview(dingweiIcon)
         
         locationManager = AMapLocationManager()
-        locationManager.locationTimeout = 3
+        locationManager.locationTimeout = 2
         self.locationManager.reGeocodeTimeout = 2
         
         
@@ -92,17 +113,18 @@ class AddressChoseViewController: UIViewController,UITableViewDelegate,UITableVi
         request.requireExtension = true
         
         
-        method.creatButton(btn: myAddressBtn, x: 0, y: mapView.bottomPosition(), wid: app_width/2, hei: showMyAddress ? 40:0, title: "我的地址", titlecolor: UIColor.black, titleFont: 14, bgColor: UIColor.clear, superView: self.view)
-        myAddressBtn.setImage(UIImage(named:"dizhi_1"), for: .normal)
-        myAddressBtn.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: myAddressBtn.titleLabel!.frame.width-10)
-        myAddressBtn.titleEdgeInsets = UIEdgeInsets(top: 0, left: myAddressBtn.imageView!.frame.width-10, bottom: 0, right: 0)
+        method.creatButton(btn: myAddressBtn, x: 0, y: mapView.bottomPosition(), wid: app_width/2, hei: showMyAddress ? 40:0, title: showMyAddress ? "我的地址":"", titlecolor: UIColor.black, titleFont: 14, bgColor: UIColor.clear, superView: self.view)
+        myAddressBtn.setImage(UIImage(named:"dizhi_hui"), for: .normal)
+        myAddressBtn.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: myAddressBtn.titleLabel!.frame.width)
+        myAddressBtn.titleEdgeInsets = UIEdgeInsets(top: 0, left: myAddressBtn.imageView!.frame.width, bottom: 0, right: 0)
         myAddressBtn.addTarget(self, action: #selector(myAddressBtnClick), for: .touchUpInside)
         
-        method.creatButton(btn: nowAddressBtn, x: app_width/2, y: mapView.bottomPosition(), wid: app_width/2, hei: showMyAddress ? 40:0, title: "定位当前地址", titlecolor: MyAppColor(), titleFont: 14, bgColor: UIColor.clear, superView: self.view)
-        nowAddressBtn.setImage(UIImage(named:"dingwei"), for: .normal)
-        nowAddressBtn.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: nowAddressBtn.titleLabel!.frame.width - 10)
-        nowAddressBtn.titleEdgeInsets = UIEdgeInsets(top: 0, left: nowAddressBtn.imageView!.frame.width - 10, bottom: 0, right: 0)
+        method.creatButton(btn: nowAddressBtn, x: app_width/2, y: mapView.bottomPosition(), wid: app_width/2, hei: showMyAddress ? 40:0, title: showMyAddress ? "定位当前地址":"", titlecolor: MyAppColor(), titleFont: 14, bgColor: UIColor.clear, superView: self.view)
+        nowAddressBtn.setImage(UIImage(named:"dingwei_huang"), for: .normal)
+        nowAddressBtn.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: nowAddressBtn.titleLabel!.frame.width)
+        nowAddressBtn.titleEdgeInsets = UIEdgeInsets(top: 0, left: nowAddressBtn.imageView!.frame.width, bottom: 0, right: 0)
         nowAddressBtn.addTarget(self, action: #selector(nowAddressBtnClick), for: .touchUpInside)
+        nowAddressBtn.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 14)
         
         method.drawLine(startX: 0, startY: nowAddressBtn.bottomPosition(), wid: app_width, hei: 0.6, add: self.view)
         method.drawLine(startX: app_width/2, startY: nowAddressBtn.frame.origin.y, wid: 0.6, hei: 40, add: self.view)
@@ -110,7 +132,7 @@ class AddressChoseViewController: UIViewController,UITableViewDelegate,UITableVi
         
         addressTable.frame = CGRect(x: 0, y: myAddressBtn.bottomPosition()+1, width: app_width, height: app_height - myAddressBtn.bottomPosition())
         addressTable.delegate = self
-        addressTable.rowHeight = 50
+        addressTable.rowHeight = 55
         addressTable.dataSource = self
         addressTable.tableFooterView = UIView()
         self.view.addSubview(addressTable)
@@ -129,27 +151,43 @@ class AddressChoseViewController: UIViewController,UITableViewDelegate,UITableVi
         searchBar.returnKeyType = .search
         searchBar.delegate = self
         self.view.addSubview(searchBar)
+        
+        alertView = DECChoseAlertView(frame: CGRect(x: 0, y: 0, width: app_width, height: app_height), arr: [])
+        alertView.delegate = self
+        self.view.addSubview(alertView)
     }
     
+    func cityChose(){
+        if cityArr.count > 0 {
+            self.alertView.titleArr = [cityArr]
+            alertView.animationHideOrNot(hide: false)
+        }
+        
+    }
+    func DECChoseAlert(title:String){
+        self.cityName = title
+        searchBykeywords(word: title)
+    }
     func myAddressBtnClick() {
         //还原
         nowAddressBtn.setTitleColor(UIColor.black, for: .normal)
-        nowAddressBtn.setImage(UIImage(named:"dizhi"), for: .normal)
-        
+        nowAddressBtn.setImage(UIImage(named:"dingwei_hui"), for: .normal)
+        nowAddressBtn.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         //选中色
         myAddressBtn.setTitleColor(MyAppColor(), for: .normal)
-        myAddressBtn.setImage(UIImage(named:"dizhi_1"), for: .normal)
+        myAddressBtn.setImage(UIImage(named:"dizhi_huang"), for: .normal)
+        myAddressBtn.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 14)
         isMyAddress = true
     }
     func nowAddressBtnClick() {
         //还原
         myAddressBtn.setTitleColor(UIColor.black, for: .normal)
-        myAddressBtn.setImage(UIImage(named:"dizhi_1"), for: .normal)
-        
+        myAddressBtn.setImage(UIImage(named:"dizhi_hui"), for: .normal)
+        myAddressBtn.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         //选中色
         nowAddressBtn.setTitleColor(MyAppColor(), for: .normal)
-        nowAddressBtn.setImage(UIImage(named:"dingwei"), for: .normal)
-        
+        nowAddressBtn.setImage(UIImage(named:"dingwei_huang"), for: .normal)
+        nowAddressBtn.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 14)
         isMyAddress = false
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
@@ -162,7 +200,7 @@ class AddressChoseViewController: UIViewController,UITableViewDelegate,UITableVi
         method.creatLabel(lab: addressTitle, x: 20, y: 10, wid: app_width-40, hei: 15, textString: "", textcolor: UIColor.black, textFont: 14, superView: cell.contentView)
         
         let addressDetail = UILabel()
-        method.creatLabel(lab: addressDetail, x: 20, y: addressTitle.bottomPosition(), wid: addressTitle.frame.width, hei: 15, textString: "", textcolor: UIColor.gray, textFont: 12, superView: cell.contentView)
+        method.creatLabel(lab: addressDetail, x: 20, y: addressTitle.bottomPosition()+5, wid: addressTitle.frame.width, hei: 15, textString: "", textcolor: UIColor.gray, textFont: 12, superView: cell.contentView)
         
         if isMyAddress{
             addressTitle.text = addressList[indexPath.row]["address"].stringValue
@@ -184,39 +222,94 @@ class AddressChoseViewController: UIViewController,UITableViewDelegate,UITableVi
         }
         self.backPage()
     }
+    //关键字搜索查询
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        if textField.text != ""{
-            let searchMapRequest = AMapPOIKeywordsSearchRequest()
-            searchMapRequest.keywords = textField.text!
-            searchMapRequest.requireExtension = true
-            if self.cityName == ""{
-                searchMapRequest.city = "成都"
-            }else{
-                searchMapRequest.city = self.cityName
-            }
-            
-            searchMapRequest.cityLimit = true
-            searchMapRequest.requireSubPOIs = true
-            searchMap.aMapPOIKeywordsSearch(searchMapRequest)
-        }
         
+        if textField.text != ""{
+            searchBykeywords(word: textField.text!)
+        }
         
         return true
     }
-    func onPOISearchDone(_ request: AMapPOISearchBaseRequest!, response: AMapPOISearchResponse!) {
+    func searchBykeywords(word:String){
+        let searchMapRequest = AMapPOIKeywordsSearchRequest()
+        searchMapRequest.keywords = word
+        searchMapRequest.requireExtension = true
+        if self.cityName == ""{
+            searchMapRequest.city = ""
+        }else{
+            searchMapRequest.city = self.cityName
+        }
         
+        searchMapRequest.cityLimit = true
+        searchMapRequest.requireSubPOIs = true
+        searchMap.aMapPOIKeywordsSearch(searchMapRequest)
+    }
+//    关键字搜索查询结果
+    func onPOISearchDone(_ request: AMapPOISearchBaseRequest!, response: AMapPOISearchResponse!) {
         if response.count == 0 {
             return
         }
+//        AMapGeoPoint
+        _=response.pois[0].location.latitude
+        let center = CLLocationCoordinate2D(latitude: Double(response.pois[0].location.latitude), longitude: Double(response.pois[0].location.longitude))
+        mapView.setCenter(center, animated: true)
+        //清除之前的内容
+//        self.nowDataArr = []
+//        for item in response.pois{
+//            print(item.district)
+//            print(item.location)
+//            let addressmod = AddressModel()
+//            addressmod.addressDetail = item.city + item.district
+//            addressmod.addressName = item.name
+//            
+//            let nowcor = CLLocationCoordinate2D(latitude: Double(item.location.latitude), longitude: Double(item.location.longitude))
+//            
+//            addressmod.Coordinate2D = nowcor
+//            self.nowDataArr.append(addressmod)
+//        }
+//        self.addressTable.reloadData()
+        
+    }
+    
+//    经纬度搜索查询
+    func mapView(_ mapView: MAMapView!, regionDidChangeAnimated animated: Bool) {
+        print(mapView.region.center)
+        
+        let searchMapRequest = AMapReGeocodeSearchRequest()
+        
+        let point = AMapGeoPoint()
+        point.latitude = CGFloat(mapView.region.center.latitude)
+        point.longitude = CGFloat(mapView.region.center.longitude)
+        searchMapRequest.location = point
+        searchMapRequest.requireExtension = true
+        searchMap.aMapReGoecodeSearch(searchMapRequest)
+        
+    }
+    func onGeocodeSearchDone(_ request: AMapGeocodeSearchRequest!, response: AMapGeocodeSearchResponse!) {
+        
+    }
+    func aMapSearchRequest(_ request: Any!, didFailWithError error: Error!) {
+        print(error)
+        print(error.localizedDescription)
+    }
+//    reverseGeocodeLocation
+    
+//    经纬度搜索查询结果
+    func onReGeocodeSearchDone(_ request: AMapReGeocodeSearchRequest!, response: AMapReGeocodeSearchResponse!) {
+//        print("经纬度搜索de 查询结果")
         //清除之前的内容
         self.nowDataArr = []
-        for item in response.pois{
-            print(item.district)
-            print(item.location)
+        
+        if response.regeocode.addressComponent.city != ""{
+            self.cityName = response.regeocode.addressComponent.city
+        }
+        for item in response.regeocode.pois{
+//             print(item.formattedDescription() + "formar")
             let addressmod = AddressModel()
-            addressmod.addressDetail = item.city + item.district
-            addressmod.addressName = item.address
+            addressmod.addressDetail = item.address
+            addressmod.addressName = item.name
             
             let nowcor = CLLocationCoordinate2D(latitude: Double(item.location.latitude), longitude: Double(item.location.longitude))
             
@@ -224,21 +317,21 @@ class AddressChoseViewController: UIViewController,UITableViewDelegate,UITableVi
             self.nowDataArr.append(addressmod)
         }
         self.addressTable.reloadData()
-        
-        //解析response获取POI信息，具体解析见 Demo
     }
-    
-    
     func mapView(_ mapView: MAMapView!, didUpdate userLocation: MAUserLocation!, updatingLocation: Bool) {
         
     }
+    
+    
     func mapView(_ mapView: MAMapView!, didFailToLocateUserWithError error: Error!) {
         //定位失败
         self.myNoticeError(title: "定位失败，请确认是否授权")
     }
+    
+    
     override func viewDidAppear(_ animated: Bool) {
-        self.noticeOnlyText("定位中，请稍后...")
-        self.locationManager.requestLocation(withReGeocode: true) { (location, regeocode, error) in
+//        self.noticeOnlyText("定位中，请稍后...")
+        /*self.locationManager.requestLocation(withReGeocode: true) { (location, regeocode, error) in
             self.clearAllNotice()
             guard error == nil else{
                 print(error!)
@@ -250,12 +343,16 @@ class AddressChoseViewController: UIViewController,UITableViewDelegate,UITableVi
             }
             
             guard location != nil else{
-                self.myNoticeError(title: "定位失败")
+//                self.myNoticeError(title: "定位失败")
                 return
             }
-//            self.nowLocation = location!.coordinate
-            print(location!.coordinate.latitude)
-            print(location!.coordinate.longitude)
+            if let city = regeocode?.city{
+                DispatchQueue.main.async {
+                    self.cityName = city
+                }
+                
+            }
+            
 //            街道信息
             if let address = regeocode?.district{
                 self.streetInfo = address
@@ -303,6 +400,7 @@ class AddressChoseViewController: UIViewController,UITableViewDelegate,UITableVi
             self.addressTable.reloadData()
             
         }
+ */
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

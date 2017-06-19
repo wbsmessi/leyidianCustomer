@@ -18,6 +18,7 @@ class TypeChoseView: UIView {
     var shop_id:String!
     var typeChoseDelegate:TypeChoseDelegate?
     var item_width:CGFloat = 80.0
+    var borderWidth:CGFloat!
     lazy var scroll = UIScrollView()
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -45,8 +46,8 @@ class TypeChoseView: UIView {
         scroll.backgroundColor = UIColor.white
         scroll.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
         self.addSubview(scroll)
-        
-        
+        method.drawLine(startX: 0, startY: self.frame.height - 1, wid: app_width, hei: 1, add: self)
+        method.drawLineWithColor(startX: 0, startY: self.frame.height - 1, wid: app_width, hei: 1, lineColor: setMyColor(r: 204, g: 204, b: 204, a: 1), add: self)
 //        initWithArray(array: array)
     }
     
@@ -55,16 +56,16 @@ class TypeChoseView: UIView {
 //        let newcount = CGFloat(count)
         let btn = UIButton()
         btn.tag = index + 10
-        method.creatButton(btn: btn, x: CGFloat(index) * item_width, y: 0, wid: item_width, hei: self.frame.height - 0.6, title: title, titlecolor: UIColor.black, titleFont: 12, bgColor: UIColor.white, superView: scroll)
+        method.creatButton(btn: btn, x: CGFloat(index) * item_width, y: 0, wid: item_width, hei: self.frame.height - 0.6, title: title, titlecolor: UIColor.black, titleFont: 13, bgColor: UIColor.white, superView: scroll)
         btn.addTarget(self, action: #selector(choseItem(btn:)), for: .touchUpInside)
         if index == 0{
             btn.setTitleColor(MyAppColor(), for: .normal)
+            btn.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 13)
             let bottomBorder = CALayer()
 //            print(btn.titleLabel!.frame.origin.x)
-            bottomBorder.frame = CGRect(x: item_width/5, y: btn.frame.height - 7, width: item_width * 3/5, height: 2)
+            bottomBorder.frame = CGRect(x: item_width/2 - 20, y: btn.frame.height - 2, width: 40, height: 2)
 //            bottomBorder.frame = CGRect(x: btn.titleLabel!.frame.origin.x, y: btn.frame.height - 7, width: btn.titleLabel!.frame.width, height: 2)
-//            
-//            print(bottomBorder.frame)
+//
             bottomBorder.backgroundColor = MyAppColor().cgColor
             btn.layer.addSublayer(bottomBorder)
         }
@@ -73,13 +74,15 @@ class TypeChoseView: UIView {
         for i in 10..<typeValue.count + 10{
             if let btn = viewWithTag(i) as? UIButton{
                 btn.setTitleColor(UIColor.black, for: .normal)
+                btn.titleLabel?.font = UIFont.systemFont(ofSize: 13)
                 btn.layer.sublayers?.last?.backgroundColor = UIColor.white.cgColor
             }
         }
         btn.setTitleColor(MyAppColor(), for: .normal)
+        btn.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 13)
         let topBorder = CALayer()
         
-        topBorder.frame = CGRect(x: item_width/5, y: btn.frame.height - 7, width: item_width * 3/5, height: 2)
+        topBorder.frame = CGRect(x: item_width/2 - 20, y: btn.frame.height - 2, width: 40, height: 2)
         topBorder.backgroundColor = MyAppColor().cgColor
         btn.layer.addSublayer(topBorder)
         

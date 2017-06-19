@@ -25,7 +25,7 @@ class FeedBackViewController: UIViewController,UITableViewDelegate,UITableViewDa
             for i in 0..<imgArr.count{
                 imgArr[i].fetchImageWithSize(CGSize(width: 70, height: 70), options: nil, completeBlock: { (img, value) in
                     let img11 = UIImageView()
-                    img11.frame = CGRect(x: 15 * CGFloat(i + 1) + 70 * CGFloat(i), y: 0, width: 70, height: 70)
+                    img11.frame = CGRect(x: 15 + 75 * CGFloat(i), y: 15, width: 70, height: 70)
                     img11.image = img
                     img11.isUserInteractionEnabled = true
 //                    img11.tag = i + 100
@@ -33,19 +33,21 @@ class FeedBackViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     
                     let btn = UIButton()
                     btn.tag = i + 10
-                    btn.setImage(UIImage(named:"删除"), for: .normal)
-                    btn.frame = CGRect(x: img11.frame.width - 15, y: -5, width: 20, height: 20)
+//                    btn.setImage(UIImage(named:"删除"), for: .normal)
+                    btn.setBackgroundImage(UIImage(named:"删除"), for: .normal)
+//                    btn.imageView?.contentMode = .scaleToFill
+                    btn.frame = CGRect(x: img11.frame.width - 15, y: -10, width: 18, height: 18)
                     img11.addSubview(btn)
                     btn.addTarget(self, action: #selector(self.removewImg(btn:)), for: .touchUpInside)
 //                    print(btn.frame)
                 })
             }
             if imgArr.count < maxImgCount{
-                imgBgView.contentSize = CGSize(width: 85 * CGFloat(imgArr.count + 1) + 15, height: 75)
-                AddImageBtn.frame.origin.x = 15 * CGFloat(imgArr.count + 1) + 70 * CGFloat(imgArr.count)
+                imgBgView.contentSize = CGSize(width: 75 * CGFloat(imgArr.count + 1) + 15, height: 75)
+                AddImageBtn.frame.origin.x = 15 + 75 * CGFloat(imgArr.count)
                 self.imgBgView.addSubview(AddImageBtn)
             }else{
-                imgBgView.contentSize = CGSize(width: 85 * CGFloat(maxImgCount) + 15, height: 75)
+                imgBgView.contentSize = CGSize(width: 75 * CGFloat(maxImgCount) + 15, height: 75)
             }
             
         }
@@ -83,6 +85,7 @@ class FeedBackViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     
     func submitClick(){
+        
         guard adviceTypeStr.text != "" else {
             self.myNoticeError(title: "请选择反馈类型")
             return
@@ -95,10 +98,25 @@ class FeedBackViewController: UIViewController,UITableViewDelegate,UITableViewDa
             self.myNoticeError(title: "请输入反馈内容")
             return
         }
-        guard self.imgArr.count > 0 else {
-            self.myNoticeError(title: "请选择图片")
+        guard phoneText.text != "" else {
+            self.myNoticeError(title: "手机号码不正确")
             return
         }
+        guard opinionText.text != defaultContext else {
+            self.myNoticeError(title: "请输入反馈内容")
+            return
+        }
+        if phoneText.text != ""{
+            if phoneText.text?.characters.count != 11{
+                self.myNoticeError(title: "手机号码不正确")
+                return
+            }
+        }
+        //测试说图片不是必填项
+//        guard self.imgArr.count > 0 else {
+//            self.myNoticeError(title: "请选择图片")
+//            return
+//        }
         self.choseImgArr = []
         self.infoNotice("提交中")
 //        上传图片
@@ -154,7 +172,7 @@ class FeedBackViewController: UIViewController,UITableViewDelegate,UITableViewDa
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
         case 1:
-            return 230
+            return 250
         default:
             return 35
         }
@@ -177,7 +195,7 @@ class FeedBackViewController: UIViewController,UITableViewDelegate,UITableViewDa
         case 0:
             cell.accessoryType = .disclosureIndicator
             let lab = UILabel()
-            method.creatLabel(lab: lab, x: 15, y: 0, wid: 100, hei: 35, textString: "反馈类型", textcolor: UIColor.black, textFont: 12, superView: cell.contentView)
+            method.creatLabel(lab: lab, x: 15, y: 0, wid: 100, hei: 35, textString: "反馈类型", textcolor: myAppBlackColor(), textFont: 14, superView: cell.contentView)
             
             
             adviceTypeStr.textAlignment = .right
@@ -192,18 +210,18 @@ class FeedBackViewController: UIViewController,UITableViewDelegate,UITableViewDa
             cell.contentView.addSubview(opinionText)
             method.drawLine(startX: 15, startY: opinionText.bottomPosition(), wid: app_width - 15, hei: 0.6, add: cell.contentView)
             
-            method.creatLabel(lab: wordCountLab, x: 50, y: opinionText.bottomPosition() - 20, wid: app_width - 70, hei: 20, textString: "还可以输入200字", textcolor: UIColor.gray, textFont: 12, superView: cell.contentView)
+            method.creatLabel(lab: wordCountLab, x: 50, y: opinionText.bottomPosition() - 20, wid: app_width - 70, hei: 20, textString: "还可以输入200字", textcolor: setMyColor(r: 204, g: 204, b: 204, a: 1), textFont: 12, superView: cell.contentView)
             wordCountLab.textAlignment = .right
             
-            imgBgView.frame = CGRect(x: 0, y: opinionText.bottomPosition() + 5, width: app_width, height: 75)
+            imgBgView.frame = CGRect(x: 0, y: opinionText.bottomPosition()+5, width: app_width, height: 100)
             imgBgView.backgroundColor = UIColor.white
             imgBgView.showsHorizontalScrollIndicator = false
             cell.contentView.addSubview(imgBgView)
             
             
-            method.creatButton(btn: AddImageBtn, x: 15, y: 0, wid: 70, hei: 70, title: "+", titlecolor: UIColor.gray, titleFont: 35, bgColor: UIColor.white, superView: imgBgView)
+            method.creatButton(btn: AddImageBtn, x: 15, y: 15, wid: 70, hei: 70, title: "+", titlecolor: UIColor.gray, titleFont: 35, bgColor: UIColor.white, superView: imgBgView)
             AddImageBtn.layer.borderWidth = 1
-            AddImageBtn.layer.borderColor = UIColor.gray.cgColor
+            AddImageBtn.layer.borderColor = setMyColor(r: 204, g: 204, b: 204, a: 1).cgColor
             AddImageBtn.addTarget(self, action: #selector(ImgChose), for: .touchUpInside)
             
         default:

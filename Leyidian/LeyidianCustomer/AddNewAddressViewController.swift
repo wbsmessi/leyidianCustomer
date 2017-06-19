@@ -30,7 +30,7 @@ class AddNewAddressViewController: UIViewController,UITableViewDelegate,UITableV
     var titleArr: [String] = ["收货人","手机号","所在区域","详细地址","标签"]
     lazy var username:UITextField={
         let username = UITextField()
-        username.frame = CGRect(x: 80, y: 0, width: app_width - 120, height: 40)
+        username.frame = CGRect(x: 80, y: 0, width: app_width - 120, height: 45)
         username.delegate = self
         username.returnKeyType = .done
         username.font = UIFont.systemFont(ofSize: 12)
@@ -44,7 +44,7 @@ class AddNewAddressViewController: UIViewController,UITableViewDelegate,UITableV
     }()
     lazy var userphone:UITextField={
         let userphone = UITextField()
-        userphone.frame = CGRect(x: 80, y: 0, width: app_width - 120, height: 40)
+        userphone.frame = CGRect(x: 80, y: 0, width: app_width - 120, height: 45)
         userphone.delegate = self
         userphone.returnKeyType = .done
         userphone.font = UIFont.systemFont(ofSize: 12)
@@ -61,7 +61,7 @@ class AddNewAddressViewController: UIViewController,UITableViewDelegate,UITableV
     lazy var cityAddress:UITextField={
         let cityAddress = UITextField()
         cityAddress.isUserInteractionEnabled = false
-        cityAddress.frame = CGRect(x: 80, y: 0, width: app_width - 120, height: 40)
+        cityAddress.frame = CGRect(x: 80, y: 0, width: app_width - 120, height: 45)
         cityAddress.font = UIFont.systemFont(ofSize: 12)
         cityAddress.textColor = UIColor.lightGray
         if !self.isAddNew{
@@ -74,7 +74,7 @@ class AddNewAddressViewController: UIViewController,UITableViewDelegate,UITableV
     
     lazy var detailAddress:UITextField={
         let detailAddress = UITextField()
-        detailAddress.frame = CGRect(x: 80, y: 0, width: app_width - 120, height: 40)
+        detailAddress.frame = CGRect(x: 80, y: 0, width: app_width - 120, height: 45)
         detailAddress.delegate = self
         detailAddress.returnKeyType = .done
         detailAddress.font = UIFont.systemFont(ofSize: 12)
@@ -89,7 +89,7 @@ class AddNewAddressViewController: UIViewController,UITableViewDelegate,UITableV
     lazy var addressRemark:UITextField={
         let addressRemark = UITextField()
         addressRemark.isUserInteractionEnabled = false
-        addressRemark.frame = CGRect(x: 80, y: 0, width: app_width - 120, height: 40)
+        addressRemark.frame = CGRect(x: 80, y: 0, width: app_width - 120, height: 45)
         addressRemark.font = UIFont.systemFont(ofSize: 12)
         addressRemark.textColor = UIColor.lightGray
         if !self.isAddNew{
@@ -103,14 +103,14 @@ class AddNewAddressViewController: UIViewController,UITableViewDelegate,UITableV
     var alertView:DECChoseAlertView!
     func creatView() {
         let table = UITableView()
-        table.frame = CGRect(x: 0, y: 80, width: app_width, height: 40 * 5)
-        table.rowHeight = 40
+        table.frame = CGRect(x: 0, y: nav_height + 10, width: app_width, height: 45 * 5)
+        table.rowHeight = 45
         table.delegate = self
         table.dataSource = self
         self.view.addSubview(table)
         
         let submit = UIButton()
-        method.creatButton(btn: submit, x: 15, y: table.bottomPosition() + 30, wid: app_width - 30, hei: 40, title: "保存", titlecolor: UIColor.white, titleFont: 14, bgColor: UIColor.clear, superView: self.view)
+        method.creatButton(btn: submit, x: 15, y: table.bottomPosition() + 30, wid: app_width - 30, hei: (app_width - 30)/7.73, title: "保存", titlecolor: UIColor.white, titleFont: 14, bgColor: UIColor.clear, superView: self.view)
         submit.setBackgroundImage(UIImage(named:"anniu"), for: .normal)
         submit.addTarget(self, action: #selector(editOrAdd), for: .touchUpInside)
         
@@ -126,7 +126,7 @@ class AddNewAddressViewController: UIViewController,UITableViewDelegate,UITableV
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         let cell = UITableViewCell()
         let title = UILabel()
-        method.creatLabel(lab: title, x: 15, y: 0, wid: 50, hei: 40, textString: titleArr[indexPath.row], textcolor: UIColor.black, textFont: 12, superView: cell.contentView)
+        method.creatLabel(lab: title, x: 15, y: 0, wid: 50, hei: 45, textString: titleArr[indexPath.row], textcolor: myAppBlackColor(), textFont: 12, superView: cell.contentView)
         
         switch indexPath.row {
         case 0:
@@ -135,7 +135,7 @@ class AddNewAddressViewController: UIViewController,UITableViewDelegate,UITableV
             cell.contentView.addSubview(userphone)
         case 2:
             let img = UIImageView()
-            method.creatImage(img: img, x: app_width - 30, y: 10, wid: 20, hei: 20, imgName: "dizhi", imgMode: .center, superView: cell.contentView)
+            method.creatImage(img: img, x: app_width - 30, y: 13, wid: 20, hei: 20, imgName: "dizhi", imgMode: .center, superView: cell.contentView)
 //            cityAddress.text = "成都市高新区成汉南路"
             cell.contentView.addSubview(cityAddress)
         case 3:
@@ -197,12 +197,8 @@ class AddNewAddressViewController: UIViewController,UITableViewDelegate,UITableV
             }
             self.myNoticeSuccess(title: "保存成功")
             self.backPage()
+            
         }
-//        if cityAddress.text != "" && detailAddress.text != "" && username.text != "" && userphone.text != "" && nowLocation != nil{
-//            
-//        }else{
-//            self.myNoticeError(title: "信息不能为空")
-//        }
         
     }
     func DECChoseAlert(title:String){

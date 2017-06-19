@@ -8,16 +8,24 @@
 
 import UIKit
 import SwiftyJSON
+import MJRefresh
 
 
 protocol CategoryGoodsViewDelegate {
     func goodsChose(goodsId:String)
     func categoryTypeChose(classifyID:String,sortType:goodsSortType,orderOrCategory:Bool)
+    func goodsNormChose(goodsInfo:JSON)
+    func pullLoadMore(pageIndex:Int)
 }
-class CategoryGoodsView: UIView,UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
 
+class CategoryGoodsView: UIView,UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,GoodsCollectionViewCellDelegate,goodsTableListTableViewCellDelegate {
+
+    var currentVC:UIViewController!
+    var pageIndex:Int = 0
     var categoryData:JSON!{
         didSet{
+            self.currentSortType = nil
+            self.currentClassifyID = nil
             //有改变先置为空
             title = []
             //二级分类
@@ -27,8 +35,11 @@ class CategoryGoodsView: UIView,UITableViewDelegate,UITableViewDataSource,UIColl
             }
         }
     }
+    
     var goodsInfo:[JSON] = []{
         didSet{
+            self.listTable.mj_footer.endRefreshing()
+            self.listCollect.mj_footer.endRefreshing()
             DispatchQueue.main.async {
                 self.listTable.reloadData()
                 self.listCollect.reloadData()
@@ -44,15 +55,17 @@ class CategoryGoodsView: UIView,UITableViewDelegate,UITableViewDataSource,UIColl
         super.init(frame: frame)
         creatView()
     }
-    let topView = UIView()
+    let topView = UIImageView()
     var listTable:UITableView!
     var listCollect:UICollectionView!
     //分类按钮
     let categoryBtn = UIButton()
     let orderByBtn = UIButton()
     func creatView() {
-        topView.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: 40)
+        topView.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: 50)
         topView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.0)
+        topView.image = UIImage(named: "typebg")
+        topView.isUserInteractionEnabled = true
         self.addSubview(topView)
         
         method.creatButton(btn: categoryBtn, x: 0, y: 0, wid: self.frame.width/2 - 20, hei: 40, title: "全部分类", titlecolor: UIColor.black, titleFont: 12, bgColor: UIColor.white, superView: topView)
@@ -60,9 +73,9 @@ class CategoryGoodsView: UIView,UITableViewDelegate,UITableViewDataSource,UIColl
         categoryBtn.titleEdgeInsets = UIEdgeInsets(top: 0, left: -categoryBtn.imageView!.frame.width, bottom: 0, right: categoryBtn.imageView!.frame.width)
         categoryBtn.imageEdgeInsets = UIEdgeInsets(top: 0, left: categoryBtn.titleLabel!.frame.width, bottom: 0, right: -categoryBtn.titleLabel!.frame.width)
         categoryBtn.addTarget(self, action: #selector(categoryClick(btn:)), for: .touchUpInside)
-        print(categoryBtn.imageView!.frame)
-        print(categoryBtn.titleLabel!.frame)
-        print(categoryBtn.frame)
+//        print(categoryBtn.imageView!.frame)
+//        print(categoryBtn.titleLabel!.frame)
+//        print(categoryBtn.frame)
         
         method.creatButton(btn: orderByBtn, x: categoryBtn.rightPosition(), y: 0, wid: self.frame.width/2 - 20, hei: 40, title: "综合排序", titlecolor: UIColor.black, titleFont: 12, bgColor: UIColor.white, superView: topView)
         orderByBtn.setImage(UIImage(named:"jiantou-up"), for: .normal)
@@ -78,14 +91,23 @@ class CategoryGoodsView: UIView,UITableViewDelegate,UITableViewDataSource,UIColl
         listType.addTarget(self, action: #selector(listTypeClick(btn:)), for: .touchUpInside)
         
         listTable = UITableView()
-        listTable.frame = CGRect(x: 0, y: categoryBtn.bottomPosition(), width: self.frame.width, height: self.frame.height - categoryBtn.frame.height)
+        listTable.frame = CGRect(x: 0, y: topView.bottomPosition(), width: self.frame.width, height: self.frame.height - topView.frame.height)
         listTable.delegate = self
         listTable.dataSource = self
         listTable.tableFooterView = UIView()
+        listTable.isHidden = true
         self.addSubview(listTable)
+        
+        self.listTable.mj_footer = MJRefreshAutoNormalFooter(refreshingBlock: {
+            self.pageIndex += 1
+            self.delegate?.pullLoadMore(pageIndex: self.pageIndex)
+        })
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
+        // 设置间距
+        layout.minimumLineSpacing = 10
+        layout.minimumInteritemSpacing = 5
         listCollect = UICollectionView(frame: listTable.frame, collectionViewLayout: layout)
         listCollect.backgroundColor = UIColor.white
         listCollect.delegate = self
@@ -93,6 +115,11 @@ class CategoryGoodsView: UIView,UITableViewDelegate,UITableViewDataSource,UIColl
         listCollect.showsVerticalScrollIndicator=false
         listCollect.register(GoodsCollectionViewCell.self, forCellWithReuseIdentifier: "goodscell")
         self.addSubview(listCollect)
+        
+        self.listCollect.mj_footer = MJRefreshAutoNormalFooter(refreshingBlock: {
+            self.pageIndex += 1
+            self.delegate?.pullLoadMore(pageIndex: self.pageIndex)
+        })
         
     }
     lazy var bgView:UIView={
@@ -190,29 +217,47 @@ class CategoryGoodsView: UIView,UITableViewDelegate,UITableViewDataSource,UIColl
     
     var orderOrCategory:Bool=true//true是排序，false是分类
     var selectedBtn:UIButton?
+    //当前选择的分类和排序
+    var currentSortType:goodsSortType?
+    var currentClassifyID:String?
     func categoryOrOrderChose(btn:UIButton){
+        
         selectedBtn?.setTitleColor(UIColor.black, for: .normal)
         btn.setTitleColor(MyAppColor(), for: UIControlState.normal)
         closeBgView()
-        var sortType:goodsSortType?
-        var classifyID:String?
+        
         
         if !orderOrCategory{//true是排序，false是分类
             //分类id
-            classifyID = (btn.tag != 100) ? categoryData["childClassifyList"][btn.tag - 100 - 1]["classifyID"].stringValue : categoryData["classifyID"].stringValue
+            //  =100就是查询全部类别的东西，
+            DispatchQueue.main.async {
+                self.categoryBtn.setTitle(self.title[btn.tag - 100], for: .normal)
+            }
+            
+            currentClassifyID = (btn.tag != 100) ? categoryData["childClassifyList"][btn.tag - 100 - 1]["classifyID"].stringValue : categoryData["classifyID"].stringValue
         }else{
+            DispatchQueue.main.async {
+                self.orderByBtn.setTitle(self.ordertitle[btn.tag - 100], for: .normal)
+            }
             switch btn.tag - 100 {
             case 0:
-                sortType = goodsSortType.defaultType
+                currentSortType = goodsSortType.defaultType
             case 1:
-                sortType = goodsSortType.highSales
+                currentSortType = goodsSortType.highSales
             case 2:
-                sortType = goodsSortType.lowPrice
+                currentSortType = goodsSortType.lowPrice
             default:
-                sortType = goodsSortType.highPrice
+                currentSortType = goodsSortType.highPrice
             }
         }
-        delegate?.categoryTypeChose(classifyID:classifyID ?? "",sortType: sortType ?? goodsSortType.defaultType,orderOrCategory:self.orderOrCategory)
+        delegate?.categoryTypeChose(classifyID:currentClassifyID ?? "",sortType: currentSortType ?? goodsSortType.defaultType,orderOrCategory:self.orderOrCategory)
+    }
+    //////////////////////GoodsCollectionViewCellDelegate
+    func alertNormChose(goods:JSON){
+        delegate?.goodsNormChose(goodsInfo:goods)
+    }
+    func goodsTableListAlertNormChose(goods: JSON) {
+        delegate?.goodsNormChose(goodsInfo:goods)
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -231,13 +276,34 @@ extension CategoryGoodsView{
         if cell == nil{
             cell = goodsTableListTableViewCell()
         }
+        cell!.currentVC = self.currentVC
+        cell!.delegate = self
         cell!.creatView(cell_wid: app_width - 100)
+//        print(goodsInfo)
+//        print(indexPath.row)
         cell!.goodsInfo = goodsInfo[indexPath.row]
         cell!.imageUrl = goodsInfo[indexPath.row]["cover"].stringValue
         cell!.oldPrice = "¥" + goodsInfo[indexPath.row]["retailPrice"].doubleValue.getMoney()
         cell!.goodsName.text = goodsInfo[indexPath.row]["commodityName"].stringValue
         cell!.goodsDetail.text = goodsInfo[indexPath.row]["commodityRemark"].stringValue
-        cell!.goodsPrice.text = goodsInfo[indexPath.row]["discountPrice"].doubleValue.getMoney()
+        
+//        var salePrice = goodsInfo[indexPath.row]["retailPrice"].doubleValue.getMoney()
+//        if goodsInfo[indexPath.row]["commodityTypes"].stringValue != ""{
+//            salePrice = goodsInfo[indexPath.row]["discountPrice"].doubleValue.getMoney()
+//        }
+//        cell!.goodsPrice.text = salePrice
+        
+        var salePrice = goodsInfo[indexPath.row]["retailPrice"].doubleValue.getMoney()
+        
+        if method.hasStringInArr(arrStr: goodsInfo[indexPath.row]["commodityTypes"].stringValue){
+            salePrice = goodsInfo[indexPath.row]["discountPrice"].doubleValue.getMoney()
+            
+        }else{
+            cell!.goodsOldPrice.isHidden = true
+        }
+        cell!.goodsPrice.text = salePrice
+        cell!.goodsStatus = goodsInfo[indexPath.row]["status"].stringValue
+        cell!.goodsActiveType = goodsInfo[indexPath.row]["commodityTypes"].stringValue
         return cell!
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -245,12 +311,16 @@ extension CategoryGoodsView{
         tableView.deselectRow(at: indexPath, animated: true)
         delegate?.goodsChose(goodsId: goodsInfo[indexPath.row]["commodityID"].stringValue)
     }
+    
 }
 extension CategoryGoodsView{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (self.frame.width-10)/2, height: (self.frame.width-10) * 2/3)
+        return CGSize(width: (self.frame.width-5)/2, height: (self.frame.width-10) * 2/3)
     }
-
+    //    返回cell 上下左右的间距
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsetsMake(5, 0, 5, 0)
+    }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         delegate?.goodsChose(goodsId: goodsInfo[indexPath.item]["commodityID"].stringValue)
     }
@@ -261,20 +331,37 @@ extension CategoryGoodsView{
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "goodscell", for: indexPath) as! GoodsCollectionViewCell
-        
+        cell.selfViewController = self.currentVC
+        cell.delegate = self
         cell.indexRow = indexPath.item
         cell.goodsInfo = goodsInfo[indexPath.row]
         cell.imageUrl = goodsInfo[indexPath.row]["cover"].stringValue
         cell.oldPrice = "¥" + goodsInfo[indexPath.row]["retailPrice"].doubleValue.getMoney()
         cell.goodsName.text = goodsInfo[indexPath.row]["commodityName"].stringValue
         cell.goodsDetail.text = goodsInfo[indexPath.row]["commodityRemark"].stringValue
-        cell.nowPrice.text = goodsInfo[indexPath.row]["retailPrice"].doubleValue.getMoney()
+//        数量显示
+//        cell.goodsNumInCar = goodsInfo[indexPath.row]["commodityNum"].intValue
+//        var salePrice = goodsInfo[indexPath.row]["retailPrice"].doubleValue.getMoney()
+//        if goodsInfo[indexPath.row]["commodityTypes"].stringValue != ""{
+//            salePrice = goodsInfo[indexPath.row]["discountPrice"].doubleValue.getMoney()
+//        }
+//        
+//        cell.nowPrice.text = salePrice
+        var salePrice = goodsInfo[indexPath.row]["retailPrice"].doubleValue.getMoney()
+        
+        if method.hasStringInArr(arrStr: goodsInfo[indexPath.row]["commodityTypes"].stringValue){
+            salePrice = goodsInfo[indexPath.row]["discountPrice"].doubleValue.getMoney()
+            cell.goodsOldPrice.isHidden = false
+        }else{
+            cell.goodsOldPrice.isHidden = true
+        }
+        cell.nowPrice.text = salePrice
+        
         cell.goodsActiveType = goodsInfo[indexPath.row]["commodityTypes"].stringValue
-//        cell.imageUrl = "http://i4.piimg.com/567571/5bb2bd5f3d9ed1c9.jpg"
-//        cell.oldPrice = "¥" + "45.00"
+        cell.goodsStatus =  goodsInfo[indexPath.row]["status"].stringValue
         return cell
     }
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        delegate?.goodsChose(goodsId: "")
-    }
+//    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+//        delegate?.goodsChose(goodsId: "")
+//    }
 }

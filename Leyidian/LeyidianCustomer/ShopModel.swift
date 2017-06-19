@@ -32,6 +32,7 @@ class ShopModel: NSObject {
     var storeName:String!
     var startLimit:String!//满多少元配送
     var storeImg:String!
+    var storeNotice:String! //商家公告
     init(shopInfo:JSON) {
         self.freeLimit = shopInfo["freeLimit"].intValue
         self.phone = shopInfo["phone"].stringValue
@@ -43,5 +44,6 @@ class ShopModel: NSObject {
         self.storeName = shopInfo["storeName"].stringValue
         self.startLimit = shopInfo["startLimit"].doubleValue.getMoney()
         self.storeImg = shopInfo["storeImg"].stringValue
+        self.storeNotice = shopInfo["notice"].stringValue
     }
 }

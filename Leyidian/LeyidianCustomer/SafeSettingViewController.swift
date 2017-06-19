@@ -25,11 +25,11 @@ class SafeSettingViewController: UIViewController,UITableViewDelegate,UITableVie
     let table = UITableView()
     func creatView(){
         
-        table.frame = CGRect(x: 0, y: nav_height, width: app_width, height: 40 * 2)
+        table.frame = CGRect(x: 0, y: nav_height + 10, width: app_width, height: 50 * 2)
         table.bounces = false
         table.delegate = self
         table.dataSource = self
-        table.rowHeight = 40
+        table.rowHeight = 50
         self.view.addSubview(table)
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
@@ -39,14 +39,14 @@ class SafeSettingViewController: UIViewController,UITableViewDelegate,UITableVie
         let cell = UITableViewCell()
         cell.accessoryType = .disclosureIndicator
         let title = UILabel()
-        method.creatLabel(lab: title, x: 15, y: 0, wid: 150, hei: 40, textString: titleArr[indexPath.row], textcolor: UIColor.black, textFont: 14, superView: cell.contentView)
+        method.creatLabel(lab: title, x: 15, y: 0, wid: 150, hei: 50, textString: titleArr[indexPath.row], textcolor: myAppBlackColor(), textFont: 13, superView: cell.contentView)
         if indexPath.row == 0{
             if let phoneNum = MyUserInfo.value(forKey: userInfoKey.phone.rawValue) as? String{
                 if phoneNum.characters.count == 11{
                     let phoneStr = (phoneNum as NSString).substring(to: 3)
                     let phoneStrend = (phoneNum as NSString).substring(from: 7)
                     let phone = UILabel()
-                    method.creatLabel(lab: phone, x: app_width - 150, y: 0, wid: 120, hei: 40, textString: phoneStr + "****" + phoneStrend, textcolor: UIColor.gray, textFont: 12, superView: cell.contentView)
+                    method.creatLabel(lab: phone, x: app_width - 150, y: 0, wid: 120, hei: 50, textString: phoneStr + "****" + phoneStrend, textcolor: UIColor.gray, textFont: 13, superView: cell.contentView)
                     phone.textAlignment = .right
                 }
             }
@@ -88,6 +88,7 @@ class SafeSettingViewController: UIViewController,UITableViewDelegate,UITableVie
             print(data)
             if data["code"].stringValue == "SUCCESS"{
                 self.resultData = data["resultData"]
+                MyUserInfo.setValue(data["resultData"]["phone"].stringValue, forKey: userInfoKey.phone.rawValue)
                 DispatchQueue.main.async {
                     self.table.reloadData()
                 }

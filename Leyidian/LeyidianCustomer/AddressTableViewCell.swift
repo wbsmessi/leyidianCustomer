@@ -32,7 +32,7 @@ class AddressTableViewCell: UITableViewCell {
             phoneAndName.text = phoneAndNameStr
         }
     }
-    var item_height:CGFloat = 60.0
+    var item_height:CGFloat = 45
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -49,13 +49,13 @@ class AddressTableViewCell: UITableViewCell {
     let deleteBtn = UIButton()
     func creatView(){
         
-        method.creatLabel(lab: remark, x: 15, y: 5, wid: 50, hei: 30, textString: "公司", textcolor: UIColor.gray, textFont: 12, superView: self)
+        method.creatLabel(lab: remark, x: 15, y: 5, wid: 40, hei: 30, textString: "公司", textcolor: UIColor.gray, textFont: 12, superView: self)
         
-        method.creatLabel(lab: addresslab, x: remark.rightPosition(), y: 5, wid: app_width - 130, hei: 30, textString: "", textcolor: UIColor.gray, textFont: 11, superView: self)
+        method.creatLabel(lab: addresslab, x: remark.rightPosition(), y: 5, wid: app_width - 70, hei: 30, textString: "", textcolor: setMyColor(r: 51, g: 51, b: 51, a: 1), textFont: 12, superView: self)
         addresslab.numberOfLines = 2
         addresslab.lineBreakMode = .byCharWrapping
         
-        method.creatLabel(lab: phoneAndName, x: 15, y: 30, wid: app_width - 80, hei: 25, textString: "", textcolor: UIColor.gray, textFont: 12, superView: self)
+        method.creatLabel(lab: phoneAndName, x: 15, y: 30, wid: app_width - 80, hei: 25, textString: "", textcolor: setMyColor(r: 51, g: 51, b: 51, a: 1), textFont: 12, superView: self)
         
         deleteBtn.frame = CGRect(x: app_width - 50, y: 0, width: 50, height: 60)
         deleteBtn.setImage(UIImage(named:"Trash"), for: .normal)

@@ -13,16 +13,39 @@ class UMSocialSwiftInterface: NSObject {
     
     func shareWebpageToPlatformType(platformType:UMSocialPlatformType,vc:UIViewController){
         let messageObject = UMSocialMessageObject()
-        let thumbUrL = "https://mobile.umeng.com/images/pic/home/social/img-1.png"
-        let shareObject = UMShareWebpageObject.shareObject(withTitle: "欢迎使用【友盟+】", descr: "欢迎使用【友盟+】社会化组件U-Sh", thumImage: thumbUrL)
-        shareObject?.webpageUrl = "http://mobile.umeng.com/social"
+        //图片地址
+//        let thumbUrL = "https://mobile.umeng.com/images/pic/home/social/img-1.png"
+        let thumbimg = UIImage(named:"leyidiancustomerIcon")
+        let shareObject = UMShareWebpageObject.shareObject(withTitle: "用乐易点轻松购物，快捷又省钱！", descr: "推荐！最亲民的购物app", thumImage: thumbimg)
+        shareObject?.webpageUrl = shareHeaderUrl + "/appmanager/downloadApp"
         messageObject.shareObject = shareObject
         
         UMSocialManager.default().share(to: platformType, messageObject: messageObject, currentViewController: vc) { (data, error) in
 //            print(data)
             if error == nil{
-                print("seccess")
+                print("success")
 //                print(data)
+            }else{
+                print("faild")
+                print(error!)
+            }
+        }
+    }
+    
+    func shareOrderToPlatformType(orderNo:String,platformType:UMSocialPlatformType,vc:UIViewController){
+        let messageObject = UMSocialMessageObject()
+//        let thumbUrL = "https://mobile.umeng.com/images/pic/home/social/img-1.png"
+        let thumbimg = UIImage(named:"leyidiancustomerIcon")
+        let shareObject = UMShareWebpageObject.shareObject(withTitle: "用乐易点轻松购物，快捷又省钱！", descr: "推荐！最亲民的购物app", thumImage: thumbimg)
+        
+        shareObject?.webpageUrl = shareHeaderUrl + "/orderApp/shear?orderNo=\(orderNo)"
+        messageObject.shareObject = shareObject
+        
+        UMSocialManager.default().share(to: platformType, messageObject: messageObject, currentViewController: vc) { (data, error) in
+            //            print(data)
+            if error == nil{
+                print("seccess")
+                //                print(data)
             }else{
                 print("faild")
                 print(error!)

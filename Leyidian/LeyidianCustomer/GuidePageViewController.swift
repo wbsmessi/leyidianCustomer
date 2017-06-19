@@ -8,9 +8,11 @@
 
 import UIKit
 
+//自定义引导页
 class GuidePageViewController: UIViewController,UIScrollViewDelegate {
 
     var imgCount = 4
+    var superVC:HomeViewController!
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor=UIColor.white
@@ -43,8 +45,10 @@ class GuidePageViewController: UIViewController,UIScrollViewDelegate {
     }
     func turnToHome(){
 //        _=self.navigationController?.popViewController(animated: false)
-        
-        self.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true) { 
+            self.superVC.AddressInfo()
+        }
+//        self.dismiss(animated: true, completion: nil)
     }
     func scrollViewDidScroll(_ scrollView: UIScrollView){
         print(scrollView.contentOffset.x)

@@ -40,7 +40,7 @@ class GoodsListViewController: UIViewController,UITableViewDelegate,UITableViewD
         cell!.goodsInfo             = goodsInfo[indexPath.row]
         cell!.imageUrl              = goodsInfo[indexPath.row]["commodityImg"].stringValue
         cell!.goodsName.text        = goodsInfo[indexPath.row]["commodityName"].stringValue
-        cell!.goodsDetail.text      = goodsInfo[indexPath.row]["commodityRemark"].stringValue
+        cell!.goodsDetail.text      = goodsInfo[indexPath.row]["norm"].stringValue
         cell!.goodsPrice.text       = goodsInfo[indexPath.row]["price"].doubleValue.getMoney()
         cell!.goodsCount.text       = "x" + goodsInfo[indexPath.row]["num"].stringValue
         return cell!

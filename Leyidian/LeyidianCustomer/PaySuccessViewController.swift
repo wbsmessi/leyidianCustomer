@@ -34,27 +34,28 @@ class PaySuccessViewController: UIViewController {
         
         let textview = UITextView()
         textview.isEditable = false
-        textview.frame = CGRect(x: 20, y: lab.bottomPosition() + 10, width: app_width - 40, height: 80)
+        textview.frame = CGRect(x: 20, y: lab.bottomPosition() + 10, width: app_width - 40, height: 120)
         textview.font = UIFont.systemFont(ofSize: 13)
+        textview.isScrollEnabled = false
         
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
         let attributes = [NSFontAttributeName:UIFont.systemFont(ofSize: 12),NSParagraphStyleAttributeName:paragraphStyle]
-        textview.attributedText = NSAttributedString(string: "   四级考试等级考试倒计时短裤时间快到家打开电视机啊叫啊健身卡手机壳抖擞精神啊就是大多数都颠三倒四的时尚大方方法改变颠三倒四的是对的是法国", attributes: attributes)
+        textview.attributedText = NSAttributedString(string: "   感谢您使用乐易点！我们将在预计时间内准时将商品送达你手中，如有任何疑问欢迎致电乐易点官方客服400-888-8008，乐易点竭诚为你提供最优质的便利购物体验", attributes: attributes)
         
         
         textview.textColor = UIColor.gray
         self.view.addSubview(textview)
         
         let leftBtn = UIButton()
-        method.creatButton(btn: leftBtn, x: app_width/4, y: textview.bottomPosition() + 30, wid: app_width/4 - 30, hei: (app_width/4 - 30) * 0.5, title: "回到首页", titlecolor: UIColor.gray, titleFont: 12, bgColor: UIColor.white, superView: self.view)
+        method.creatButton(btn: leftBtn, x: (app_width - 160)/3, y: textview.bottomPosition() + 30, wid: 80, hei: 40, title: "回到首页", titlecolor: UIColor.gray, titleFont: 12, bgColor: UIColor.white, superView: self.view)
         leftBtn.addTarget(self, action: #selector(leftBtnClick), for: .touchUpInside)
         leftBtn.layer.cornerRadius = 5
         leftBtn.layer.borderColor = UIColor.gray.cgColor
         leftBtn.layer.borderWidth = 0.6
         
         let rightBtn = UIButton()
-        method.creatButton(btn: rightBtn, x: app_width/2 + app_width/12, y: textview.bottomPosition() + 30, wid: app_width/4 - 30, hei: (app_width/4 - 30) * 0.5, title: "查看订单", titlecolor: UIColor.gray, titleFont: 12, bgColor: UIColor.white, superView: self.view)
+        method.creatButton(btn: rightBtn, x: leftBtn.rightPosition() + (app_width - 160)/3, y: textview.bottomPosition() + 30, wid: 80, hei: 40, title: "查看订单", titlecolor: UIColor.gray, titleFont: 12, bgColor: UIColor.white, superView: self.view)
         rightBtn.addTarget(self, action: #selector(rightBtnClick), for: .touchUpInside)
         rightBtn.layer.cornerRadius = 5
         rightBtn.layer.borderColor = UIColor.gray.cgColor
@@ -63,6 +64,9 @@ class PaySuccessViewController: UIViewController {
     }
     
     func leftBtnClick(){
+        DispatchQueue.main.async {
+            self.tabBarController?.selectedIndex=0
+        }
         self.backToRootPage()
     }
     

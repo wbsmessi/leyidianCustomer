@@ -8,6 +8,7 @@
 
 import UIKit
 
+//自定义选择器
 protocol DECChoseAlertViewDelegate {
     func DECChoseAlert(title:String)
 }
@@ -94,6 +95,7 @@ class DECChoseAlertView: UIView,UIPickerViewDelegate,UIPickerViewDataSource {
             })
         }else{
             //显示
+            self.picker.selectRow(0, inComponent: 0, animated: false)
             self.isHidden = hide
             UIView.animate(withDuration: 0.2, animations: {
                 self.bottomView.frame.origin.y = self.frame.height - 235

@@ -57,7 +57,7 @@ class adminItemView: UIView {
         
         let title=UILabel()
         title.textAlignment = .center
-        method.creatLabel(lab: title, x: 0, y: img.bottomPosition(), wid: view.frame.width, hei: view.frame.height/3, textString: titleArr[index], textcolor: UIColor.black, textFont: 11, superView: view)
+        method.creatLabel(lab: title, x: 0, y: img.bottomPosition(), wid: view.frame.width, hei: view.frame.height/3, textString: titleArr[index], textcolor: myAppBlackColor(), textFont: 12, superView: view)
     }
     func viewClick(tap:UIGestureRecognizer) {
         let index = tap.view!.tag

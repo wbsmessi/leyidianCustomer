@@ -24,22 +24,36 @@ class AddressViewController: UIViewController,UITableViewDelegate,UITableViewDat
             }
         }
     }
+    
     var isAddressChose:Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setTitleView(title: "收货地址", canBack: true)
         creatView()
-        
         // Do any additional setup after loading the view.
     }
     func reloadData(){
-        HttpTool.shareHttpTool.Http_getAddressList { (data) in
-            print(data)
-            if data.arrayValue.count == 0{
-                self.myNoticeNodata()
+        if isChoseAddress{
+            if let storeid = storeInfomation!.storeID{
+                print(storeid)
+                HttpTool.shareHttpTool.Http_getAddressList(storeID:"\(storeid)", succesce: { (data) in
+                    print(data)
+                    if data.arrayValue.count == 0{
+                        self.myNoticeNodata()
+                    }
+                    self.addressList = data.arrayValue
+                })
             }
-            self.addressList = data.arrayValue
+        }else{
+            HttpTool.shareHttpTool.Http_getAddressList(storeID:"", succesce: { (data) in
+                print(data)
+                if data.arrayValue.count == 0{
+                    self.myNoticeNodata()
+                }
+                self.addressList = data.arrayValue
+            })
         }
+        
     }
     let addressTable = UITableView()
     func creatView(){
@@ -49,41 +63,65 @@ class AddressViewController: UIViewController,UITableViewDelegate,UITableViewDat
         
         let topnotice = UILabel()
         method.creatLabel(lab: topnotice, x: 0, y: nav_height, wid: app_width, hei: 30, textString: "       最多可新增20个收获地址", textcolor: UIColor.gray, textFont: 10, superView: self.view)
-        topnotice.backgroundColor = MyGlobalColor()
+        topnotice.backgroundColor = setMyColor(r: 232, g: 232, b: 232, a: 1)
         
         
         addressTable.frame = CGRect(x: 0, y: topnotice.bottomPosition(), width: app_width, height: app_height - topnotice.bottomPosition())
         addressTable.delegate = self
         addressTable.dataSource = self
         addressTable.rowHeight = 60.0
+        addressTable.backgroundColor = MyGlobalColor()
         addressTable.tableFooterView = UIView()
+        addressTable.separatorStyle = .none
         self.view.addSubview(addressTable)
     }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+    func numberOfSections(in tableView: UITableView) -> Int {
         return addressList.count
     }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+        return 1
+    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return section == 0 ? 0:10
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         var cell = tableView.dequeueReusableCell(withIdentifier: "addresscellid") as? AddressTableViewCell
         if cell == nil{
             cell = AddressTableViewCell()
         }
-        cell!.addressRemark = addressList[indexPath.row]["addressType"].stringValue
-        cell!.addressStr = addressList[indexPath.row]["address"].stringValue + addressList[indexPath.row]["addressInfo"].stringValue
-        cell!.phoneAndNameStr = addressList[indexPath.row]["contactParson"].stringValue + "       " + addressList[indexPath.row]["phone"].stringValue
-        cell!.deleteBtn.tag = indexPath.row
-        cell!.deleteBtn.addTarget(self, action: #selector(deleteAddress(btn:)), for: .touchUpInside)
+        cell!.addressRemark = addressList[indexPath.section]["addressType"].stringValue
+        cell!.addressStr = addressList[indexPath.section]["address"].stringValue + addressList[indexPath.section]["addressInfo"].stringValue
+        cell!.phoneAndNameStr = addressList[indexPath.section]["contactParson"].stringValue + "       " + addressList[indexPath.section]["phone"].stringValue
+            
+        if isChoseAddress{
+            cell!.deleteBtn.isHidden = true
+            if addressList[indexPath.section]["deliveryFlag"].boolValue{
+                cell?.backgroundColor = UIColor.white
+            }else{
+                cell?.backgroundColor = setMyColor(r: 204, g: 204, b: 204, a: 1)
+            }
+            
+        }else{
+            cell!.deleteBtn.tag = indexPath.section
+            cell!.deleteBtn.addTarget(self, action: #selector(deleteAddress(btn:)), for: .touchUpInside)
+        }
+        
         return cell!
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if isChoseAddress{
-            delegate?.postAddressInfo(address: addressList[indexPath.row])
-            self.backPage()
+            if addressList[indexPath.section]["deliveryFlag"].boolValue{
+                delegate?.postAddressInfo(address: addressList[indexPath.section])
+                self.backPage()
+            }else{
+                self.myNoticeError(title: "此地址超出配送范围")
+            }
         }else{
             let vc = AddNewAddressViewController()
             vc.isAddNew = false
-            vc.addressInfo = addressList[indexPath.row]
+            vc.addressInfo = addressList[indexPath.section]
             self.pushToNext(vc: vc)
         }
     }

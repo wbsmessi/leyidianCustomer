@@ -11,6 +11,7 @@ import UIKit
 protocol DECAlertViewDelegate {
     func DECAlertViewClick(leftClick:Bool)
 }
+//自定义弹窗
 class DECAlertView: UIView {
 
     var delegate:DECAlertViewDelegate?
@@ -31,7 +32,7 @@ class DECAlertView: UIView {
         method.creatLabel(lab: titleLab, x: 0, y: 0, wid: bgview.frame.width, hei: bgview.frame.height/3, textString: title, textcolor: UIColor.black, textFont: 18, superView: bgview)
         
         let messageLab = UILabel()
-        method.creatLabel(lab: messageLab, x: 30, y: titleLab.bottomPosition(), wid: bgview.frame.width - 60, hei: bgview.frame.height/3, textString: message, textcolor: UIColor.gray, textFont: 14, superView: bgview)
+        method.creatLabel(lab: messageLab, x: 40, y: titleLab.bottomPosition(), wid: bgview.frame.width - 80, hei: bgview.frame.height/3, textString: message, textcolor: UIColor.gray, textFont: 14, superView: bgview)
         messageLab.numberOfLines = 2
         messageLab.lineBreakMode = .byCharWrapping
         messageLab.textAlignment = .center
@@ -43,7 +44,7 @@ class DECAlertView: UIView {
         
         let rightBtn = UIButton()
         rightBtn.tag = 200
-        method.creatButton(btn: rightBtn, x: bgview.frame.width/2, y: bgview.frame.height * 3/4, wid: bgview.frame.width/2, hei: bgview.frame.height/4, title: rightBtnTitle, titlecolor: MyAppColor(), titleFont: 14, bgColor: UIColor.white, superView: bgview)
+        method.creatButton(btn: rightBtn, x: bgview.frame.width/2, y: bgview.frame.height * 3/4, wid: bgview.frame.width/2, hei: bgview.frame.height/4, title: rightBtnTitle, titlecolor: myAppBlackColor(), titleFont: 14, bgColor: UIColor.white, superView: bgview)
         rightBtn.addTarget(self, action: #selector(btnClick(btn:)), for: .touchUpInside)
     }
     func btnClick(btn:UIButton){

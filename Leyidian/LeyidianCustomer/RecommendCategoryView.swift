@@ -16,9 +16,23 @@ class RecommendCategoryView: UIView {
     var method = Methods()
     var delegate:RecommendCategoryDelegate?
     var itemCount:Int!
+    
+    let bgImageview = UIImageView()
+    var bgImageName = "typebg"{
+        didSet{
+            DispatchQueue.main.async {
+                self.bgImageview.backgroundColor = setMyColor(r: 240, g: 240, b: 240, a: 1)
+                self.bgImageview.image = UIImage(named: self.bgImageName)
+            }
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-//        self.backgroundColor=UIColor.white
+        method.creatImage(img: bgImageview, x: 0, y: 0, wid: self.frame.width, hei: self.frame.height, imgName: bgImageName, imgMode: .scaleAspectFill, superView: self)
+        bgImageview.clipsToBounds = true
+        bgImageview.isUserInteractionEnabled = true
+        self.backgroundColor=UIColor.white
 //        initView()
     }
     func initView(imgArr:[String],titleArr:[String]) {
@@ -36,16 +50,15 @@ class RecommendCategoryView: UIView {
         let tap = UITapGestureRecognizer(target: self, action: #selector(viewClick(tap:)))
         view.tag=index
         view.addGestureRecognizer(tap)
-        view.backgroundColor=UIColor.white
-        view.frame = CGRect(x: x, y: 0, width: self.frame.width/CGFloat(itemCount), height: self.frame.height)
-        self.addSubview(view)
+        view.frame = CGRect(x: x, y: 0, width: self.frame.width/CGFloat(itemCount), height: self.frame.height - 10)
+        bgImageview.addSubview(view)
         
         let img = UIImageView()
         method.creatImage(img: img, x: view.frame.width/3, y: (view.frame.height - view.frame.width/3)/2 - 10, wid: view.frame.width/3, hei: view.frame.width/3, imgName: imgArr[index], imgMode: .scaleAspectFit, superView: view)
         
         let title=UILabel()
         title.textAlignment = .center
-        method.creatLabel(lab: title, x: 0, y: img.bottomPosition() + 5, wid: view.frame.width, hei: (view.frame.height - view.frame.width/3)/2, textString: titleArr[index], textcolor: UIColor.gray, textFont: 11, superView: view)
+        method.creatLabel(lab: title, x: 0, y: img.bottomPosition() + 5, wid: view.frame.width, hei: (view.frame.height - view.frame.width/3)/2, textString: titleArr[index], textcolor: myAppBlackColor(), textFont: 11, superView: view)
     }
     func viewClick(tap:UIGestureRecognizer) {
         let index = tap.view!.tag

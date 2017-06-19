@@ -24,6 +24,8 @@ class AddressChoseAlert: UIView,UITableViewDelegate,UITableViewDataSource {
         let bgview = UIView()
         bgview.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)
         bgview.frame = self.frame
+        let tap = UITapGestureRecognizer(target: self, action: #selector(closeView))
+        bgview.addGestureRecognizer(tap)
         self.addSubview(bgview)
         
         let table = UITableView()
@@ -32,9 +34,12 @@ class AddressChoseAlert: UIView,UITableViewDelegate,UITableViewDataSource {
         table.delegate = self
         table.dataSource = self
         table.rowHeight = table.frame.height/2
+        table.separatorStyle = .none
         self.addSubview(table)
     }
-    
+    func closeView(){
+        self.removeFromSuperview()
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         return 2
     }
@@ -44,7 +49,7 @@ class AddressChoseAlert: UIView,UITableViewDelegate,UITableViewDataSource {
         let title = UILabel()
         if indexPath.row == 0{
             cell.accessoryType = .disclosureIndicator
-            method.creatLabel(lab: title, x: 30, y: 0, wid: 100, hei: 40, textString: "定位、搜索地标", textcolor: UIColor.gray, textFont: 12, superView: cell.contentView)
+            method.creatLabel(lab: title, x: 30, y: 0, wid: 100, hei: 40, textString: "定位、搜索地标", textcolor: myAppBlackColor(), textFont: 12, superView: cell.contentView)
             
             let title2 = UILabel()
             title2.textAlignment = .right

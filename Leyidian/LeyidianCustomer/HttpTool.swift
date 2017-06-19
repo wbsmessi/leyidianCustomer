@@ -106,9 +106,13 @@ class HttpTool: NSObject {
                 self.noticeNoData()
                 return
             }
-            let jsonStr = JSON(result.json!)
-            self.cleaAllNotice()
-            succesce(jsonStr)
+            var json = JSON(result.json!)
+            if let jsondata = self.desToData(desStr: json["resultData"].stringValue){
+                json["resultData"] = jsondata
+                self.cleaAllNotice()
+                succesce(json)
+            }
+            
         }
     }
     /**登录*/
@@ -128,6 +132,74 @@ class HttpTool: NSObject {
             succesce(json)
         }
     }
+    /**短信登录*/
+//    user/smsUserLogin
+//    phone
+//    validCode
+    func Http_smsSign(phone:String,validCode:String,succesce:@escaping (_ value:JSON)->(Void)) {
+        Just.post(
+            headerUrl + getDesKey(param: "/user/smsUserLogin?phone=\(phone)&validCode=\(validCode)")
+        ) { result in
+            print(result)
+            self.cleaAllNotice()
+            guard result.ok else{
+                self.noticeNoData()
+                return
+            }
+            var json = JSON(result.json!)
+            json["resultData"] = self.desToData(desStr: json["resultData"].stringValue)!
+            self.cleaAllNotice()
+            succesce(json)
+        }
+    }
+//    /user/resetPassword
+//    phone	是	string	手机号
+//    password	是	string	密码
+//    validCode	是	string	验证码
+    func Http_resetPwd(phone:String,validCode:String,password:String,succesce:@escaping (_ value:JSON)->(Void)) {
+        Just.post(
+            headerUrl + getDesKey(param: "/user/resetPassword?phone=\(phone)&validCode=\(validCode)&password=\(password.md5()!)")
+        ) { result in
+            print(result)
+            self.cleaAllNotice()
+            guard result.ok else{
+                self.noticeNoData()
+                return
+            }
+            print(result.json)
+            let json = JSON(result.json!)
+//            json["resultData"] = self.desToData(desStr: json["resultData"].stringValue)!
+            self.cleaAllNotice()
+            succesce(json)
+        }
+    }
+    //重置密码
+    ///userApp/hotWords
+//    搜索热词
+    func Http_getHotWords(succesce:@escaping (_ value:JSON)->(Void)) {
+        //        loadingStatus()
+        Just.post(
+            headerUrl + getDesKey(param: "/user/hotWords")
+        ) { result in
+            //print(result)
+            guard result.ok else{
+                self.noticeNoData()
+                return
+            }
+            let json = JSON(result.json!)
+            guard json["code"].stringValue == "SUCCESS" else{
+                self.noticeError(title: json["msg"].stringValue)
+                return
+            }
+            if let jsonData = self.desToData(desStr: json["resultData"].stringValue){
+                //                self.cleaAllNotice()
+                succesce(jsonData)
+            }else{
+                //                self.noticeNoData()
+            }
+            
+        }
+    }
 //    /user/authLogin
 //    授权登录
 //    nickName	是	string	昵称
@@ -138,6 +210,24 @@ class HttpTool: NSObject {
     func Http_Sign(nickName:String,openID:String,headUrl:String,sex:String,authType:String,succesce:@escaping (_ value:JSON)->(Void)) {
         Just.post(
             headerUrl + getDesKey(param: "/user/authLogin?nickName=\(nickName)&openID=\(openID)&headUrl=\(headUrl)&sex=\(sex)&authType=\(authType)")
+        ) { result in
+            print(result)
+            self.cleaAllNotice()
+            guard result.ok else{
+                self.noticeNoData()
+                return
+            }
+            var json = JSON(result.json!)
+            json["resultData"] = self.desToData(desStr: json["resultData"].stringValue)!
+            self.cleaAllNotice()
+            succesce(json)
+        }
+    }
+//    /user/cityList
+//    获取开通城市
+    func Http_getCityList(succesce:@escaping (_ value:JSON)->(Void)) {
+        Just.post(
+            headerUrl + getDesKey(param: "/user/cityList")
         ) { result in
             print(result)
             self.cleaAllNotice()
@@ -173,18 +263,115 @@ class HttpTool: NSObject {
             }else{
 //                self.noticeNoData()
             }
-            
         }
     }
-    
+//    /user/noticeNum
+    //获取消息数量
+//    externalID	是	int	外部ID
+//    externalType	是	String	U 用户 S 店铺
+    func Http_getNoticeNum(succesce:@escaping (_ value:JSON)->(Void)) {
+        //        loadingStatus()
+        if let userid = MyUserInfo.value(forKey: userInfoKey.userID.rawValue) as? String{
+            Just.post(
+                headerUrl + getDesKey(param: "/user/noticeNum?externalID=\(userid)&externalType=U")
+            ) { result in
+                guard result.ok else{
+                    self.noticeNoData()
+                    return
+                }
+//                print(result.json)
+                if let value = result.json{
+                    var json = JSON(value)
+                    //                print(json)
+                    guard json["code"].stringValue == "SUCCESS" else{
+                        self.noticeError(title: json["msg"].stringValue)
+                        return
+                    }
+                    
+                    if let jsonData = self.desToData(desStr: json["resultData"].stringValue){
+                        //                self.cleaAllNotice()
+                        json["resultData"] = jsonData
+                        succesce(json)
+                    }else{
+                        
+                    }
+                }
+            }
+        }
+    }
+    //    /user/noticeList
+    //    平台公告列表
+//    noticeType	是	string	类型（P 平台公告 S 系统消息）
+//    externalID	是	int	外部ID（用户端就传userID 店铺就传storeID）
+//    externalType	是	string	类型（U 用户端 S 店铺端）
+//    startIndex	是	int	起始页
+//    rows	是	int	行数
+    func Http_getNoticeList(noticeType:String,startIndex:Int,succesce:@escaping (_ value:JSON)->(Void)) {
+        //        loadingStatus()
+        if let userid = MyUserInfo.value(forKey: userInfoKey.userID.rawValue) as? String{
+            var url = "/user/noticeList?externalID=\(userid)&startIndex=\(startIndex)&noticeType=\(noticeType)&rows=20&externalType=U"
+            if noticeType == "P"{
+                url = "/user/noticeList?startIndex=\(startIndex)&noticeType=\(noticeType)&rows=20&"
+            }
+            Just.post(
+                headerUrl + getDesKey(param: url)
+            ) { result in
+                print(result)
+                guard result.ok else{
+                    self.noticeNoData()
+                    return
+                }
+                var json = JSON(result.json!)
+                guard json["code"].stringValue == "SUCCESS" else{
+                    self.noticeError(title: json["msg"].stringValue)
+                    return
+                }
+                if let jsonData = self.desToData(desStr: json["resultData"].stringValue){
+                    //                self.cleaAllNotice()
+                    json["resultData"] = jsonData
+                    succesce(json)
+                }else{
+                    
+                }
+            }
+        }
+    }
+    //    /user/noticeList
+    //    平台公告列表
+//    func Http_getSystemNoticeList(succesce:@escaping (_ value:JSON)->(Void)) {
+//        //        loadingStatus()
+//        if let userid = MyUserInfo.value(forKey: userInfoKey.userID.rawValue) as? String{
+//            Just.post(
+//                headerUrl + getDesKey(param: "/user/noticeList")
+//            ) { result in
+//                guard result.ok else{
+//                    self.noticeNoData()
+//                    return
+//                }
+//                var json = JSON(result.json!)
+//                guard json["code"].stringValue == "SUCCESS" else{
+//                    self.noticeError(title: json["msg"].stringValue)
+//                    return
+//                }
+//                if let jsonData = self.desToData(desStr: json["resultData"].stringValue){
+//                    //                self.cleaAllNotice()
+//                    json["resultData"] = jsonData
+//                    succesce(json)
+//                }else{
+//                }
+//                
+//            }
+//        }
+//        
+//    }
     //获取首页信息
 //    lon	是	double	经度
 //    lat	是	double	纬度
 //    storeType	否	String	店铺类型
 //    userID	否	int	用户ID
-    func Http_getHomePageInfo(storeType:String,lon:String,lat:String,succesce:@escaping (_ value:JSON)->(Void)) {
+    func Http_getHomePageInfo(storeType:String,lon:String,lat:String,succesce:@escaping (_ value:JSON?)->(Void)) {
 //        print(headerUrl + getDesKey(param: "/user/indexPage?lon=\(lon)&lat=\(lat)"))
-        loadingStatus()
+//        loadingStatus()
         var url = "/user/indexPage?lon=\(lon)&lat=\(lat)&storeType=\(storeType)"
         if let userid = MyUserInfo.value(forKey: userInfoKey.userID.rawValue) as? String{
             url += "&userID=\(userid)"
@@ -193,24 +380,29 @@ class HttpTool: NSObject {
         Just.post(
             headerUrl + getDesKey(param: url)
         ) { result in
-//            print(result)
+            print(result)
             guard result.ok else{
                 self.noticeNoData()
                 return
             }
             if let data = result.json{
                 let json = JSON(data)
-//                print(json)
-                guard json["code"].stringValue == "SUCCESS" else{
-                    self.noticeError(title: json["msg"].stringValue)
-                    return
-                }
-                if let jsonData = self.desToData(desStr: json["resultData"].stringValue){
-                    self.cleaAllNotice()
-                    succesce(jsonData)
+                print(json)
+                if json["code"].stringValue == "SUCCESS"{
+                    if let jsonData = self.desToData(desStr: json["resultData"].stringValue){
+                        self.cleaAllNotice()
+                        succesce(jsonData)
+                    }else{
+                        self.noticeNoData()
+                    }
                 }else{
-                    self.noticeNoData()
+//                    self.noticeError(title: json["msg"].stringValue)
+                    succesce(json)
                 }
+                
+            }else{
+                succesce(nil)
+//                let json = JSON(result.json)
             }
             
         }
@@ -364,7 +556,7 @@ class HttpTool: NSObject {
         }
         
         Just.post(
-            headerUrl + getDesKey(param: "/user/searchCommodity?storeID=\(storeInfomation!.storeID!)&startIndex=\(startIndex)&rows=20&searchText=\(searchText)&userID=\(UserId)")
+            headerUrl + getDesKey(param: "/user/searchCommodity?storeID=\(storeInfomation!.storeID!)&startIndex=\(startIndex)&rows=15&searchText=\(searchText)&userID=\(UserId)")
         ) { result in
             //            print(result)
             guard result.ok else{
@@ -404,6 +596,7 @@ class HttpTool: NSObject {
             return
         }
         loadingStatus()
+        print("/user/getClassifyCommodity?classifyID=\(classifyID)&storeID=\(storeInfomation!.storeID!)&userID=\(UserId)&startIndex=\(startIndex)&rows=16&sortType=\(sortType)")
         Just.post(
             headerUrl + getDesKey(param: "/user/getClassifyCommodity?classifyID=\(classifyID)&storeID=\(storeInfomation!.storeID!)&userID=\(UserId)&startIndex=\(startIndex)&rows=16&sortType=\(sortType)")
         ) { result in
@@ -485,6 +678,7 @@ class HttpTool: NSObject {
 //                    self.noticeError(title: json["msg"].stringValue)
                     return
                 }
+                print(json)
                 if let jsonData = self.desToData(desStr: json["resultData"].stringValue){
 //                    self.cleaAllNotice()
                     succesce(jsonData)
@@ -492,7 +686,7 @@ class HttpTool: NSObject {
             }
         }
     }
-//
+
 //    添加商品道购物车
 //    userID	是	int	用户ID
 //    storeID	是	int	店铺ID
@@ -568,7 +762,7 @@ class HttpTool: NSObject {
     //减少购物车商品数量
     func Http_CutGoodsFromCar(goodsId:String,detailsID:String,succesce:@escaping (_ value:JSON)->(Void)) {
         loadingStatus()
-        let carId = MyUserInfo.value(forKey: userdefaultKey.nowShopCarId.rawValue) as! String
+        let carId = (MyUserInfo.value(forKey: userdefaultKey.nowShopCarId.rawValue) as? String) ?? ""
         var url = "/shopcar/removeCart?cartID=\(carId)&commodityID=\(goodsId)"
         if detailsID != ""{
             url = "/shopcar/removeCart?detailsID=\(detailsID)"
@@ -608,23 +802,32 @@ class HttpTool: NSObject {
 //    ticketID	否	int	优惠券ID
 //    addressID	是	int	收货地址ID
 //    remark	否	String	订单备注
-    func Http_CreateOrder(detailsIDs:[Int],addressID:String,succesce:@escaping (_ value:JSON)->(Void)) {
+    
+//    @param detailsIDs       commodityID 商品ID num 商品数量 norm 商品规格
+//    * @param cartID                        购物车ID
+//    * @param userID                        用户ID
+//    * @param storeID                       店铺ID
+//    * @param ticketID                      优惠券ID
+//    * @param addressID                   收货地址ID
+//    * @param remark
+    
+    func Http_CreateOrder(detailsIDs:[Int],addressID:String,cartID:String,ticketID:String,remark:String,succesce:@escaping (_ value:JSON)->(Void)) {
         loadingStatus()
         guard storeInfomation != nil else {
             self.noticeNoData()
             return
         }
         Just.post(
-            headerUrl + getDesKey(param: "/orderApp/createOrder?userID=\(UserId)&storeID=\(storeInfomation!.storeID!)&detailsIDs=\(detailsIDs)&addressID=\(addressID)")
+            headerUrl + getDesKey(param: "/orderApp/createOrder?userID=\(UserId)&storeID=\(storeInfomation!.storeID!)&detailsIDs=\(detailsIDs)&addressID=\(addressID)&cartID=\(cartID)&ticketID=\(ticketID)&remark=\(remark)")
         ) { result in
-            print(result)
+//            print(result)
             guard result.ok else{
                 self.noticeNoData()
                 return
             }
             if let data = result.json{
                 var json = JSON(data)
-                print(json)
+//                print(json)
                 guard json["code"].stringValue == "SUCCESS" else{
                     self.noticeError(title: json["msg"].stringValue)
                     return
@@ -677,10 +880,11 @@ class HttpTool: NSObject {
 //    orderID	是	int	订单ID
 //    ticketID	否	int	优惠券ID
 //    remark	否	string	订单备注
+    
     func Http_ToPayOrder(payType:String,orderNo:String,succesce:@escaping (_ value:JSON)->(Void)) {
         loadingStatus()
         Just.post(
-            headerUrl + getDesKey(param: "/orderApp/payOrder?userID=\(UserId)&payType=\(payType)&orderNo=\(orderNo)")
+            headerUrl + getDesKey(param: "/orderApp/pay_param?payType=\(payType)&orderNo=\(orderNo)")
         ) { result in
             print(result)
             guard result.ok else{
@@ -704,10 +908,11 @@ class HttpTool: NSObject {
 //    取消订单
 //    orderNo	是	string	订单号
 //    remark	是	string	取消原因
+//    cancelType   U  P
     func Http_CancelOrder(remark:String,orderNo:String,succesce:@escaping (_ value:JSON)->(Void)) {
         loadingStatus()
         Just.post(
-            headerUrl + getDesKey(param: "/orderApp/cancelOrder?remark=\(remark)&orderNo=\(orderNo)")
+            headerUrl + getDesKey(param: "/orderApp/cancelOrder?remark=\(remark)&orderNo=\(orderNo)&cancelType=U")
         ) { result in
             print(result)
             guard result.ok else{
@@ -718,7 +923,7 @@ class HttpTool: NSObject {
                 var json = JSON(data)
                 //                print(json)
                 guard json["code"].stringValue == "SUCCESS" else{
-                    self.noticeError(title: "")
+                    self.noticeError(title: json["msg"].stringValue)
                     return
                 }
                 self.cleaAllNotice()
@@ -741,10 +946,10 @@ class HttpTool: NSObject {
             if let data = result.json{
                 var json = JSON(data)
                 //                print(json)
-                guard json["code"].stringValue == "SUCCESS" else{
-                    self.noticeError(title: "")
-                    return
-                }
+//                guard json["code"].stringValue == "SUCCESS" else{
+//                    self.noticeError(title: "")
+//                    return
+//                }
                 self.cleaAllNotice()
                 succesce(json)
             }
@@ -752,10 +957,11 @@ class HttpTool: NSObject {
     }
 //    /orderApp/deleteOrder
 //    删除订单
+//    userType = U 用户取消
     func Http_DeleteOrder(orderID:String,succesce:@escaping (_ value:JSON)->(Void)) {
         loadingStatus()
         Just.post(
-            headerUrl + getDesKey(param: "/orderApp/deleteOrder?orderID=\(orderID)")
+            headerUrl + getDesKey(param: "/orderApp/deleteOrder?orderID=\(orderID)&userType=U")
         ) { result in
             print(result)
             guard result.ok else{
@@ -808,7 +1014,7 @@ class HttpTool: NSObject {
 //    startIndex	是	int	起始页
 //    rows	是	int	行数
     func Http_GetOrderList(status:String,startIndex:Int,succesce:@escaping (_ value:JSON)->(Void)) {
-        loadingStatus()
+//        loadingStatus()
         
         var url = "/orderApp/orderList?userID=\(UserId)&startIndex=\(startIndex)&rows=10"
         if status != ""{
@@ -825,13 +1031,13 @@ class HttpTool: NSObject {
             }
             if let data = result.json{
                 let json = JSON(data)
-                print(json)
+//                print(json)
                 guard json["code"].stringValue == "SUCCESS" else{
                     self.noticeError(title: json["msg"].stringValue)
                     return
                 }
                 if let jsonData = self.desToData(desStr: json["resultData"].stringValue){
-                    self.cleaAllNotice()
+//                    self.cleaAllNotice()
                     succesce(jsonData)
                 }else{
                     self.noticeNoData()
@@ -895,6 +1101,9 @@ class HttpTool: NSObject {
                 }
                 if let jsonData = self.desToData(desStr: json["resultData"].stringValue){
                     self.cleaAllNotice()
+//                    if startIndex > 0 && jsonData["integralList"].arrayValue.count == 0{
+//                        self.noticeNomore()
+//                    }
                     succesce(jsonData)
                 }else{
                     self.noticeNoData()
@@ -902,11 +1111,18 @@ class HttpTool: NSObject {
             }
         }
     }
+    func noticeNomore(){
+        DispatchQueue.main.async {
+            SwiftNotice.clear()
+            SwiftNotice.showNoticeWithText(NoticeType.error, text: "没有更多了", autoClear: true, autoClearTime: 1)
+        }
+    }
     //    收货地址列表
-    func Http_getAddressList(succesce:@escaping (_ value:JSON)->(Void)) {
-        loadingStatus()
+//    storeID
+    func Http_getAddressList(storeID:String,succesce:@escaping (_ value:JSON)->(Void)) {
+//        loadingStatus()
         Just.get(
-            headerUrl + getDesKey(param: "/user/addressList?userID=\(UserId)")
+            headerUrl + getDesKey(param: "/user/addressList?userID=\(UserId)&storeID=\(storeID)")
         ) { result in
             
             guard result.ok else{
@@ -921,7 +1137,7 @@ class HttpTool: NSObject {
                     return
                 }
                 if let jsonData = self.desToData(desStr: json["resultData"].stringValue){
-                    self.cleaAllNotice()
+//                    self.cleaAllNotice()
                     succesce(jsonData)
                 }else{
                     self.noticeNoData()
@@ -971,9 +1187,9 @@ class HttpTool: NSObject {
             self.noticeNoData()
             return
         }
-        
+        print("/user/notUseTicket?userID=\(UserId)&amount=\(amount)&storeType=\(storeInfomation!.storeType)&rows=20")
         Just.get(
-            headerUrl + getDesKey(param: "/user/notUseTicket?userID=\(UserId)&amount=\(amount)&storeType=\(storeInfomation!.storeType)&rows=20")
+            headerUrl + getDesKey(param: "/user/notUseTicket?userID=\(UserId)&amount=\(amount)&storeType=\(storeInfomation!.storeType!)&rows=20")
         ) { result in
             print(result)
             guard result.ok else{
@@ -1023,7 +1239,7 @@ class HttpTool: NSObject {
             if let data = result.json{
                 let json = JSON(data)
 //                print(json)
-                self.cleaAllNotice()
+//                self.cleaAllNotice()
                 succesce(json)
             }
         }
@@ -1204,7 +1420,7 @@ class HttpTool: NSObject {
     func Http_SitePassword(password:String,succesce:@escaping (_ value:JSON)->(Void)) {
         loadingStatus()
         Just.post(
-            headerUrl + getDesKey(param: "/user/sitePhone?userID=\(UserId)&password=\(password)")
+            headerUrl + getDesKey(param: "/user/sitePassword?userID=\(UserId)&password=\(password)")
         ) { result in
             
             guard result.ok else{
@@ -1239,5 +1455,9 @@ class HttpTool: NSObject {
                 succesce(json)
             }
         }
+    }
+//    mallApp/mallUrl?userID=1
+    func getDuibaUrl()->String {
+        return headerUrlShot + "key=" + getDesKey(param: "/mallApp/mallUrl?userID=\(UserId)")
     }
 }

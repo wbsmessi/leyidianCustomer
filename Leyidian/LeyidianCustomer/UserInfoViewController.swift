@@ -25,6 +25,7 @@ class UserInfoViewController: UIViewController,adminItemViewDelegate,RecommendCa
 //    let userNickName = UILabel()
     let userNickName = UIButton()
     let signatureLab = UILabel()
+    var messageBtn:UIButton!
     func creatView() {
         let topBgImg = UIImageView()
         topBgImg.frame = CGRect(x: 0, y: 0, width: app_width, height: (app_height - tab_height)/3)
@@ -33,14 +34,16 @@ class UserInfoViewController: UIViewController,adminItemViewDelegate,RecommendCa
         self.view.addSubview(topBgImg)
         let tap = UITapGestureRecognizer(target: self, action: #selector(editUserInfo))
         topBgImg.addGestureRecognizer(tap)
+        
         let rightBtn = UIButton()
-        rightBtn.frame = CGRect(x: app_width - 50, y: 30, width: 30, height: 30)
-        rightBtn.setImage(UIImage(named:"xiaoxi"), for: .normal)
+        rightBtn.frame = CGRect(x: app_width - 45, y: 30, width: 30, height: 30)
+        rightBtn.setImage(UIImage(named:"youxiaoxi-bai"), for: .normal)//xiaoxi-bai
         rightBtn.addTarget(self, action: #selector(messageBtnClick), for: .touchUpInside)
-        topBgImg.addSubview(rightBtn)
+        self.messageBtn = rightBtn
+        self.view.addSubview(rightBtn)
         
         
-        headImage.frame = CGRect(x: topBgImg.frame.width/2 - topBgImg.frame.width/8, y: topBgImg.frame.height/2 - topBgImg.frame.width/8 - 10, width: topBgImg.frame.width/4, height: topBgImg.frame.width/4)
+        headImage.frame = CGRect(x: topBgImg.frame.width/2 - topBgImg.frame.width/8, y: topBgImg.frame.height/2 - topBgImg.frame.width/8, width: topBgImg.frame.width/4, height: topBgImg.frame.width/4)
         headImage.layer.cornerRadius = headImage.frame.width/2
         headImage.contentMode = .scaleAspectFill
         headImage.clipsToBounds = true
@@ -48,7 +51,7 @@ class UserInfoViewController: UIViewController,adminItemViewDelegate,RecommendCa
         headImage.layer.borderWidth = 2.0
         topBgImg.addSubview(headImage)
         
-        method.creatButton(btn: userNickName, x: 10, y: headImage.bottomPosition() + 5, wid: topBgImg.frame.width - 20, hei: 20, title: "用户昵称", titlecolor: UIColor.white, titleFont: 12, bgColor: UIColor.clear, superView: topBgImg)
+        method.creatButton(btn: userNickName, x: 10, y: headImage.bottomPosition() + 5, wid: topBgImg.frame.width - 20, hei: 20, title: "用户昵称", titlecolor: UIColor.white, titleFont: 13, bgColor: UIColor.clear, superView: topBgImg)
         userNickName.setImage(UIImage(named: "nv"), for: .normal)
         self.userNickName.imageEdgeInsets = UIEdgeInsets(top: 0, left: self.userNickName.titleLabel!.frame.width + 30, bottom: 0, right: -self.userNickName.titleLabel!.frame.width)
         self.userNickName.titleEdgeInsets = UIEdgeInsets(top: 0, left: -self.userNickName.imageView!.frame.width, bottom: 0, right: self.userNickName.imageView!.frame.width)
@@ -56,17 +59,17 @@ class UserInfoViewController: UIViewController,adminItemViewDelegate,RecommendCa
 //        userNickName.textAlignment = .center
         
         
-        method.creatLabel(lab: signatureLab, x: 10, y: userNickName.bottomPosition(), wid: topBgImg.frame.width - 20, hei: userNickName.frame.height, textString: "", textcolor: UIColor.white, textFont: 10, superView: topBgImg)
+        method.creatLabel(lab: signatureLab, x: 10, y: userNickName.bottomPosition(), wid: topBgImg.frame.width - 20, hei: userNickName.frame.height, textString: "", textcolor: UIColor.white, textFont: 11, superView: topBgImg)
         signatureLab.textAlignment = .center
         
         //四项推荐类型
-        let RCM_CATEGORY = RecommendCategoryView(frame: CGRect(x: 0, y: topBgImg.bottomPosition(), width: app_width, height: 70))
+        let RCM_CATEGORY = RecommendCategoryView(frame: CGRect(x: 0, y: topBgImg.bottomPosition(), width: app_width, height: 80))
         RCM_CATEGORY.initView(imgArr: adminPageImgArr, titleArr: adminPageTitleArr)
         RCM_CATEGORY.delegate=self
         self.view.addSubview(RCM_CATEGORY)
         
         let height_bo = app_width > ((app_height - tab_height) * 2/3 - 100) ? ((app_height - tab_height) * 2/3 - 100) : (app_width - 50)
-        let adminview = adminItemView(frame: CGRect(x: 0, y: RCM_CATEGORY.bottomPosition() + 10, width: app_width, height: height_bo), line_itemCount: 3)
+        let adminview = adminItemView(frame: CGRect(x: 0, y: RCM_CATEGORY.bottomPosition(), width: app_width, height: height_bo - 30), line_itemCount: 3)
         adminview.initView(imgArr: ["wode-dingan","jifenduihuan","youhuiquan","shouhuodiz","hezuo","fxiang","gouwuzhinan","yijianfankui","shezhi"], titleArr: ["我的积分","积分兑换","我的优惠券","收获地址","申请合作","分享给好友","购物指南","意见反馈","设置"])
         adminview.delegate = self
         self.view.addSubview(adminview)
@@ -104,7 +107,7 @@ class UserInfoViewController: UIViewController,adminItemViewDelegate,RecommendCa
             case 1:
                 vc.orderType = orderTypeEnum.waitPay
             case 2:
-                vc.orderType = orderTypeEnum.send
+                vc.orderType = orderTypeEnum.arrived
             case 3:
                 vc.orderType = orderTypeEnum.waitEnv
             default:
@@ -133,7 +136,11 @@ class UserInfoViewController: UIViewController,adminItemViewDelegate,RecommendCa
                     vc = MyScoreViewController()
                 case 1:
                     //积分兑换
-                    vc = PaySuccessViewController()
+                    vc = LYDWebViewController()
+//                    print(HttpTool().getDuibaUrl())
+                    (vc as! LYDWebViewController).nav_title = "积分兑换"
+                    (vc as! LYDWebViewController).loadUrl = HttpTool().getDuibaUrl()
+//                    vc.url = headerUrlShot + getDesKey(param: "mallApp/mallUrl?userID=\(UserId)"))
                 case 2:
                     vc = CouponViewController()
                     (vc as! CouponViewController).initListView()
@@ -164,14 +171,14 @@ class UserInfoViewController: UIViewController,adminItemViewDelegate,RecommendCa
             let user_sex = MyUserInfo.value(forKey: userInfoKey.sex.rawValue) as? String
 //            print(user_Image)
             DispatchQueue.main.async {
-                self.method.loadImage(imgUrl: user_Image ?? "0", Img_View: self.headImage)
+                self.method.loadImageWithDefault(imgUrl: user_Image ?? "0", Img_View: self.headImage, defaultImage: "weidenglu")
+//                self.method.loadImage(imgUrl: user_Image ?? "0", Img_View: self.headImage)
                 self.userNickName.setTitle(user_nickName ?? "", for: .normal)
                 self.signatureLab.text = user_signature ?? "登录后，体验乐易点带给你的品质生活"
-//                print(user_sex)
-                self.userNickName.setImage(UIImage(named: user_sex == "0" ? "nan":"nv"), for: .normal)
+                self.userNickName.setImage(UIImage(named: user_sex! == "1" ? "nv":"nan"), for: .normal)
                 
-                self.userNickName.imageEdgeInsets = UIEdgeInsets(top: 0, left: self.userNickName.titleLabel!.frame.width + 30, bottom: 0, right: -self.userNickName.titleLabel!.frame.width)
-                self.userNickName.titleEdgeInsets = UIEdgeInsets(top: 0, left: -self.userNickName.imageView!.frame.width, bottom: 0, right: self.userNickName.imageView!.frame.width)
+                self.userNickName.titleEdgeInsets = UIEdgeInsets(top: 0, left: -self.userNickName.imageView!.frame.width - 5, bottom: 0, right: self.userNickName.imageView!.frame.width + 5)
+                self.userNickName.imageEdgeInsets = UIEdgeInsets(top: 0, left: self.userNickName.titleLabel!.frame.width + 5, bottom: 0, right: -self.userNickName.titleLabel!.frame.width - 5)
             }
         }else{
 //            self.method.loadImage(imgUrl: user_Image ?? "0", Img_View: self.headImage)
@@ -181,7 +188,22 @@ class UserInfoViewController: UIViewController,adminItemViewDelegate,RecommendCa
             self.userNickName.setImage(UIImage(named: ""), for: .normal)
             self.signatureLab.text = "登录后，体验乐易点带给你的品质生活"
         }
-        
+        self.noticeNumber()
+    }
+    
+    func noticeNumber(){
+        HttpTool.shareHttpTool.Http_getNoticeNum{ (data) in
+            print(data)
+            DispatchQueue.main.async {
+                if data["resultData"]["notice_type_p"].intValue > 0 || data["resultData"]["notice_type_s"].intValue > 0{
+                    //需要通知的红点
+                    self.messageBtn.setImage(UIImage(named:"youxiaoxi-bai"), for: .normal)
+                }else{
+                    self.messageBtn.setImage(UIImage(named:"xiaoxi-bai"), for: .normal)
+                }
+            }
+            
+        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

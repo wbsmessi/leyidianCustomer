@@ -69,11 +69,16 @@
 }
 
 - (void)userTapRateView:(UITapGestureRecognizer *)gesture {
-    CGPoint tapPoint = [gesture locationInView:self];
-    CGFloat offset = tapPoint.x;
-    CGFloat realStarScore = offset / (self.bounds.size.width / self.numberOfStars);
-    CGFloat starScore = self.allowIncompleteStar ? realStarScore : ceilf(realStarScore);
-    self.scorePercent = starScore / self.numberOfStars;
+    if (_allowEditStar) {
+        CGPoint tapPoint = [gesture locationInView:self];
+        CGFloat offset = tapPoint.x;
+        CGFloat realStarScore = offset / (self.bounds.size.width / self.numberOfStars);
+        CGFloat starScore = self.allowIncompleteStar ? realStarScore : ceilf(realStarScore);
+        
+        [self setwoScorePercent:starScore / self.numberOfStars];
+        self.scorePercent = starScore / self.numberOfStars;
+    }
+    
 }
 
 - (UIView *)createStarViewWithImage:(NSString *)imageName {
@@ -93,12 +98,16 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     __weak CWStarRateView *weakSelf = self;
-    if (_allowEditStar) {
-        CGFloat animationTimeInterval = self.hasAnimation ? ANIMATION_TIME_INTERVAL : 0;
-        [UIView animateWithDuration:animationTimeInterval animations:^{
-            weakSelf.foregroundStarView.frame = CGRectMake(0, 0, weakSelf.bounds.size.width * weakSelf.scorePercent, weakSelf.bounds.size.height);
-        }];
-    }
+    CGFloat animationTimeInterval = self.hasAnimation ? ANIMATION_TIME_INTERVAL : 0;
+    [UIView animateWithDuration:animationTimeInterval animations:^{
+        weakSelf.foregroundStarView.frame = CGRectMake(0, 0, weakSelf.bounds.size.width * weakSelf.scorePercent, weakSelf.bounds.size.height);
+    }];
+//    if (_allowEditStar) {
+//        CGFloat animationTimeInterval = self.hasAnimation ? ANIMATION_TIME_INTERVAL : 0;
+//        [UIView animateWithDuration:animationTimeInterval animations:^{
+//            weakSelf.foregroundStarView.frame = CGRectMake(0, 0, weakSelf.bounds.size.width * weakSelf.scorePercent, weakSelf.bounds.size.height);
+//        }];
+//    }
     
 }
 

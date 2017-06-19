@@ -15,7 +15,7 @@ class ShopGuideViewController: UIViewController {
 //        self.setTitleView(title: "购物指南", canBack: true)
         let vc = LYDWebViewController()
         vc.nav_title = "购物指南"
-        vc.loadUrl = "http://www.baidu.com"
+        vc.loadUrl = shareHeaderUrl + "/appmanager/getUserShop"
         self.view.addSubview(vc.view)
         // Do any additional setup after loading the view.
     }
@@ -25,15 +25,5 @@ class ShopGuideViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

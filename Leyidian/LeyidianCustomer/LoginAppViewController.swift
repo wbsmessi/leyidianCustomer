@@ -14,32 +14,31 @@ class LoginAppViewController: UIViewController,DECSegmentDelegate {
     var buycarCome:Bool = false
     //登录方式  false  验证码，。true密码
     var ispwdLogin:Bool = false
+    var second:Int=60{
+        didSet{
+            DispatchQueue.main.async {
+                if self.second == 60{
+                    self.getVer_code.setTitle("获取验证码", for: .normal)
+                }else{
+                    self.getVer_code.setTitle("\(self.second)s", for: .normal)
+                }
+            }
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setTitleView(title: "欢迎来到乐易点", canBack: false)
         self.view.backgroundColor = MyGlobalColor()
         creatView()
     }
+    
 //    13412345678
 //    123456
     /****************************UI部分*******************************/
     lazy var UserName = UITextField()
     lazy var passWord = UITextField()
     lazy var getVer_code = UIButton()
-    func backtopage(){
-        if buycarCome{
-            self.dismiss(animated: true, completion: {
-//                print(self.tabBarController?.selectedIndex)
-//                self.tabBarController?.selectedIndex=0
-//                let sb = UIStoryboard(name: "Main", bundle: Bundle.main)
-//                let vc = sb.instantiateViewController(withIdentifier: "homePage") as! UITabBarController
-//                vc.selectedIndex=0
-            })
-//            self.dismiss(animated: true, completion: nil)
-        }else{
-            _=self.navigationController?.popViewController(animated: true)
-        }
-    }
+    
     func creatView() {
         let back_btn = UIButton()
         back_btn.setImage(UIImage(named:"fanhui"), for: .normal)
@@ -62,6 +61,7 @@ class LoginAppViewController: UIViewController,DECSegmentDelegate {
         UserName.leftViewMode = .always
         UserName.backgroundColor = UIColor.white
         UserName.placeholder = "手机号"
+        UserName.keyboardType = .phonePad
         UserName.font = UIFont.systemFont(ofSize: 14)
         
         let line = CALayer()
@@ -76,15 +76,20 @@ class LoginAppViewController: UIViewController,DECSegmentDelegate {
         passWord.leftViewMode = .always
         passWord.backgroundColor = UIColor.white
         passWord.placeholder = "验证码"
+        passWord.keyboardType = .numberPad
         passWord.font = UIFont.systemFont(ofSize: 14)
         self.view.addSubview(UserName)
         self.view.addSubview(passWord)
         
-        method.creatButton(btn: getVer_code, x: app_width-120, y: 0, wid: 120, hei: 60, title: "获取验证码", titlecolor: setMyColor(r:255, g:189, b:0, a:1), titleFont: 14, bgColor: UIColor.clear, superView: passWord)
+        method.creatButton(btn: getVer_code, x: app_width-100, y: 0, wid: 100, hei: 60, title: "获取验证码", titlecolor: setMyColor(r:255, g:189, b:0, a:1), titleFont: 14, bgColor: UIColor.clear, superView: passWord)
         getVer_code.addTarget(self, action: #selector(getVerCode), for: .touchUpInside)
         
+        let forgetPwd = UIButton()
+        method.creatButton(btn: forgetPwd, x: app_width - 80, y: passWord.bottomPosition()+10, wid: 80, hei: 20, title: "忘记密码？", titlecolor: myAppGryaColor(), titleFont: 12, bgColor: UIColor.clear, superView: self.view)
+        forgetPwd.addTarget(self, action: #selector(forgetPwdClick), for: .touchUpInside)
+        
         let submit = UIButton()
-        method.creatButton(btn: submit, x: 15, y: passWord.bottomPosition() + 60, wid: app_width - 30, hei: 40, title: "登  录", titlecolor: UIColor.white, titleFont: 16, bgColor: UIColor.clear, superView: self.view)
+        method.creatButton(btn: submit, x: 15, y: passWord.bottomPosition() + 60, wid: app_width - 30, hei: (app_width - 30)/7.73, title: "登  录", titlecolor: UIColor.white, titleFont: 16, bgColor: UIColor.clear, superView: self.view)
         submit.setBackgroundImage(UIImage(named:"anniu"), for: .normal)
         submit.addTarget(self, action: #selector(toLoginApp), for: .touchUpInside)
         
@@ -114,6 +119,8 @@ class LoginAppViewController: UIViewController,DECSegmentDelegate {
         qqSign.addTarget(self, action: #selector(QQLogin), for: .touchUpInside)
         bottomView.addSubview(qqSign)
     }
+    
+    
     func wechatLogin(){
         print("wechat")
         getUserInfoForPlatform(platformType: .wechatSession)
@@ -124,57 +131,140 @@ class LoginAppViewController: UIViewController,DECSegmentDelegate {
     }
     /***************************事件处理********************************/
     func toLoginApp(){
+        
         if UserName.text != "" && passWord.text != ""{
-            HttpTool.shareHttpTool.Http_Sign(phone: UserName.text!, pwd: passWord.text!) { (data) in
-                print(data)
-                guard data["code"].stringValue == "SUCCESS" else{
-                    self.myNoticeError(title: data["msg"].stringValue)
-                    return
+            
+            if ispwdLogin{
+                HttpTool.shareHttpTool.Http_Sign(phone: UserName.text!, pwd: passWord.text!) { (data) in
+                    print(data)
+                    guard data["code"].stringValue == "SUCCESS" else{
+                        self.myNoticeError(title: data["msg"].stringValue)
+                        return
+                    }
+                    let userid = data["resultData"]["userID"].stringValue
+                    UMessage.removeAlias(userid, type: "iOS", response: nil)
+                    UMessage.addAlias(userid, type: "iOS", response: nil)
+                    MyUserInfo.setValue(userid, forKey: userInfoKey.userID.rawValue)
+                    MyUserInfo.setValue(data["resultData"]["headUrl"].stringValue, forKey: userInfoKey.headUrl.rawValue)
+                    MyUserInfo.setValue(data["resultData"]["nickName"].stringValue, forKey: userInfoKey.nickName.rawValue)
+                    MyUserInfo.setValue(data["resultData"]["phone"].stringValue, forKey: userInfoKey.phone.rawValue)
+                    MyUserInfo.setValue(data["resultData"]["integral"].stringValue, forKey: userInfoKey.integral.rawValue)
+                    MyUserInfo.setValue(data["resultData"]["signature"].stringValue, forKey: userInfoKey.signature.rawValue)
+                    MyUserInfo.setValue(data["resultData"]["sex"].string ?? "1", forKey: userInfoKey.sex.rawValue)
+                    MyUserInfo.synchronize()
+                    self.myNoticeSuccess(title: "登录成功")
+                    DispatchQueue.main.async {
+                        self.backtopage()
+                    }
                 }
-                MyUserInfo.setValue(data["resultData"]["userID"].stringValue, forKey: userInfoKey.userID.rawValue)
-                MyUserInfo.setValue(data["resultData"]["headUrl"].stringValue, forKey: userInfoKey.headUrl.rawValue)
-                MyUserInfo.setValue(data["resultData"]["nickName"].stringValue, forKey: userInfoKey.nickName.rawValue)
-                MyUserInfo.setValue(data["resultData"]["phone"].stringValue, forKey: userInfoKey.phone.rawValue)
-                MyUserInfo.setValue(data["resultData"]["integral"].stringValue, forKey: userInfoKey.integral.rawValue)
-                MyUserInfo.setValue(data["resultData"]["signature"].stringValue, forKey: userInfoKey.signature.rawValue)
-                MyUserInfo.setValue(data["resultData"]["sex"].stringValue, forKey: userInfoKey.sex.rawValue)
-                MyUserInfo.synchronize()
-                self.myNoticeSuccess(title: "登录成功")
-                DispatchQueue.main.async {
-                    self.backtopage()
-                }
+            }else{
+                HttpTool.shareHttpTool.Http_smsSign(phone: UserName.text!, validCode: passWord.text!, succesce: { (data) in
+                    print(data)
+                    guard data["code"].stringValue == "SUCCESS" else{
+                        self.myNoticeError(title: data["msg"].stringValue)
+                        return
+                    }
+                    let userid = data["resultData"]["userID"].stringValue
+                    UMessage.removeAlias(userid, type: "iOS", response: nil)
+                    UMessage.addAlias(userid, type: "iOS", response: nil)
+                    MyUserInfo.setValue(userid, forKey: userInfoKey.userID.rawValue)
+                    MyUserInfo.setValue(data["resultData"]["headUrl"].stringValue, forKey: userInfoKey.headUrl.rawValue)
+                    MyUserInfo.setValue(data["resultData"]["nickName"].stringValue, forKey: userInfoKey.nickName.rawValue)
+                    MyUserInfo.setValue(data["resultData"]["phone"].stringValue, forKey: userInfoKey.phone.rawValue)
+                    MyUserInfo.setValue(data["resultData"]["integral"].stringValue, forKey: userInfoKey.integral.rawValue)
+                    MyUserInfo.setValue(data["resultData"]["signature"].stringValue, forKey: userInfoKey.signature.rawValue)
+                    MyUserInfo.setValue(data["resultData"]["sex"].string ?? "1", forKey: userInfoKey.sex.rawValue)
+                    MyUserInfo.synchronize()
+                    self.myNoticeSuccess(title: "登录成功")
+                    DispatchQueue.main.async {
+                        self.backtopage()
+                    }
+                })
             }
+            
         }else{
             self.myNoticeError(title: "账号和密码不能为空")
         }
     }
     func getVerCode(){
+        //////////////
         guard  UserName.text != "" else {
             self.myNoticeError(title: "手机号码不能为空")
             return
         }
+        self.timerStart()
         HttpTool.shareHttpTool.Http_SendSmsCode(phone: UserName.text!) { (data) -> (Void) in
             print(data)
+        }
+    }
+    var timer:Timer?
+    func timerStart(){
+        self.getVer_code.removeTarget(self, action: #selector(self.getVerCode), for: .touchUpInside)
+        self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
+    }
+    func updateTime(){
+        print(second)
+        if second >= 1{
+            second -= 1
+        }else{
+            timer?.invalidate()
+            timer = nil
+            second = 60
+            getVer_code.addTarget(self, action: #selector(getVerCode), for: .touchUpInside)
+            
         }
     }
     //
     func DECSegmentSelect(index: Int) {
 //        print(index)
         passWord.text = ""
+        passWord.resignFirstResponder()
         if index == 0{
             self.ispwdLogin = false
             (passWord.leftView as! UIImageView).image = UIImage(named: "yazhengma")
             passWord.placeholder = "验证码"
+            passWord.isSecureTextEntry = false
+            passWord.keyboardType = .numberPad
             getVer_code.isHidden = false
         }else{
             self.ispwdLogin = true
             (passWord.leftView as! UIImageView).image = UIImage(named: "mima")
             passWord.placeholder = "请输入您的密码"
+            passWord.keyboardType = .default
+            passWord.isSecureTextEntry = true
             getVer_code.isHidden = true
         }
     }
+    
+    func backtopage(){
+        if buycarCome{
+            self.dismiss(animated: true, completion: nil)
+        }else{
+            _=self.navigationController?.popViewController(animated: true)
+        }
+    }
+    
+    func forgetPwdClick(){
+        let vc = ForgetPwdViewController()
+        if buycarCome{
+            vc.isbuyCarCome = self.buycarCome
+            vc.forceVC = self
+            self.present(vc, animated: true, completion: nil)
+        }else{
+            self.pushToNext(vc: vc)
+        }
+    }
+    
     func turnToSignIn(){
-        self.pushToNext(vc: SignUpViewController())
+        let vc = SignUpViewController()
+        if buycarCome{
+            vc.isbuyCarCome = self.buycarCome
+            vc.forceVC = self
+            self.present(vc, animated: true, completion: nil)
+        }else{
+            self.pushToNext(vc: vc)
+        }
+//        self.pushToNext(vc: SignUpViewController())
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         UserName.resignFirstResponder()
@@ -182,7 +272,7 @@ class LoginAppViewController: UIViewController,DECSegmentDelegate {
     }
 //    第三方登录
     func getUserInfoForPlatform(platformType:UMSocialPlatformType){
-        
+        self.pleaseWait()
         UMSocialManager.default().getUserInfo(with: platformType, currentViewController: self) { (result, error) in
             if error == nil{
                 print("liginsuccess")
@@ -208,7 +298,10 @@ class LoginAppViewController: UIViewController,DECSegmentDelegate {
                     print(data)
                     if data["code"].stringValue == "SUCCESS"{
                         //存登录信息
-                        MyUserInfo.setValue(data["resultData"]["userID"].stringValue, forKey: userInfoKey.userID.rawValue)
+                        let userid = data["resultData"]["userID"].stringValue
+                        UMessage.removeAlias(userid, type: "iOS", response: nil)
+                        UMessage.addAlias(userid, type: "iOS", response: nil)
+                        MyUserInfo.setValue(userid, forKey: userInfoKey.userID.rawValue)
                         MyUserInfo.setValue(data["resultData"]["headUrl"].stringValue, forKey: userInfoKey.headUrl.rawValue)
                         MyUserInfo.setValue(data["resultData"]["nickName"].stringValue, forKey: userInfoKey.nickName.rawValue)
                         MyUserInfo.setValue(data["resultData"]["phone"].stringValue, forKey: userInfoKey.phone.rawValue)
@@ -220,10 +313,12 @@ class LoginAppViewController: UIViewController,DECSegmentDelegate {
                         DispatchQueue.main.async {
                             self.backPage()
                         }
+                    }else{
+                        self.myNoticeError(title: "登录失败")
                     }
                 })
             }else{
-                print("liginfaild")
+                print("loginfaild")
             }
         }
     }

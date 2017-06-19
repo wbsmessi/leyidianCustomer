@@ -12,11 +12,12 @@ import SwiftyJSON
 protocol OrderCellDelegate {
     func rightBtnClick(orderType:orderTypeEnum,indexpath:IndexPath)
     func leftBtnClick(orderType:orderTypeEnum,indexpath:IndexPath)
+    func orderOverTime()
 }
 class WaitPayOrderTableViewCell: UITableViewCell {
 
     //订单过期时间（300s）
-    let orderFireSeconds:Int = 900
+    var orderFireSeconds:Int = 10
     var method = Methods()
     var orderType:orderTypeEnum!
     var delegate:OrderCellDelegate!
@@ -32,9 +33,12 @@ class WaitPayOrderTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.backgroundColor = MyGlobalColor()
     }
-    var item_height:CGFloat = 40 + 80.0 + 50
+    var item_height:CGFloat = 40 + 100.0 + 50
     
     func creatViewWithGoods(Goods:JSON) {
+        if PAY_ORDER_TIME_OUT > 0{
+            self.orderFireSeconds = PAY_ORDER_TIME_OUT * 60
+        }
         
         let bgview = UIView()
         bgview.frame = CGRect(x: 0, y: 0, width: app_width, height: item_height)
@@ -61,7 +65,7 @@ class WaitPayOrderTableViewCell: UITableViewCell {
         if Goods["details"].arrayValue.count == 1{
             //只有一件商品时的UI
             let goodsImg = UIImageView()
-            goodsImg.frame = CGRect(x: 15, y: storeName.bottomPosition() + 10, width: 60, height: 60)
+            goodsImg.frame = CGRect(x: 15, y: storeName.bottomPosition() + 10, width: 80, height: 80)
             goodsImg.contentMode = .scaleAspectFit
             method.loadImage(imgUrl: Goods["details"][0]["commodityImg"].stringValue, Img_View: goodsImg)
             goodsImg.layer.borderColor = setMyColor(r: 240, g: 240, b: 240, a: 1).cgColor
@@ -69,37 +73,36 @@ class WaitPayOrderTableViewCell: UITableViewCell {
             bgview.addSubview(goodsImg)
             
             let goodsName = UILabel()
-            method.creatLabel(lab: goodsName, x: goodsImg.rightPosition() + 10, y: goodsImg.frame.origin.y, wid: app_width - goodsImg.rightPosition() - 30, hei: 20, textString: Goods["details"][0]["commodityName"].stringValue, textcolor: UIColor.black, textFont: 12, superView: bgview)
+            method.creatLabel(lab: goodsName, x: goodsImg.rightPosition() + 10, y: goodsImg.frame.origin.y, wid: app_width - goodsImg.rightPosition() - 30, hei: 20, textString: Goods["details"][0]["commodityName"].stringValue, textcolor: UIColor.black, textFont: 14, superView: bgview)
             
             let goodsDetail = UILabel()
-            method.creatLabel(lab: goodsDetail, x: goodsName.frame.origin.x, y: goodsName.bottomPosition(), wid: goodsName.frame.width, hei: 20, textString: Goods["details"][0]["norm"].stringValue, textcolor: UIColor.gray, textFont: 10, superView: bgview)
+            method.creatLabel(lab: goodsDetail, x: goodsName.frame.origin.x, y: goodsName.bottomPosition(), wid: goodsName.frame.width, hei: 30, textString: Goods["details"][0]["norm"].stringValue, textcolor: UIColor.gray, textFont: 12, superView: bgview)
             
             let price = UILabel()
             method.creatLabel(lab: price, x: goodsName.frame.origin.x, y: goodsDetail.bottomPosition(), wid: 150, hei: 20, textString: "¥"+Goods["details"][0]["discountPrice"].stringValue, textcolor: MyMoneyColor(), textFont: 12, superView: bgview)
             
             let goodsCount = UILabel()
-            method.creatLabel(lab: goodsCount, x: price.rightPosition(), y: goodsDetail.bottomPosition(), wid: app_width - price.rightPosition() - 15, hei: 20, textString: "x" + "\(Goods["details"][0]["num"].intValue)", textcolor: UIColor.gray, textFont: 11, superView: bgview)
+            method.creatLabel(lab: goodsCount, x: price.rightPosition(), y: goodsDetail.bottomPosition()+10, wid: app_width - price.rightPosition() - 15, hei: 20, textString: "x" + "\(Goods["details"][0]["num"].intValue)", textcolor: UIColor.gray, textFont: 11, superView: bgview)
             goodsCount.textAlignment = .right
         }else{
             //多件商品时的UI
 //            img尺寸为60
             let goodsScroll = UIScrollView()
-            goodsScroll.frame = CGRect(x: 0, y: 40, width: app_width, height: 80)
+            goodsScroll.frame = CGRect(x: 0, y: 40, width: app_width, height: 100)
             goodsScroll.isUserInteractionEnabled = false
-            let scroll_width = CGFloat(Goods.count * 75) > app_width ? CGFloat(Goods.count * 75) : app_width
-            goodsScroll.contentSize = CGSize(width: scroll_width, height: 80)
+            let scroll_width = CGFloat(Goods.count * 90) > app_width ? CGFloat(Goods.count * 90) : app_width
+            goodsScroll.contentSize = CGSize(width: scroll_width, height: 100)
             bgview.addSubview(goodsScroll)
-            
             for i in 0..<Goods["details"].arrayValue.count{
-                let orgin_x:CGFloat = CGFloat((15 + 60) * i) + 15
+                let orgin_x:CGFloat = CGFloat((10 + 80) * i) + 10
                 
                 creatGoodsItem(x: orgin_x, y: 10, goodsInfo: Goods["details"][i], superView: goodsScroll)
             }
         }
         
-        method.drawLine(startX: 0, startY: 120, wid: app_width, hei: 0.6, add: bgview)
+        method.drawLine(startX: 0, startY: 140, wid: app_width, hei: 0.6, add: bgview)
         let rightBtn = UIButton()
-        method.creatButton(btn: rightBtn, x: app_width - 80, y: 130, wid: 70, hei: 30, title: "", titlecolor: UIColor.black, titleFont: 12, bgColor: UIColor.white, superView: bgview)
+        method.creatButton(btn: rightBtn, x: app_width - 80, y: 150, wid: 70, hei: 30, title: "", titlecolor: UIColor.black, titleFont: 12, bgColor: UIColor.white, superView: bgview)
         rightBtn.layer.borderWidth = 0.6
         rightBtn.layer.borderColor = UIColor.lightGray.cgColor
         rightBtn.layer.cornerRadius = 5
@@ -107,7 +110,7 @@ class WaitPayOrderTableViewCell: UITableViewCell {
         rightBtn.addTarget(self, action: #selector(rightBtnClick), for: .touchUpInside)
         
         let leftBtn = UIButton()
-        method.creatButton(btn: leftBtn, x: app_width - 160, y: 130, wid: 70, hei: 30, title: "", titlecolor: UIColor.black, titleFont: 12, bgColor: UIColor.white, superView: bgview)
+        method.creatButton(btn: leftBtn, x: app_width - 160, y: 150, wid: 70, hei: 30, title: "", titlecolor: UIColor.black, titleFont: 12, bgColor: UIColor.white, superView: bgview)
         leftBtn.layer.borderWidth = 0.6
         leftBtn.layer.borderColor = UIColor.lightGray.cgColor
         leftBtn.layer.cornerRadius = 5
@@ -145,6 +148,9 @@ class WaitPayOrderTableViewCell: UITableViewCell {
             case orderTypeEnum.send.rawValue:
                 timerBtn.isHidden = true
                 rightBtn.setTitle("立即签收", for: .normal)
+            case orderTypeEnum.arrived.rawValue:
+                timerBtn.isHidden = true
+                rightBtn.setTitle("立即签收", for: .normal)
             case orderTypeEnum.waitEnv.rawValue:
                 timerBtn.isHidden = true
                 rightBtn.setTitle("立即评价", for: .normal)
@@ -173,6 +179,8 @@ class WaitPayOrderTableViewCell: UITableViewCell {
             runSeconds = orderFireSeconds - fireTime
             timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
         }else{
+            
+            
             self.timerBtn.setTitle("已过期", for: .normal)
         }
     }
@@ -197,6 +205,8 @@ class WaitPayOrderTableViewCell: UITableViewCell {
         }else{
             timer?.invalidate()
             timer = nil
+            //通知刷新
+            delegate.orderOverTime()
             self.timerBtn.setTitle("已过期", for: .normal)
         }
         
@@ -204,20 +214,22 @@ class WaitPayOrderTableViewCell: UITableViewCell {
     func creatGoodsItem(x:CGFloat,y:CGFloat,goodsInfo:JSON,superView:UIView){
         let goodsImg = UIImageView()
         goodsImg.isUserInteractionEnabled = false
-        goodsImg.frame = CGRect(x: x, y: y, width: 60, height: 60)
+        goodsImg.frame = CGRect(x: x, y: y, width: 80, height: 80)
         method.loadImage(imgUrl: goodsInfo["commodityImg"].stringValue, Img_View: goodsImg)
         goodsImg.layer.borderColor = setMyColor(r: 240, g: 240, b: 240, a: 1).cgColor
         goodsImg.layer.borderWidth = 0.6
         goodsImg.contentMode = .scaleAspectFit
         superView.addSubview(goodsImg)
         
+        
         let count = UILabel()
-        method.creatLabel(lab: count, x: goodsImg.rightPosition() - 5, y: goodsImg.frame.origin.y - 5, wid: 10, hei: 10, textString: "\(goodsInfo["num"].intValue)", textcolor: MyAppColor(), textFont: 8, superView: superView)
+        method.creatLabel(lab: count, x: goodsImg.rightPosition() - 15, y: goodsImg.frame.origin.y - 5, wid: 20, hei: 20, textString: "\(goodsInfo["num"].intValue)", textcolor: MyAppColor(), textFont: 10, superView: superView)
         count.textAlignment = .center
         count.backgroundColor = MyGlobalColor()
         count.layer.cornerRadius = count.frame.width/2
         count.layer.borderColor = UIColor.lightGray.cgColor
         count.layer.borderWidth = 0.4
+        count.clipsToBounds = true
         
     }
 //    右边第一个按钮

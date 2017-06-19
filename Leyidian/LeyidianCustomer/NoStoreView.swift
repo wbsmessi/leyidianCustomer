@@ -8,6 +8,7 @@
 
 import UIKit
 
+//自定义无商家提示view
 class NoStoreView: UIView {
     var method = Methods()
     var superVC:UIViewController?

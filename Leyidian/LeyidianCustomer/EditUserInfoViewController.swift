@@ -59,7 +59,7 @@ class EditUserInfoViewController: UIViewController,UITableViewDelegate,UITableVi
     var nowInfoChanged:Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setTitleView(title: "个人信息",canBack:false)
+        self.setTitleView(title: "个人资料",canBack:false)
         newHeadImgUrl = headimageUrlStr
         creatView()
     }
@@ -115,37 +115,39 @@ class EditUserInfoViewController: UIViewController,UITableViewDelegate,UITableVi
         let cell = UITableViewCell()
         let lab_title = UILabel()
         lab_title.textAlignment = .center
-        method.creatLabel(lab: lab_title, x: 0, y: 0, wid: 60, hei: indexPath.row == 0 ? 50:40, textString: title_arr[indexPath.row], textcolor: UIColor.black, textFont: 12, superView: cell.contentView)
+        method.creatLabel(lab: lab_title, x: 0, y: 0, wid: 60, hei: indexPath.row == 0 ? 60:50, textString: title_arr[indexPath.row], textcolor: myAppBlackColor(), textFont: 12, superView: cell.contentView)
         
         switch indexPath.row {
         case 0:
             cell.accessoryType = .disclosureIndicator
-            method.creatImage(img: head_image, x: app_width - 80, y: 5, wid: 40, hei: 40, imgName: "", imgMode: .scaleAspectFill, superView: cell.contentView)
+            method.creatImage(img: head_image, x: app_width - 80, y: 5, wid: 50, hei: 50, imgName: "", imgMode: .scaleAspectFill, superView: cell.contentView)
             head_image.clipsToBounds = true
             head_image.layer.cornerRadius = head_image.frame.width/2
 //            let imgurl = MyUserInfo.value(forKey: userInfoKey.headUrl.rawValue)
             method.loadImage(imgUrl: headimageUrlStr, Img_View: head_image)
         case 1:
             //nickname
-            nickName.frame = CGRect(x: lab_title.rightPosition(), y: 0, width: app_width - 80, height: 40)
+            nickName.frame = CGRect(x: lab_title.rightPosition(), y: 0, width: app_width - 80, height: 50)
             nickName.font = UIFont.systemFont(ofSize: 12)
             nickName.placeholder = "请输入昵称"
             nickName.text = nickNameStr
             nickName.returnKeyType = .done
             nickName.delegate = self
+            nickName.textColor = myAppGryaColor()
             cell.contentView.addSubview(nickName)
         case 2:
             cell.accessoryType = .disclosureIndicator
             // sex
-            method.creatLabel(lab: sexLab, x: lab_title.rightPosition(), y: 0, wid: app_width - 80, hei: 40, textString: sexStr == "0" ? "男" : "女", textcolor: UIColor.black, textFont: 12, superView: cell.contentView)
+            method.creatLabel(lab: sexLab, x: lab_title.rightPosition(), y: 0, wid: app_width - 80, hei: 50, textString: sexStr == "0" ? "男" : "女", textcolor: myAppGryaColor(), textFont: 12, superView: cell.contentView)
         default:
             // signature
-            signature.frame = CGRect(x: lab_title.rightPosition(), y: 0, width: app_width - 80, height: 40)
+            signature.frame = CGRect(x: lab_title.rightPosition(), y: 0, width: app_width - 80, height: 50)
             signature.font = UIFont.systemFont(ofSize: 12)
             signature.text = signatureStr
             signature.placeholder = "请输入签名"
             signature.returnKeyType = .done
             signature.delegate = self
+            signature.textColor = myAppGryaColor()
             cell.contentView.addSubview(signature)
 
         }
@@ -158,7 +160,7 @@ class EditUserInfoViewController: UIViewController,UITableViewDelegate,UITableVi
 //        return section == 0 ? 0:10
 //    }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return indexPath.row == 0 ? 50:40
+        return indexPath.row == 0 ? 60:50
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -167,6 +169,8 @@ class EditUserInfoViewController: UIViewController,UITableViewDelegate,UITableVi
 //            照片选择
             PhotoChose()
         case 2:
+            nickName.resignFirstResponder()
+            signature.resignFirstResponder()
 //            性别修改
             alertView.animationHideOrNot(hide: false)
         default:
@@ -187,9 +191,15 @@ class EditUserInfoViewController: UIViewController,UITableViewDelegate,UITableVi
 //        }
         return true
     }
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if string == " "{
+            return false
+        }else{
+            return true
+        }
+    }
     func PhotoChose(){
-        let action = UIAlertController(title: "", message: "请选择图片", preferredStyle: .actionSheet)
-        
+        let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let xiangji = UIAlertAction(title: "拍照", style: UIAlertActionStyle.default, handler: { (action: UIAlertAction!) -> Void in
             self.fromPhotograph(typeInt:1)
         })
@@ -284,8 +294,14 @@ class EditUserInfoViewController: UIViewController,UITableViewDelegate,UITableVi
     func submitEdit(){
         //本地保存头像信息
         print(newHeadImgUrl)
-        HttpTool.shareHttpTool.Http_EditInfomation(nickName: nickNameStr, headUrl: newHeadImgUrl, sex: sexStr, signature: signatureStr) { (data) in
-//            print(data)
+        var nowSex=""
+        if self.sexLab.text == "男"{
+            nowSex = "0"
+        }else{
+            nowSex = "1"
+        }
+        HttpTool.shareHttpTool.Http_EditInfomation(nickName: nickName.text!, headUrl: newHeadImgUrl, sex: nowSex, signature: signature.text!) { (data) in
+            print(data)
             guard data["code"].stringValue == "SUCCESS" else{
                 self.myNoticeError(title: data["msg"].stringValue)
                 return
@@ -311,6 +327,7 @@ class EditUserInfoViewController: UIViewController,UITableViewDelegate,UITableVi
                 print(self.headimageUrlStr)
             }
             self.myNoticeSuccess(title: data["msg"].stringValue)
+            
             self.backPage()
         }
     }

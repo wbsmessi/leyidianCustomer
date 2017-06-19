@@ -34,7 +34,7 @@ class ChangePhoneViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     lazy var oldPhone:UITextField={
         let text = UITextField()
-        text.frame = CGRect(x: 100, y: 0, width: app_width - 150, height: 40)
+        text.frame = CGRect(x: 100, y: 0, width: app_width - 150, height: 45)
         text.font = UIFont.systemFont(ofSize: 12)
         text.placeholder = "请输入原来绑定手机号"
         text.returnKeyType = .done
@@ -44,7 +44,7 @@ class ChangePhoneViewController: UIViewController,UITableViewDelegate,UITableVie
     }()
     lazy var newPhone:UITextField={
         let text = UITextField()
-        text.frame = CGRect(x: 100, y: 0, width: app_width - 150, height: 40)
+        text.frame = CGRect(x: 100, y: 0, width: app_width - 150, height: 45)
         text.font = UIFont.systemFont(ofSize: 12)
         text.placeholder = "请输入现在要绑定的手机号"
 //        text.isSecureTextEntry = true
@@ -56,7 +56,7 @@ class ChangePhoneViewController: UIViewController,UITableViewDelegate,UITableVie
     
     lazy var ver_code:UITextField={
         let text = UITextField()
-        text.frame = CGRect(x: 100, y: 0, width: app_width - 150, height: 40)
+        text.frame = CGRect(x: 100, y: 0, width: app_width - 150, height: 45)
         text.font = UIFont.systemFont(ofSize: 12)
         text.placeholder = "请输入验证码"
 //        text.isSecureTextEntry = true
@@ -69,7 +69,7 @@ class ChangePhoneViewController: UIViewController,UITableViewDelegate,UITableVie
     let getVerCodeBtn = UIButton()//发送验证码
     func creatView(){
         let table = UITableView()
-        table.frame = CGRect(x: 0, y: nav_height, width: app_width, height: hasOldPhone ? 120:80)
+        table.frame = CGRect(x: 0, y: nav_height + 10, width: app_width, height: hasOldPhone ? 135:90)
         table.bounces = false
         table.delegate = self
         table.dataSource = self
@@ -77,7 +77,7 @@ class ChangePhoneViewController: UIViewController,UITableViewDelegate,UITableVie
         self.view.addSubview(table)
         
         let submitBtn = UIButton()
-        method.creatButton(btn: submitBtn, x: 15, y: table.bottomPosition() + 60, wid: app_width - 30, hei: 40, title: "确定", titlecolor: UIColor.white, titleFont: 16, bgColor: UIColor.clear, superView: self.view)
+        method.creatButton(btn: submitBtn, x: 15, y: table.bottomPosition() + 60, wid: app_width - 30, hei: (app_width - 30)/7.73, title: "确定", titlecolor: UIColor.white, titleFont: 16, bgColor: UIColor.clear, superView: self.view)
         submitBtn.setBackgroundImage(UIImage(named:"anniu"), for: .normal)
         submitBtn.addTarget(self, action: #selector(submitBtnClick), for: .touchUpInside)
     }
@@ -85,7 +85,7 @@ class ChangePhoneViewController: UIViewController,UITableViewDelegate,UITableVie
         if indexPath.row == 0 && !hasOldPhone{
             return 0
         }else{
-            return 40
+            return 45
         }
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
@@ -94,12 +94,12 @@ class ChangePhoneViewController: UIViewController,UITableViewDelegate,UITableVie
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         let cell = UITableViewCell()
         let title = UILabel()
-        method.creatLabel(lab: title, x: 15, y: 0, wid: 85, hei: 40, textString: titleArr[indexPath.row], textcolor: UIColor.black, textFont: 12, superView: cell.contentView)
+        method.creatLabel(lab: title, x: 15, y: 0, wid: 85, hei: 45, textString: titleArr[indexPath.row], textcolor: myAppBlackColor(), textFont: 13, superView: cell.contentView)
         if indexPath.row == 0{
             cell.contentView.addSubview(oldPhone)
         }else if indexPath.row == 1{
             cell.contentView.addSubview(newPhone)
-            method.creatButton(btn: getVerCodeBtn, x: app_width - 80, y: 0, wid: 80, hei: 40, title: "获取验证码", titlecolor: MyAppColor(), titleFont: 13, bgColor: UIColor.clear, superView: cell.contentView)
+            method.creatButton(btn: getVerCodeBtn, x: app_width - 80, y: 0, wid: 80, hei: 45, title: "获取验证码", titlecolor: MyAppColor(), titleFont: 13, bgColor: UIColor.clear, superView: cell.contentView)
             getVerCodeBtn.addTarget(self, action: #selector(getVerCodeBtnClick), for: .touchUpInside)
         }else{
             cell.contentView.addSubview(ver_code)
@@ -170,7 +170,7 @@ class ChangePhoneViewController: UIViewController,UITableViewDelegate,UITableVie
                     MyUserInfo.setValue(self.newPhone.text!, forKey: userInfoKey.phone.rawValue)
                     self.backPage()
                 }else{
-                    self.myNoticeSuccess(title: data["msg"].stringValue)
+                    self.myNoticeError(title: data["msg"].stringValue)
                 }
             }
         }else{
@@ -181,7 +181,7 @@ class ChangePhoneViewController: UIViewController,UITableViewDelegate,UITableVie
                     self.myNoticeSuccess(title: "设置成功")
                     self.backPage()
                 }else{
-                    self.myNoticeSuccess(title: data["msg"].stringValue)
+                    self.myNoticeError(title: data["msg"].stringValue)
                 }
             })
         }

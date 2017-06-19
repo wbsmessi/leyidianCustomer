@@ -12,11 +12,13 @@ import MJRefresh
 
 class StoreInfomationViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,TypeChoseDelegate,GoodsTypeDelegate,CategoryGoodsViewDelegate {
 
+
+
     var method = Methods()
     //当前的页码
     var pageIndex:Int = 0{
         didSet{
-            reloadGoodsDate()
+//            reloadGoodsDate()
         }
     }
     //当前的分类
@@ -47,7 +49,9 @@ class StoreInfomationViewController: UIViewController,UITableViewDelegate,UITabl
     }
     var envlotionList:[JSON] = []{
         didSet{
-            EvaluationTable.reloadSections(NSIndexSet(index: 1) as IndexSet, with: .automatic)
+            DispatchQueue.main.async {
+                self.EvaluationTable.reloadSections(NSIndexSet(index: 1) as IndexSet, with: .fade)
+            }
         }
     }
     var categoryArr = ["商品","评价"]{
@@ -68,12 +72,19 @@ class StoreInfomationViewController: UIViewController,UITableViewDelegate,UITabl
         HttpTool.shareHttpTool.Http_StoreEnvlotion { (data) in
             print(data)
             let storeAve = Float((data["serviceAppr"].floatValue + data["distributionAppr"].floatValue + data["productAppr"].floatValue)/3.0)
-            self.categoryArr = ["商品","评价\(storeAve.getOneDecimal())分"]
+            self.categoryArr = ["商品","评价(\(storeAve.getOneDecimal())分)"]
             self.EnvlotionData = data
         }
-        HttpTool.shareHttpTool.Http_EnvlotionList(startIndex: pageIndex, rows: 20) { (data) in
+    }
+    func getEnvlotionList(){
+        HttpTool.shareHttpTool.Http_EnvlotionList(startIndex: pageIndex, rows: 15) { (data) in
             print(data)
-            self.envlotionList = data.arrayValue
+//            self.EvaluationTable.mj_header.endRefreshing()
+            if data.arrayValue.count == 0{
+                self.myNoticeError(title: "没有更多了")
+            }
+            self.EvaluationTable.mj_footer.endRefreshing()
+            self.envlotionList += data.arrayValue
         }
     }
     var shopType:TypeChoseView!
@@ -86,6 +97,15 @@ class StoreInfomationViewController: UIViewController,UITableViewDelegate,UITabl
         table.dataSource = self
         table.allowsSelection = false
         table.tableFooterView = UIView()
+//        table.mj_header = MJRefreshNormalHeader(refreshingBlock: {
+//            self.pageIndex = 0
+//            self.envlotionList = []
+//            self.getEnvlotionList()
+//        })
+        table.mj_footer = MJRefreshAutoNormalFooter(refreshingBlock: {
+            self.pageIndex += 1
+            self.getEnvlotionList()
+        })
         return table
     }()
     var storeImage:UIImageView!//店铺图片
@@ -93,6 +113,7 @@ class StoreInfomationViewController: UIViewController,UITableViewDelegate,UITabl
     var storeRemark:UILabel!//店铺规则备注
     var storeOpenTime:UILabel!//店铺营业时间
     var storeNotice:UILabel!//店家公告
+    var normChose:NormChoseView!//规格弹窗
     func creatView(){
         self.view.backgroundColor = MyGlobalColor()
         let topView = UIImageView()
@@ -119,6 +140,8 @@ class StoreInfomationViewController: UIViewController,UITableViewDelegate,UITabl
         storeImage = UIImageView(frame: CGRect(x: 15, y: 70, width: 60, height: 60))
         storeImage.contentMode = .scaleAspectFill
         storeImage.layer.cornerRadius = storeImage.frame.width/2
+        storeImage.layer.borderWidth = 2
+        storeImage.layer.borderColor = setMyColor(r: 252, g: 192, b: 69, a: 1).cgColor
 //        storeImage.backgroundColor = UIColor.white
         method.loadImage(imgUrl: "\(storeInfomation!.storeImg!)", Img_View: storeImage)
         topView.addSubview(storeImage)
@@ -133,14 +156,15 @@ class StoreInfomationViewController: UIViewController,UITableViewDelegate,UITabl
         method.creatLabel(lab: storeOpenTime, x: storeName.frame.origin.x, y: storeRemark.bottomPosition(), wid: storeName.frame.width, hei: 20, textString: "营业时间：\(storeInfomation!.businessHours!)", textcolor: UIColor.white, textFont: 11, superView: topView)
         
         storeNotice = UILabel()
-        method.creatLabel(lab: storeNotice, x: 15, y: storeImage.bottomPosition(), wid: topView.frame.width - 30, hei: 50, textString: "公告：乐易点讲竭诚为你服务", textcolor: UIColor.white, textFont: 11, superView: topView)
+        method.creatLabel(lab: storeNotice, x: 15, y: storeImage.bottomPosition(), wid: topView.frame.width - 30, hei: 50, textString: "公告：\(storeInfomation!.storeNotice!)", textcolor: UIColor.white, textFont: 11, superView: topView)
         ////////////////////商品分类和评论/////////////////////////
         
         shopType.item_width = app_width/CGFloat(categoryArr.count)
         shopType.reloadWithArray(array: categoryArr)
+        
         self.view.addSubview(shopType)
         
-        goodsInfoView.frame = CGRect(x: 0, y: shopType.bottomPosition() + 1, width: app_width, height: app_height - topView.bottomPosition())
+        goodsInfoView.frame = CGRect(x: 0, y: shopType.bottomPosition() + 1, width: app_width, height: app_height - shopType.bottomPosition())
         goodsInfoView.backgroundColor = UIColor.white
         self.view.addSubview(goodsInfoView)
         
@@ -148,15 +172,29 @@ class StoreInfomationViewController: UIViewController,UITableViewDelegate,UITabl
         typeList.delegate = self
         goodsInfoView.addSubview(typeList)
         
-        category = CategoryGoodsView(frame: CGRect(x: typeList.rightPosition(), y: 0, width: app_width - typeList.rightPosition(), height: app_height - nav_height - tab_height))
+        category = CategoryGoodsView(frame: CGRect(x: typeList.rightPosition(), y: 0, width: app_width - typeList.rightPosition(), height: goodsInfoView.frame.height))
         category.delegate = self
+        category.currentVC = self
         goodsInfoView.addSubview(category)
+        
+        normChose = NormChoseView(frame: CGRect(x: 0, y: 0, width: app_width, height: app_height))
+        self.view.addSubview(normChose)
     }
     /*******************************************************************************
      //////////////////////////////事件处理///////////////////////////////////////////
      *******************************************************************************/
+    
     func EvaluationChange(score:String){
         categoryArr = ["商品","评价(\(score)分)"]
+    }
+    
+    func pullLoadMore(pageIndex:Int){
+        self.pageIndex = pageIndex
+    }
+    
+    func goodsNormChose(goodsInfo:JSON){
+        normChose.goodsInfo = goodsInfo
+        normChose.animationHide(hide: false)
     }
     func searchBtnClick(){
         //
@@ -165,11 +203,19 @@ class StoreInfomationViewController: UIViewController,UITableViewDelegate,UITabl
     //一级分类的点击
     func typeClick(index:Int) {
         print(index)
+        //索引变0
+        self.pageIndex = 0
+        self.category?.pageIndex = 0
+        self.category?.goodsInfo = []
         category.categoryData = cateInfoData[index]
         self.pageClassifyID = cateInfoData[index]["classifyID"].stringValue
     }
     //点击了分类或者排序。。。。
     func categoryTypeChose(classifyID:String,sortType:goodsSortType,orderOrCategory:Bool){
+        //索引变0
+        self.pageIndex = 0
+        self.category?.pageIndex = 0
+        self.category?.goodsInfo = []
         if orderOrCategory{
             //排序处理
             self.pageGoodsSortType = sortType
@@ -195,12 +241,13 @@ class StoreInfomationViewController: UIViewController,UITableViewDelegate,UITabl
             goodsInfoView.isHidden = true
             EvaluationTable.frame = goodsInfoView.frame
             self.view.addSubview(EvaluationTable)
+            self.getEnvlotionList()
         }
     }
     func reloadGoodsDate(){
         HttpTool.shareHttpTool.Http_GetGoodsByCategory(classifyID: pageClassifyID, startIndex: pageIndex, sortType: pageGoodsSortType.rawValue) { (data) in
             //print(data)
-            self.category.goodsInfo = data.arrayValue
+            self.category.goodsInfo += data.arrayValue
         }
     }
     override func didReceiveMemoryWarning() {

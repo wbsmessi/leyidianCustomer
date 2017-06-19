@@ -9,7 +9,9 @@
 import UIKit
 import SwiftyJSON
 
-
+protocol CouponTicketChoseDelegate {
+    func CouponTicketChose(couponInfo:JSON)
+}
 class CouponViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,TypeChoseDelegate {
 
     var couponData:[JSON] = []{
@@ -19,6 +21,9 @@ class CouponViewController: UIViewController,UITableViewDelegate,UITableViewData
             }
         }
     }
+    //是否是选择优惠券
+    var isCouponTicketChose:Bool = false
+    var delegate:CouponTicketChoseDelegate?
     var couponType:couponTypeEnum = couponTypeEnum.unuse
     var method = Methods()
     override func viewDidLoad() {
@@ -38,6 +43,7 @@ class CouponViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     let conponTable = UITableView()
     func creatView(iscouponChose:Bool){
+        self.isCouponTicketChose = iscouponChose
         let conponTypeView = TypeChoseView(frame: CGRect(x: 0, y: nav_height, width: app_width, height: iscouponChose ? 0 : 50))
         conponTypeView.typeChoseDelegate = self
         conponTypeView.item_width = app_width/3
@@ -48,7 +54,7 @@ class CouponViewController: UIViewController,UITableViewDelegate,UITableViewData
         conponTable.delegate = self
         conponTable.dataSource = self
         conponTable.tableFooterView = UIView()
-        conponTable.allowsSelection = false
+        conponTable.allowsSelection = isCouponTicketChose
         conponTable.rowHeight = 120
         conponTable.showsVerticalScrollIndicator = false
         conponTable.separatorStyle = .none
@@ -82,11 +88,28 @@ class CouponViewController: UIViewController,UITableViewDelegate,UITableViewData
             cell = ConponTableViewCell()
         }
 //        couponData[indexPath.row]["ticketInstName"].stringValue
+        var firetime = ""
+        if couponData[indexPath.row]["dateLimitType"].stringValue == "D"{
+            let date = couponData[indexPath.row]["createDate"].doubleValue + 3600 * 24 * 1000 * couponData[indexPath.row]["dateLimitValue"].doubleValue
+            let endtime = method.convertTimeYMD(time:date)
+            let starttime = method.convertTimeYMD(time:couponData[indexPath.row]["createDate"].doubleValue)
+            
+            firetime = starttime + "-" + endtime
+        }else{
+            firetime = couponData[indexPath.row]["dateLimitValue"].stringValue.replacingOccurrences(of: ",", with: "-")
+        }
         let requireStr = "限购[\(couponData[indexPath.row]["useStoreType"].stringValue == "B" ? "便利店":"连锁超市")]店铺商品"
-        cell!.setValue(money: couponData[indexPath.row]["worth"].stringValue, remark: couponData[indexPath.row]["consumeLimit"].stringValue, require: requireStr, fireTime: couponData[indexPath.row]["createDate"].doubleValue, couponType:self.couponType)
+        cell!.setValue(money: couponData[indexPath.row]["worth"].stringValue, remark: couponData[indexPath.row]["consumeLimit"].stringValue, require: requireStr, fireTime: firetime, couponType:self.couponType)
         
         
         return cell!
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        if isCouponTicketChose{
+            delegate?.CouponTicketChose(couponInfo: couponData[indexPath.row])
+            self.backPage()
+        }
     }
     func loadCouponList(type:String){
         HttpTool.shareHttpTool.Http_ticketList(status: type, startIndex: 0) { (data) in

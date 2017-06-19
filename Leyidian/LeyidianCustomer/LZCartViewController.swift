@@ -18,6 +18,7 @@ class LZCartViewController: UIViewController,UITableViewDelegate,UITableViewData
     //    当前是否上班
     var shopOpen:Bool = true
     //是否是编辑状态
+    var cartID:String = ""
     var isEdit:Bool = false{
         didSet{
 //            submitBtn?.setTitle(isEdit ? "删除":"去结算", for: .normal)
@@ -28,9 +29,13 @@ class LZCartViewController: UIViewController,UITableViewDelegate,UITableViewData
             }else{
                 bottomBackgroundView.addSubview(allSelectButton!)
             }
-            tableView?.reloadData()
+            self.tableView?.reloadSections(NSIndexSet(index: 1) as IndexSet, with: .automatic)
+//            tableView?.reloadData()
         }
     }
+    //已优惠价格
+    var couponPrice:Double!
+    //实际支付价格
     var currentPayMoney:Double = 0.00{
         didSet{
             //处理结算按钮的颜色问题
@@ -40,7 +45,9 @@ class LZCartViewController: UIViewController,UITableViewDelegate,UITableViewData
             if needMore > 0.00 {
                 btnTitle = "还差" + needMore.getMoney() + "元起送"
                 commitButton.backgroundColor = UIColor.lightGray
+                commitButton.titleLabel!.font=UIFont.systemFont(ofSize: 12)
             }else{
+                commitButton.titleLabel!.font=UIFont.systemFont(ofSize: 15)
                 commitButton.backgroundColor = MyAppColor()
             }
             commitButton.setTitle(btnTitle, for: .normal)
@@ -90,7 +97,7 @@ class LZCartViewController: UIViewController,UITableViewDelegate,UITableViewData
         tableView?.frame = CGRect(x: 0, y: nav_height, width: app_width, height: table_height)
         tableView?.delegate = self
         tableView?.dataSource = self
-        tableView?.backgroundColor = MyGlobalColor()
+//        tableView?.backgroundColor = MyGlobalColor()
 //        tableView?.rowHeight = 100
         tableView?.showsVerticalScrollIndicator = false
         tableView?.tableFooterView = UIView()
@@ -108,8 +115,8 @@ class LZCartViewController: UIViewController,UITableViewDelegate,UITableViewData
             price += pri! * Double(model.number)
             print(price)
             
-            let oldpri = Double(model.oldprice!)
-            saveMoney += oldpri! * Double(model.number)
+            let oldpri = Double(model.oldprice!) ?? 0.0
+            saveMoney += oldpri * Double(model.number)
             print(saveMoney)
         }
 //        for model in self.dataArray {
@@ -125,6 +132,7 @@ class LZCartViewController: UIViewController,UITableViewDelegate,UITableViewData
 //        }
         currentPayMoney = price
         saveMoney = (saveMoney - price <= 0.0) ? 0.0 : saveMoney - price
+        self.couponPrice = saveMoney
         DispatchQueue.main.async {
             self.saveMoneyLabel?.text = "已优惠：¥\(saveMoney.getMoney())"
             self.priceLabel?.attributedText = self.priceString("\(price.getMoney())")
@@ -133,18 +141,27 @@ class LZCartViewController: UIViewController,UITableViewDelegate,UITableViewData
     
     
     /*创建自定义导航*/
+    //最右边切换编辑按钮
+    let rightBtn = UIButton()
     func setupNavBar() {
         self.setTitleView(title: "购物车", canBack: !isHomeCarPage)
         
-        let rightBtn = UIButton()
-        method.creatButton(btn: rightBtn, x: app_width - 80, y: 34, wid: 80, hei: 30, title: "编辑", titlecolor: UIColor.black, titleFont: 14, bgColor: UIColor.clear, superView: self.view)
+        
+        method.creatButton(btn: rightBtn, x: app_width - 80, y: 20, wid: 80, hei: 44, title: "编辑", titlecolor: myAppBlackColor(), titleFont: 14, bgColor: UIColor.clear, superView: self.view)
         rightBtn.addTarget(self, action: #selector(toEditCar(btn:)), for: .touchUpInside)
 //
     }
+    //切换编辑功能
     func toEditCar(btn:UIButton){
         btn.isSelected = !btn.isSelected
         btn.setTitle(btn.isSelected ? "完成":"编辑", for: .normal)
         isEdit = btn.isSelected
+    }
+    //任意情况，关闭编辑功能
+    func toCloseEditCar(){
+        self.rightBtn.isSelected = false
+        self.rightBtn.setTitle("编辑", for: .normal)
+        isEdit = false
     }
     /*创建底部视图*/
     //正常状态的底部view
@@ -155,36 +172,38 @@ class LZCartViewController: UIViewController,UITableViewDelegate,UITableViewData
         //正常状态的底部view
         let backView_Y = isHomeCarPage ? app_height - 2*tab_height : app_height - tab_height
         bottomBackgroundView.frame = CGRect(x: 0, y: backView_Y, width: app_width, height: tab_height)
-        bottomBackgroundView.backgroundColor = MyGlobalColor()
+        bottomBackgroundView.backgroundColor = UIColor.white
         self.view.addSubview(bottomBackgroundView)
         
-        method.drawLine(startX: 0, startY: 0, wid: app_width, hei: 0.6, add: bottomBackgroundView)
-        
+//        method.drawLine(startX: 0, startY: 0, wid: app_width, hei: 0.6, add: bottomBackgroundView)
+        method.drawLineWithColor(startX: 0, startY: 0, wid: app_width, hei: 0.6, lineColor: setMyColor(r: 238, g: 238, b: 238, a: 1), add: bottomBackgroundView)
         let seletAllButton = UIButton(type: .custom)
         seletAllButton.frame = CGRect(x: 10, y: 5, width: 80, height: tab_height - 10)
         seletAllButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         seletAllButton.setTitle("  全选", for: UIControlState())
         seletAllButton.setImage(UIImage(named: "weixuanze"), for: UIControlState())
         seletAllButton.setImage(UIImage(named: "xuanze-1"), for: UIControlState.selected)
-        seletAllButton.setTitleColor(UIColor.gray, for: UIControlState())
+        seletAllButton.setTitleColor(myAppBlackColor(), for: UIControlState())
         seletAllButton.addTarget(self, action: #selector(selectAllButtonClick), for: UIControlEvents.touchUpInside)
         bottomBackgroundView.addSubview(seletAllButton)
         allSelectButton = seletAllButton
         
         commitButton = UIButton(type: .custom)
         commitButton.frame = CGRect(x: app_width - 100, y: 0, width: 100, height: tab_height)
-        
+        commitButton.titleLabel!.font=UIFont.systemFont(ofSize: 15)
         let minMoney = storeInfomation?.startLimit ?? "0.00"
 //        print(minMoney ?? "0.00")
         var btnTitle = "去结算"
         if Double(minMoney)! > 0.00 {
             btnTitle = "还差" + minMoney + "元起送"
             commitButton.backgroundColor = UIColor.lightGray
+            commitButton.titleLabel!.font=UIFont.systemFont(ofSize: 12)
         }else{
             commitButton.backgroundColor = MyAppColor()
         }
         commitButton.setTitle(btnTitle, for: UIControlState())
-        commitButton.titleLabel!.font=UIFont.systemFont(ofSize: 12)
+        
+        
         commitButton.titleLabel?.lineBreakMode = .byCharWrapping
         commitButton.titleLabel?.numberOfLines = 2
         commitButton.addTarget(self, action: #selector(comitButtonClick), for: UIControlEvents.touchUpInside)
@@ -234,6 +253,10 @@ class LZCartViewController: UIViewController,UITableViewDelegate,UITableViewData
         deleteGoodsById(id:detailsId)
     }
     func deleteGoodsById(id:String){
+        guard id != "" else{
+            self.myNoticeError(title: "请选择要删除的商品")
+            return
+        }
         var newDataArr:[LZCartModel] = []
         for item in self.dataArray{
             if item.select != true{
@@ -295,8 +318,8 @@ class LZCartViewController: UIViewController,UITableViewDelegate,UITableViewData
                 self.selectArray.append(model)
             }
         }
-        
-        self.tableView?.reloadData()
+        self.tableView?.reloadSections(NSIndexSet(index: 1) as IndexSet, with: .automatic)
+//        self.tableView?.reloadData()
         self.priceCount()
     }
     /*提交按钮点击事件*/
@@ -308,40 +331,55 @@ class LZCartViewController: UIViewController,UITableViewDelegate,UITableViewData
         guard commitButton.backgroundColor == MyAppColor() else {
             return
         }
+        
         guard addressInfo != nil else {
             self.myNoticeError(title: "请先选择收获地址")
             return
         }
+        
         var detailsIDs:[Int] = []
         for model in self.selectArray {
             detailsIDs.append(model.detailsID!)
 //            print("选择的商品:\(model)")
         }
-        
         submitOrder(detailsIDs: detailsIDs)
         
         
     }
     func submitOrder(detailsIDs: [Int]){
-        print(detailsIDs)
-        HttpTool.shareHttpTool.Http_CreateOrder(detailsIDs: detailsIDs, addressID: self.addressInfo!["addressID"].stringValue) { (data) in
-            print(data)
-            if data["code"].stringValue == "SUCCESS"{
-                let vc = PrePayOrderViewController()
-                vc.addressInfo = self.addressInfo
-                vc.orderInfo = data["resultData"]
-                DispatchQueue.main.async {
-                    self.pushToNext(vc: vc)
-                }
-            }else{
-                self.myNoticeError(title: data["msg"].stringValue)
-            }
+        let vc = PrePayOrderViewController()
+        vc.addressInfo = self.addressInfo
+        vc.orderInfo = self.selectArray
+        vc.cartID = self.cartID
+        vc.detailsIDs = detailsIDs
+        
+        vc.totalMoney = currentPayMoney
+        vc.couponMoney = self.couponPrice
+        DispatchQueue.main.async {
+            self.pushToNext(vc: vc)
         }
+        
+        
+        
+//        HttpTool.shareHttpTool.Http_CreateOrder(detailsIDs: detailsIDs, addressID: self.addressInfo!["addressID"].stringValue) { (data) in
+//            print(data)
+//            if data["code"].stringValue == "SUCCESS"{
+//                let vc = PrePayOrderViewController()
+//                vc.addressInfo = self.addressInfo
+//                vc.orderInfo = data["resultData"]
+//                DispatchQueue.main.async {
+//                    self.pushToNext(vc: vc)
+//                }
+//            }else{
+//                self.myNoticeError(title: data["msg"].stringValue)
+//            }
+//        }
     }
     /*购物车为空时的视图*/
     let backgroundEmptyView = UIView()
     func emptyView() {
-        backgroundEmptyView.frame = CGRect(x: 0, y: nav_height, width: app_width, height: app_height - nav_height - tab_height)
+        let height = isHomeCarPage ? app_height - nav_height - tab_height:app_height - nav_height
+        backgroundEmptyView.frame = CGRect(x: 0, y: nav_height, width: app_width, height: height)
         backgroundEmptyView.backgroundColor = UIColor.white
         self.view.addSubview(backgroundEmptyView)
         
@@ -369,6 +407,7 @@ class LZCartViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     override func viewWillAppear(_ animated: Bool) {
         reloadCarData()
+        self.toCloseEditCar()
     }
     override func viewDidAppear(_ animated: Bool) {
         if !method.isLogin(){
@@ -383,26 +422,55 @@ class LZCartViewController: UIViewController,UITableViewDelegate,UITableViewData
             
         }
     }
-
+    var currentGoodsData:JSON?
     func reloadCarData(){
+        guard storeInfomation != nil else {
+            //////////////
+            DispatchQueue.main.async {
+                //
+                self.toCloseEditCar()
+                self.backgroundEmptyView.isHidden = false
+            }
+            return
+        }
         HttpTool.shareHttpTool.Http_GetCarGoods { (data) in
             print(data)
+            //
+            guard self.currentGoodsData != data else{
+                return
+            }
+            self.currentGoodsData = data
+            
+            
+            self.cartID = data["cartID"].stringValue
             self.selectArray = []
             self.dataArray = []
+            
             for item in data["detailsList"].arrayValue{
                 let model = LZCartModel()
                 model.detailsID = item["detailsID"].intValue
                 model.goodsId   = item["commodityID"].stringValue
                 model.name      = item["commodityName"].stringValue
-                model.price     = item["commodityCouponPrice"].doubleValue.getMoney()
+                
                 model.number    = item["num"].intValue
                 model.detail    = item["norm"].stringValue
                 model.oldprice  = item["commoditySettlePrice"].doubleValue.getMoney()
                 model.image     = item["commodityImg"].stringValue
+                
+                var salePrice:String = item["commoditySettlePrice"].doubleValue.getMoney()
+                if self.method.hasStringInArr(arrStr: item["commodityTypes"].stringValue){
+                    salePrice = item["commodityCouponPrice"].doubleValue.getMoney()
+                }else{
+                    model.oldprice = ""
+                }
+                model.price     = salePrice
+                
                 self.dataArray.append(model)
             }
             if data["detailsList"].arrayValue.count == 0{
                 DispatchQueue.main.async {
+                    //
+                    self.toCloseEditCar()
                     self.backgroundEmptyView.isHidden = false
                 }
             }else{
@@ -414,16 +482,17 @@ class LZCartViewController: UIViewController,UITableViewDelegate,UITableViewData
                 self.allSelectButton?.isSelected = false
                 let name = data["storeName"].stringValue
                 //上下班
-                self.shopOpen = data["storeStatus"].stringValue == "1" ? true:false
-                let status = data["storeStatus"].stringValue == "1" ? "(上班)":"(下班)"
+                self.shopOpen = data["storeStatus"].stringValue == "0" ? true:false
+                let status = data["storeStatus"].stringValue == "0" ? "(营业中)":"(已打烊)"
                 let attStr = NSMutableAttributedString(string: name + status)
                 let range = ((name + status) as NSString).range(of: status)
 //                let range = NSMakeRange(2, 4)
-                attStr.addAttributes([NSForegroundColorAttributeName:MyAppColor()], range: range)
+                attStr.addAttributes([NSForegroundColorAttributeName:setMyColor(r: 255, g: 221, b: 67, a: 1)], range: range)
                 
                 self.storeNameStr = attStr
-                
-                self.tableView?.reloadData()
+//                NSIndexSet(index: 1)
+                self.tableView?.reloadSections(NSIndexSet(index: 1) as IndexSet, with: .automatic)
+//                self.tableView?.reloadData()
                 self.priceCount()
             }
         }
@@ -431,6 +500,7 @@ class LZCartViewController: UIViewController,UITableViewDelegate,UITableViewData
     
     func postAddressInfo(address:JSON){
         self.addressInfo = address
+        self.tableView?.reloadSections(NSIndexSet(index: 0) as IndexSet, with: .automatic)
     }
 }
 extension LZCartViewController{
@@ -445,7 +515,7 @@ extension LZCartViewController{
             self.pushToNext(vc: vc)
         }
         if indexPath.section == 1{
-            print("11111")
+//            print("11111")
             let vc = GoodsDetailViewController()
             vc.goodsId = self.dataArray[indexPath.row].goodsId!
             self.pushToNext(vc: vc)
@@ -483,7 +553,7 @@ extension LZCartViewController{
             self.storeName.attributedText = self.storeNameStr
         }
         
-        method.creatLabel(lab: storeName, x: 15, y: 0, wid: 200, hei: 30, textString: "", textcolor: UIColor.black, textFont: 12, superView: view)
+        method.creatLabel(lab: storeName, x: 15, y: 0, wid: 200, hei: 30, textString: "", textcolor: myAppBlackColor(), textFont: 12, superView: view)
         
         let img = UIImageView()
         method.creatImage(img: img, x: app_width - 35, y: 0, wid: 30, hei: 30, imgName: "kebianjijiantou", imgMode: .center, superView: view)
@@ -502,13 +572,15 @@ extension LZCartViewController{
         
         if indexPath.section == 0{
             let cell = UITableViewCell()
-            cell.accessoryType = .disclosureIndicator
+//            cell.accessoryType = .disclosureIndicator
             //收获地址、
             let addressLab = UILabel()
             method.creatLabel(lab: addressLab, x: 15, y: 0, wid: app_width - 50, hei: 40, textString: "添加收货地址", textcolor: UIColor.black, textFont: 12, superView: cell.contentView)
             if self.addressInfo != nil{
                 addressLab.text = self.addressInfo!["address"].stringValue + self.addressInfo!["addressInfo"].stringValue
             }
+            let img = UIImageView()
+            method.creatImage(img: img, x: app_width - 35, y: 0, wid: 30, hei: 30, imgName: "kebianjijiantou", imgMode: .center, superView: cell.contentView)
             return cell
         }else{
             //  商品信息

@@ -32,7 +32,7 @@ class LeftTypeView: UIView,UITableViewDelegate,UITableViewDataSource {
         typeTable.dataSource = self
         typeTable.delegate = self
         typeTable.showsVerticalScrollIndicator = false
-        typeTable.backgroundColor=MyGlobalColor()
+        typeTable.backgroundColor=setMyColor(r: 248, g: 248, b: 248, a: 1)
         self.addSubview(typeTable)
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
@@ -52,7 +52,7 @@ class LeftTypeView: UIView,UITableViewDelegate,UITableViewDataSource {
         return cell!
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 40
+        return 50
     }
     var selectedIndex:IndexPath = IndexPath(row: 0, section: 0)//默认是现实第一个个分类
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -61,10 +61,13 @@ class LeftTypeView: UIView,UITableViewDelegate,UITableViewDataSource {
         }
         let cell = tableView.cellForRow(at: indexPath) as? LeftTypeTableViewCell//当前选中行，设置选择色白色
         cell?.isSelectCell = true
+        
         //之前选择的颜色去掉
         let selectedCell = tableView.cellForRow(at: selectedIndex) as? LeftTypeTableViewCell
         selectedCell?.isSelectCell = false
         selectedIndex = indexPath
+//        selectedCell?.titleLab.font = UIFont.systemFont(ofSize: 12)
+//        selectedCell?.lineRight.isHidden = false
         delegate?.typeClick(index:indexPath.row)
     }
     required init?(coder aDecoder: NSCoder) {

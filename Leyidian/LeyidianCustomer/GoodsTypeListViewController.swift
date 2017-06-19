@@ -10,10 +10,11 @@ import UIKit
 import SwiftyJSON
 import MJRefresh
 
-class GoodsTypeListViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,TypeChoseDelegate {
+class GoodsTypeListViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,TypeChoseDelegate,GoodsCollectionViewCellDelegate {
 //    HomePageTitleArr=["优选精品","限时抢购","折扣特价","掌柜推荐"]
     var typeName:String!
     var activeGoodsType:ActivitieGoods!
+    var method = Methods()
     //当前选择的分类id
     var loadClassifyID:String = ""
     var categoryData:[JSON] = []{
@@ -56,7 +57,14 @@ class GoodsTypeListViewController: UIViewController,UICollectionViewDelegate,UIC
     func loadCategoryData(){
         HttpTool.shareHttpTool.Http_GoodsCategory { (data)  in
             print(data)
-            self.categoryData = data.arrayValue
+            if data.arrayValue.count > 0{
+                var da = data.arrayValue
+                da.remove(at: 0)
+                self.categoryData = da
+            }else{
+                self.categoryData = []
+            }
+            
         }
     }
     
@@ -78,6 +86,7 @@ class GoodsTypeListViewController: UIViewController,UICollectionViewDelegate,UIC
         return shopType
     }()
     var goodsList:UICollectionView!
+    var normChose:NormChoseView!//规格弹窗
     func creatView(){
 //        let categoryArr = ["全部分类","分类一","分类二","分类三"]
 //        shopType.item_width=app_width/CGFloat(categoryArr.count)
@@ -96,6 +105,13 @@ class GoodsTypeListViewController: UIViewController,UICollectionViewDelegate,UIC
         self.goodsList.mj_header = MJRefreshNormalHeader(refreshingBlock: {
             self.reloadData(classifyID: self.loadClassifyID)
         })
+        
+        normChose = NormChoseView(frame: CGRect(x: 0, y: 0, width: app_width, height: app_height))
+        self.view.addSubview(normChose)
+    }
+    func alertNormChose(goods:JSON){
+        normChose.goodsInfo = goods
+        normChose.animationHide(hide: false)
     }
     func TypeChoseClick(index:Int){
         print(index)
@@ -141,6 +157,7 @@ extension GoodsTypeListViewController{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "goodscell", for: indexPath) as! GoodsCollectionViewCell
         
+        cell.delegate = self
         cell.goodsInfo = goodsData[indexPath.item]
         cell.indexRow = indexPath.item
         cell.imageUrl = goodsData[indexPath.item]["cover"].stringValue
@@ -148,6 +165,17 @@ extension GoodsTypeListViewController{
         cell.goodsNameStr = goodsData[indexPath.item]["commodityName"].stringValue
         cell.goodsDetail.text = goodsData[indexPath.item]["commodityRemark"].stringValue
         cell.nowPrice.text = goodsData[indexPath.item]["discountPrice"].stringValue
+        
+        var salePrice = goodsData[indexPath.item]["retailPrice"].doubleValue.getMoney()
+        if method.hasStringInArr(arrStr: goodsData[indexPath.item]["commodityTypes"].stringValue){
+            salePrice = goodsData[indexPath.item]["discountPrice"].doubleValue.getMoney()
+            cell.goodsOldPrice.isHidden = false
+        }else{
+            cell.goodsOldPrice.isHidden = true
+        }
+        cell.nowPrice.text = salePrice
+        
+        cell.goodsStatus = goodsData[indexPath.item]["status"].stringValue
         return cell
     }
 }

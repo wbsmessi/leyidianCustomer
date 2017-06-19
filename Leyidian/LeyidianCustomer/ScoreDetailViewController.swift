@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyJSON
+import MJRefresh
 
 class ScoreDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
@@ -30,9 +31,16 @@ class ScoreDetailViewController: UIViewController,UITableViewDelegate,UITableVie
     func loadData(){
         HttpTool.shareHttpTool.Http_GetIntegralList(startIndex: pageIndex) { (data) in
             print(data)
+            self.scoreTable.mj_footer.endRefreshing()
+            self.scoreTable.mj_header.endRefreshing()
             self.infoJSON += data["integralList"].arrayValue
             if data["integralList"].arrayValue.count == 0{
-                self.myNoticeError(title: "当前无数据")
+                if self.pageIndex > 0{
+                    self.myNoticeError(title: "没有更多了")
+                }else{
+                    self.myNoticeError(title: "当前无数据")
+                }
+                
             }
             self.pageIndex += 1
         }
@@ -47,6 +55,16 @@ class ScoreDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         scoreTable.allowsSelection = false
         scoreTable.rowHeight = 60
         self.view.addSubview(scoreTable)
+        
+        self.scoreTable.mj_header = MJRefreshNormalHeader(refreshingBlock: {
+            self.pageIndex = 0
+            self.infoJSON = []
+            self.loadData()
+        })
+        self.scoreTable.mj_footer = MJRefreshAutoNormalFooter(refreshingBlock: {
+            self.pageIndex += 1
+            self.loadData()
+        })
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         return infoJSON.count

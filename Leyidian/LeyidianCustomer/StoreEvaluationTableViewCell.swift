@@ -19,8 +19,8 @@ class StoreEvaluationTableViewCell: UITableViewCell {
     }
     var Score:Float=0.0{
         didSet{
-            userStar.setwoScorePercent(CGFloat(Score * 0.2))
-//            userStar.scorePercent = CGFloat(Score * 0.2)
+//            userStar.setwoScorePercent(CGFloat(Score * 0.2))
+            userStar.scorePercent = CGFloat(Score * 0.2)
         }
     }
     override func awakeFromNib() {

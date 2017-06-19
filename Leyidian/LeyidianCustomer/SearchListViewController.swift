@@ -8,9 +8,11 @@
 
 import UIKit
 import SwiftyJSON
+import MJRefresh
 
-class SearchListViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class SearchListViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,goodsTableListTableViewCellDelegate {
 
+    var pageIndex:Int = 0
     var goodsInfo:[JSON] = []{
         didSet{
             if goodsInfo.count == 0{
@@ -21,6 +23,7 @@ class SearchListViewController: UIViewController,UITableViewDelegate,UITableView
             }
         }
     }
+    var method = Methods()
     var searchStr:String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,12 +33,15 @@ class SearchListViewController: UIViewController,UITableViewDelegate,UITableView
         // Do any additional setup after loading the view.
     }
     func searchGoods(){
-        HttpTool.shareHttpTool.Http_goodsSearch(startIndex: 0, searchText: searchStr) { (data) in
+        HttpTool.shareHttpTool.Http_goodsSearch(startIndex: pageIndex, searchText: searchStr) { (data) in
             print(data)
-            self.goodsInfo = data.arrayValue
+            self.tableList.mj_header.endRefreshing()
+            self.tableList.mj_footer.endRefreshing()
+            self.goodsInfo += data.arrayValue
         }
     }
     let tableList = UITableView()
+    var normChose:NormChoseView!//规格弹窗
     func creatView(){
         
         tableList.frame = CGRect(x: 0, y: nav_height, width: app_width, height: app_height - nav_height)
@@ -44,6 +50,18 @@ class SearchListViewController: UIViewController,UITableViewDelegate,UITableView
         tableList.dataSource = self
         tableList.rowHeight = 100
         self.view.addSubview(tableList)
+        tableList.mj_header = MJRefreshNormalHeader(refreshingBlock: {
+            self.pageIndex = 0
+            self.goodsInfo = []
+            self.searchGoods()
+        })
+        tableList.mj_footer = MJRefreshAutoNormalFooter(refreshingBlock: {
+            self.pageIndex += 1
+            self.searchGoods()
+        })
+        
+        normChose = NormChoseView(frame: CGRect(x: 0, y: 0, width: app_width, height: app_height))
+        self.view.addSubview(normChose)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
@@ -56,15 +74,45 @@ class SearchListViewController: UIViewController,UITableViewDelegate,UITableView
             cell = goodsTableListTableViewCell()
         }
         cell!.creatView(cell_wid: app_width)
+        cell!.delegate = self
         cell!.goodsInfo = goodsInfo[indexPath.row]
         cell!.imageUrl = goodsInfo[indexPath.row]["cover"].stringValue
         cell!.oldPrice = "¥" + goodsInfo[indexPath.row]["retailPrice"].doubleValue.getMoney()
         cell!.goodsName.text = goodsInfo[indexPath.row]["commodityName"].stringValue
         cell!.goodsDetail.text = goodsInfo[indexPath.row]["commodityRemark"].stringValue
         cell!.goodsPrice.text = goodsInfo[indexPath.row]["discountPrice"].doubleValue.getMoney()
+        
+        var salePrice = goodsInfo[indexPath.row]["retailPrice"].doubleValue.getMoney()
+        
+        if method.hasStringInArr(arrStr: goodsInfo[indexPath.row]["commodityTypes"].stringValue){
+            salePrice = goodsInfo[indexPath.row]["discountPrice"].doubleValue.getMoney()
+            
+        }else{
+            cell!.goodsOldPrice.isHidden = true
+        }
+        cell!.goodsPrice.text = salePrice
+        cell!.goodsStatus = goodsInfo[indexPath.row]["status"].stringValue
+        cell!.goodsActiveType = goodsInfo[indexPath.row]["commodityTypes"].stringValue
         return cell!
     }
-
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        //跳转到商品详情页
+        self.toGoodsDetail(id: goodsInfo[indexPath.row]["commodityID"].stringValue)
+    }
+    func toGoodsDetail(id:String){
+        let vc = GoodsDetailViewController()
+        vc.goodsId = id
+        self.pushToNext(vc: vc)
+    }
+    func goodsTableListAlertNormChose(goods:JSON){
+        normChose.goodsInfo = goods
+        normChose.animationHide(hide: false)
+    }
+//    func alertNormChose(goods:JSON){
+//        
+//        
+//    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

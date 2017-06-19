@@ -14,15 +14,16 @@ class EvaluationViewController: UIViewController,CWStarRateViewDelegate,UITextVi
     var method = Methods()
     var orderInfo:JSON!
     //服务评分
-    var serviceStar:String?
+    var serviceStar:String = "5.0"
 //    商品评分
-    var productStar:String?
+    var productStar:String = "5.0"
 //    配送评分
-    var distributionStar:String?
+    var distributionStar:String = "5.0"
     
     let defaultContext = "你可以从服务态度，商品质量，配送速度等方面来发表评价"
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(orderInfo)
         self.setTitleView(title: "立即评价", canBack: true)
         self.view.backgroundColor = MyGlobalColor()
         creatView()
@@ -31,6 +32,7 @@ class EvaluationViewController: UIViewController,CWStarRateViewDelegate,UITextVi
     
     //评价内容
     let eva_context = UITextView()
+    var wordCount:UILabel!
     func creatView(){
         //提交按钮
         let submitBtn = UIButton()
@@ -78,6 +80,10 @@ class EvaluationViewController: UIViewController,CWStarRateViewDelegate,UITextVi
         eva_context.returnKeyType = .done
         eva_context.text = defaultContext
         self.view.addSubview(eva_context)
+        
+        wordCount = UILabel()
+        wordCount.textAlignment = .right
+        method.creatLabel(lab: wordCount, x: app_width - 100, y: eva_context.bottomPosition() - 20, wid: 80, hei: 20, textString: "300字", textcolor: setMyColor(r: 101, g: 102, b: 103, a: 1), textFont: 12, superView: self.view)
     }
     
     func creatItem(Y:CGFloat,title:String,value:String,superView:UIView){
@@ -128,11 +134,12 @@ class EvaluationViewController: UIViewController,CWStarRateViewDelegate,UITextVi
         }
     }
     func submitBtnClick(){
-        if serviceStar == nil || serviceStar == nil || productStar == nil || eva_context.text == "" || eva_context.text == defaultContext{
-            self.myNoticeError(title: "请将信息写完整")
+//        serviceStar == nil || distributionStar == nil || productStar == nil || 
+        if eva_context.text == "" || eva_context.text == defaultContext{
+            self.myNoticeError(title: "请输入评价内容")
             return
         }
-        HttpTool.shareHttpTool.Http_OrderAppraise(orderID: self.orderInfo["orderID"].stringValue, serviceAppr: serviceStar!, productAppr: productStar!, distributionAppr: distributionStar!, content: eva_context.text!) { (data) in
+        HttpTool.shareHttpTool.Http_OrderAppraise(orderID: self.orderInfo["orderID"].stringValue, serviceAppr: serviceStar, productAppr: productStar, distributionAppr: distributionStar, content: eva_context.text!) { (data) in
             print(data)
             if data["code"].stringValue == "SUCCESS"{
                 self.myNoticeSuccess(title: "发表评价成功")
@@ -140,10 +147,24 @@ class EvaluationViewController: UIViewController,CWStarRateViewDelegate,UITextVi
             }
         }
     }
+    func textViewDidChange(_ textView: UITextView) {
+//        let count = textView.text.characters.count
+        
+//        DispatchQueue.main.async {
+//            self.wordCount.text = "还可以输入\(300 - count)字"
+//        }
+        
+    }
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n"{
             textView.resignFirstResponder()
+        }else{
+            let count = textView.text.characters.count
+            if count >= 300{
+                return false
+            }
         }
+        
         return true
     }
     func textViewDidBeginEditing(_ textView: UITextView) {

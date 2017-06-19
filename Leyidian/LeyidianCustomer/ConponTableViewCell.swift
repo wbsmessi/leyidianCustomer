@@ -16,7 +16,7 @@ class ConponTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-    func setValue(money:String,remark:String,require:String,fireTime:Double,couponType:couponTypeEnum){
+    func setValue(money:String,remark:String,require:String,fireTime:String,couponType:couponTypeEnum){
         let attStr = NSMutableAttributedString(string: "¥" + money)
         let rang = ("¥\(money)" as NSString).range(of: "¥")
         attStr.addAttribute(NSFontAttributeName, value: UIFont.systemFont(ofSize: 16), range: rang)
@@ -24,36 +24,41 @@ class ConponTableViewCell: UITableViewCell {
         
         remarkLab.text = "满\(remark)元可用"
         userRequire.text = require
-        fireDate.text = method.convertTime(time: fireTime)
-        
+//        fireDate.text = method.convertTime(time: fireTime)
+        fireDate.text = fireTime
         switch couponType {
         case .unuse:
             markLab.isHidden = true
+            bgview.image = UIImage(named: "youhuiquanbg")
         case .used:
             markLab.isHidden = false
             markLab.text = "已使用"
+            bgview.image = UIImage(named: "yiguoqi-youhuiquan")
         default:
             markLab.isHidden = false
             markLab.text = "已过期"
+            bgview.image = UIImage(named: "yiguoqi-youhuiquan")
         }
     }
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.backgroundColor = MyGlobalColor()
+        self.backgroundColor = setMyColor(r: 248, g: 248, b: 248, a: 1)
         creatView()
     }
-    
+    //优惠券背景图
+    let bgview = UIImageView()
     let moneyLab = UILabel()
     let remarkLab = UILabel()
     let userRequire = UILabel()
     let fireDate = UILabel()
     let markLab = UILabel()
     func creatView() {
-        let bgview = UIImageView()
-        bgview.frame = CGRect(x: 0, y: 0, width: app_width, height: item_height)
-        bgview.image = UIImage(named: "youhuiquanbg")
-        self.addSubview(bgview)
         
+        bgview.frame = CGRect(x: 0, y: 0, width: app_width, height: item_height)
+//        bgview.image = UIImage(named: "youhuiquanbg")
+        bgview.isUserInteractionEnabled = true
+        self.addSubview(bgview)
+//        yiguoqi-youhuiquan
         method.creatLabel(lab: moneyLab, x: 10, y: 20, wid: (app_width - 20)/3, hei: 40, textString: "¥200", textcolor: UIColor.white, textFont: 22, superView: self)
         moneyLab.font = UIFont(name: "Helvetica-Bold", size: 26)
 //        if #available(iOS 8.2, *) {
@@ -66,7 +71,7 @@ class ConponTableViewCell: UITableViewCell {
         method.creatLabel(lab: remarkLab, x: 10, y: moneyLab.bottomPosition(), wid: moneyLab.frame.width, hei: 20, textString: "", textcolor: UIColor.white, textFont: 14, superView: self)
         remarkLab.textAlignment = .center
         
-        method.creatLabel(lab: userRequire, x: moneyLab.rightPosition() + 15, y: 10, wid: app_width - moneyLab.rightPosition() - 30, hei: 50, textString: "仅限便利店店铺商品", textcolor: UIColor.gray, textFont: 12, superView: self)
+        method.creatLabel(lab: userRequire, x: moneyLab.rightPosition() + 15, y: 10, wid: app_width - moneyLab.rightPosition() - 30, hei: 50, textString: "仅限便利店店铺商品", textcolor: myAppBlackColor(), textFont: 12, superView: self)
         
         method.creatLabel(lab: fireDate, x: userRequire.frame.origin.x, y: 60, wid: userRequire.frame.width, hei: 20, textString: "2017.03.08--2017.09.08", textcolor: UIColor.gray, textFont: 12, superView: self)
         

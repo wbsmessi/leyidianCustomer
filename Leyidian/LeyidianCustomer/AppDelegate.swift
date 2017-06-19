@@ -22,12 +22,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         IQKeyboardManager.sharedManager().enable = true
         IQKeyboardManager.sharedManager().enableAutoToolbar = false
         // Override point for customization after application launch.
+        //高德地图
         AMapServices.shared().apiKey = gaodeMapAppkey
-//        友盟
+//        友盟分享
         UMSocialManager.default().umSocialAppkey = umengKey
         configUSharePlatforms()
         
         if let userid = MyUserInfo.value(forKey: userInfoKey.userID.rawValue) as? String{
+            //        友盟推送
+            UMessage.removeAlias(userid, type: "iOS", response: nil)
             UMessage.addAlias(userid, type: "iOS", response: nil)
         }
         
@@ -63,7 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
          //qq空间
         UMSocialManager.default().setPlaform(.qzone, appKey: tencentKey, appSecret: nil, redirectURL: "http://mobile.umeng.com/social")
          //微博
-        UMSocialManager.default().setPlaform(.sina, appKey: "", appSecret: "", redirectURL: "http://mobile.umeng.com/social")
+        UMSocialManager.default().setPlaform(.sina, appKey: weiboAppKey, appSecret: weiboAppSecket, redirectURL: "http://mobile.umeng.com/social")
     }
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -73,11 +76,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         let device_ns = NSData.init(data: deviceToken)
         
         var token:String = device_ns.description.trimmingCharacters(in: CharacterSet(charactersIn: "<>" ))
-        
+        print(token)
         //        print("-------------")
         token = token.description.trimmingCharacters(in: CharacterSet(charactersIn: "<>"));
+        print(token)
         token = token.replacingOccurrences(of: " ", with: "")
         // [ GTSdk ]：向个推服务器注册deviceToken
+        print(token)
         print(token)
     }
     func applicationDidEnterBackground(_ application: UIApplication) {

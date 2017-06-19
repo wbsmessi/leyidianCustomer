@@ -12,11 +12,13 @@
 		1900663F1EBAD258008E3FA4 /* PSCityPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1900663D1EBAD258008E3FA4 /* PSCityPickerView.m */; };
 		190066411EBC2844008E3FA4 /* SearchListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190066401EBC2844008E3FA4 /* SearchListViewController.swift */; };
 		191C32751E77808900255E0B /* NoStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191C32741E77808900255E0B /* NoStoreView.swift */; };
+		19225DE01ED9599700BEDF5F /* NoticeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19225DDF1ED9599700BEDF5F /* NoticeDetailViewController.swift */; };
+		19391B1B1EC98053004EE2B1 /* CancleReasonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19391B1A1EC98052004EE2B1 /* CancleReasonViewController.swift */; };
+		19391B1D1EC9871A004EE2B1 /* CancleReasonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19391B1C1EC9871A004EE2B1 /* CancleReasonTableViewCell.swift */; };
 		193BF3361EB8164500F19EA2 /* GoodsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193BF3351EB8164500F19EA2 /* GoodsListViewController.swift */; };
 		193BF3391EB8187600F19EA2 /* GoodsListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193BF3371EB8187600F19EA2 /* GoodsListTableViewCell.swift */; };
 		1941EEDB1E84C94F00848174 /* OrderDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1941EEDA1E84C94F00848174 /* OrderDetailViewController.swift */; };
 		1941EEDD1E84CCE700848174 /* orderStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1941EEDC1E84CCE700848174 /* orderStatusView.swift */; };
-		1941EEE01E84F7BC00848174 /* orderDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1941EEDF1E84F7BC00848174 /* orderDetailView.swift */; };
 		19456A2E1EA9D9BF00A54C32 /* UMSocialSwiftInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19456A2D1EA9D9BF00A54C32 /* UMSocialSwiftInterface.swift */; };
 		19456A351EAA12C100A54C32 /* libUMessage_Sdk_1.5.0a.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19456A331EAA12C100A54C32 /* libUMessage_Sdk_1.5.0a.a */; };
 		19456A381EAA12F800A54C32 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19456A371EAA12F800A54C32 /* UserNotifications.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -54,6 +56,9 @@
 		197C97F31E6913A3000C075D /* HomeScrollTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197C97F21E6913A3000C075D /* HomeScrollTableViewCell.swift */; };
 		197C97F61E6942EE000C075D /* LoginAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197C97F51E6942EE000C075D /* LoginAppViewController.swift */; };
 		197C97FB1E6952D9000C075D /* DECSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197C97FA1E6952D9000C075D /* DECSegment.swift */; };
+		1988192B1ED80A0200B4990E /* ForgetPwdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1988192A1ED80A0200B4990E /* ForgetPwdViewController.swift */; };
+		1988192D1ED825C900B4990E /* StoreClosedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1988192C1ED825C900B4990E /* StoreClosedView.swift */; };
+		1988192F1ED832BB00B4990E /* NoInfomationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1988192E1ED832BB00B4990E /* NoInfomationView.swift */; };
 		1996D2EE1E77D7FC00E5368A /* StoreIntroductionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1996D2EC1E77D7FC00E5368A /* StoreIntroductionTableViewCell.swift */; };
 		1996D2EF1E77D7FC00E5368A /* StoreIntroductionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1996D2ED1E77D7FC00E5368A /* StoreIntroductionTableViewCell.xib */; };
 		1996D2F11E77E1F300E5368A /* StoreInfomationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1996D2F01E77E1F300E5368A /* StoreInfomationViewController.swift */; };
@@ -142,11 +147,13 @@
 		1900663D1EBAD258008E3FA4 /* PSCityPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSCityPickerView.m; sourceTree = "<group>"; };
 		190066401EBC2844008E3FA4 /* SearchListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchListViewController.swift; sourceTree = "<group>"; };
 		191C32741E77808900255E0B /* NoStoreView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoStoreView.swift; sourceTree = "<group>"; };
+		19225DDF1ED9599700BEDF5F /* NoticeDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoticeDetailViewController.swift; sourceTree = "<group>"; };
+		19391B1A1EC98052004EE2B1 /* CancleReasonViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CancleReasonViewController.swift; sourceTree = "<group>"; };
+		19391B1C1EC9871A004EE2B1 /* CancleReasonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CancleReasonTableViewCell.swift; sourceTree = "<group>"; };
 		193BF3351EB8164500F19EA2 /* GoodsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoodsListViewController.swift; sourceTree = "<group>"; };
 		193BF3371EB8187600F19EA2 /* GoodsListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoodsListTableViewCell.swift; sourceTree = "<group>"; };
 		1941EEDA1E84C94F00848174 /* OrderDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderDetailViewController.swift; sourceTree = "<group>"; };
 		1941EEDC1E84CCE700848174 /* orderStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = orderStatusView.swift; sourceTree = "<group>"; };
-		1941EEDF1E84F7BC00848174 /* orderDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = orderDetailView.swift; sourceTree = "<group>"; };
 		19456A2D1EA9D9BF00A54C32 /* UMSocialSwiftInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UMSocialSwiftInterface.swift; sourceTree = "<group>"; };
 		19456A331EAA12C100A54C32 /* libUMessage_Sdk_1.5.0a.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMessage_Sdk_1.5.0a.a; sourceTree = "<group>"; };
 		19456A341EAA12C100A54C32 /* UMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMessage.h; sourceTree = "<group>"; };
@@ -189,6 +196,9 @@
 		197C97F21E6913A3000C075D /* HomeScrollTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeScrollTableViewCell.swift; sourceTree = "<group>"; };
 		197C97F51E6942EE000C075D /* LoginAppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginAppViewController.swift; sourceTree = "<group>"; };
 		197C97FA1E6952D9000C075D /* DECSegment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DECSegment.swift; sourceTree = "<group>"; };
+		1988192A1ED80A0200B4990E /* ForgetPwdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgetPwdViewController.swift; sourceTree = "<group>"; };
+		1988192C1ED825C900B4990E /* StoreClosedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreClosedView.swift; sourceTree = "<group>"; };
+		1988192E1ED832BB00B4990E /* NoInfomationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoInfomationView.swift; sourceTree = "<group>"; };
 		1996D2EC1E77D7FC00E5368A /* StoreIntroductionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreIntroductionTableViewCell.swift; sourceTree = "<group>"; };
 		1996D2ED1E77D7FC00E5368A /* StoreIntroductionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreIntroductionTableViewCell.xib; sourceTree = "<group>"; };
 		1996D2F01E77E1F300E5368A /* StoreInfomationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreInfomationViewController.swift; sourceTree = "<group>"; };
@@ -334,6 +344,7 @@
 				1941EEDA1E84C94F00848174 /* OrderDetailViewController.swift */,
 				19E0441F1E9B63D000DFF097 /* EvaluationViewController.swift */,
 				193BF3351EB8164500F19EA2 /* GoodsListViewController.swift */,
+				19391B1A1EC98052004EE2B1 /* CancleReasonViewController.swift */,
 			);
 			name = "订单相关";
 			sourceTree = "<group>";
@@ -369,10 +380,10 @@
 			children = (
 				194981C61E82101B004F1252 /* WaitPayOrderTableViewCell.swift */,
 				1941EEDC1E84CCE700848174 /* orderStatusView.swift */,
-				1941EEDF1E84F7BC00848174 /* orderDetailView.swift */,
 				19DEA13E1E8516DB004BC988 /* OrderDetailGoodsInfoTableViewCell.swift */,
 				19DEA1401E851D26004BC988 /* orderInfoView.swift */,
 				193BF3371EB8187600F19EA2 /* GoodsListTableViewCell.swift */,
+				19391B1C1EC9871A004EE2B1 /* CancleReasonTableViewCell.swift */,
 			);
 			name = "订单";
 			sourceTree = "<group>";
@@ -424,6 +435,7 @@
 			children = (
 				197C97F51E6942EE000C075D /* LoginAppViewController.swift */,
 				194F81B31E6CF0A20011B59A /* SignUpViewController.swift */,
+				1988192A1ED80A0200B4990E /* ForgetPwdViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -575,6 +587,7 @@
 				194F81DE1E71586C0011B59A /* AddressChoseViewController.swift */,
 				19EA91181E8E0A280094BF23 /* GoodsSearchViewController.swift */,
 				190066401EBC2844008E3FA4 /* SearchListViewController.swift */,
+				19225DDF1ED9599700BEDF5F /* NoticeDetailViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -595,6 +608,8 @@
 				194F81D61E6FE2C40011B59A /* shopDetailView.swift */,
 				194F81E21E724E9B0011B59A /* HomeAdvertisingView.swift */,
 				19EA91161E8CF25C0094BF23 /* AddressChoseAlert.swift */,
+				1988192C1ED825C900B4990E /* StoreClosedView.swift */,
+				1988192E1ED832BB00B4990E /* NoInfomationView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -932,8 +947,10 @@
 				1996D3131E7FC1B200E5368A /* CouponViewController.swift in Sources */,
 				19FEB1BC1E65764200883097 /* Methods.swift in Sources */,
 				1996D3051E7A38BE00E5368A /* LZCartViewController.swift in Sources */,
+				1988192D1ED825C900B4990E /* StoreClosedView.swift in Sources */,
 				194981C21E8101D7004F1252 /* AddNewAddressViewController.swift in Sources */,
 				19456A441EAF3F3700A54C32 /* AddressModel.swift in Sources */,
+				1988192B1ED80A0200B4990E /* ForgetPwdViewController.swift in Sources */,
 				1941EEDD1E84CCE700848174 /* orderStatusView.swift in Sources */,
 				1996D2FD1E7A28DF00E5368A /* ConfigFile.swift in Sources */,
 				194981B71E80B4A2004F1252 /* ScoreDetailViewController.swift in Sources */,
@@ -950,6 +967,7 @@
 				194F81DB1E7006010011B59A /* GoodsTypeListViewController.swift in Sources */,
 				19FEB1B71E6572A200883097 /* UserInfoViewController.swift in Sources */,
 				191C32751E77808900255E0B /* NoStoreView.swift in Sources */,
+				19225DE01ED9599700BEDF5F /* NoticeDetailViewController.swift in Sources */,
 				194F81EB1E7690EE0011B59A /* ShopModel.swift in Sources */,
 				19EA90EA1E8A3D3E0094BF23 /* AliPay.swift in Sources */,
 				1996D30D1E7FAEB400E5368A /* OrderViewController.swift in Sources */,
@@ -970,6 +988,7 @@
 				19456A2E1EA9D9BF00A54C32 /* UMSocialSwiftInterface.swift in Sources */,
 				194F81D71E6FE2C40011B59A /* shopDetailView.swift in Sources */,
 				194981BF1E80DAF3004F1252 /* AddressTableViewCell.swift in Sources */,
+				19391B1D1EC9871A004EE2B1 /* CancleReasonTableViewCell.swift in Sources */,
 				194981BA1E80C2D8004F1252 /* ConponTableViewCell.swift in Sources */,
 				1996D3111E7FC04700E5368A /* ConvertScoreViewController.swift in Sources */,
 				1996D31B1E7FC52C00E5368A /* FeedBackViewController.swift in Sources */,
@@ -991,6 +1010,7 @@
 				197C97EB1E67EC89000C075D /* GoodsCollectionViewCell.swift in Sources */,
 				19EA90D41E88BCB70094BF23 /* SafeSettingViewController.swift in Sources */,
 				190066411EBC2844008E3FA4 /* SearchListViewController.swift in Sources */,
+				1988192F1ED832BB00B4990E /* NoInfomationView.swift in Sources */,
 				194F81C21E6E415D0011B59A /* MessageCenterViewController.swift in Sources */,
 				194981C91E824FFD004F1252 /* DECChoseAlertView.swift in Sources */,
 				19EA91191E8E0A280094BF23 /* GoodsSearchViewController.swift in Sources */,
@@ -998,6 +1018,7 @@
 				194F81E11E7235CE0011B59A /* GoodsDetailViewController.swift in Sources */,
 				1996D3041E7A38BE00E5368A /* LZCartTableViewCell.swift in Sources */,
 				19E044201E9B63D000DFF097 /* EvaluationViewController.swift in Sources */,
+				19391B1B1EC98053004EE2B1 /* CancleReasonViewController.swift in Sources */,
 				19456A3A1EADDA1C00A54C32 /* SingleChose.swift in Sources */,
 				1996D2F91E78EA0600E5368A /* StoreEvaluationTableViewCell.swift in Sources */,
 				1996D3191E7FC42B00E5368A /* ShopGuideViewController.swift in Sources */,
@@ -1007,7 +1028,6 @@
 				19EA910A1E8A3FD70094BF23 /* wechatPayment.swift in Sources */,
 				1996D3171E7FC33A00E5368A /* CooperationViewController.swift in Sources */,
 				19DEA1411E851D26004BC988 /* orderInfoView.swift in Sources */,
-				1941EEE01E84F7BC00848174 /* orderDetailView.swift in Sources */,
 				1996D2FB1E78EA2700E5368A /* StoreAllEvaluationTableViewCell.swift in Sources */,
 				194F81D11E6F95D90011B59A /* DES.m in Sources */,
 				194F81BE1E6D49F70011B59A /* LeftTypeView.swift in Sources */,
@@ -1138,7 +1158,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = LeyidianCustomer/LeyidianCustomer.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Shaojun Liu (G8DSVX2Z4P)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shaojun Liu (99B64FQDW3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEVELOPMENT_TEAM = 99B64FQDW3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1154,8 +1175,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.Leyidian.customer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8de2de81-d4d9-4f02-88f0-94561130d90c";
-				PROVISIONING_PROFILE_SPECIFIER = leyidiancustomerdeveloper;
+				PROVISIONING_PROFILE = "d19a6b24-c220-4cba-bb08-a3ec96693117";
+				PROVISIONING_PROFILE_SPECIFIER = leyidianCustomerNew;
 				SWIFT_OBJC_BRIDGING_HEADER = "LeyidianCustomer/LeyidianCustomer-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -1170,8 +1191,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = LeyidianCustomer/LeyidianCustomer.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Shaojun Liu (G8DSVX2Z4P)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Shaojun Liu (G8DSVX2Z4P)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shaojun Liu (99B64FQDW3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEVELOPMENT_TEAM = 99B64FQDW3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1187,8 +1208,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.Leyidian.customer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8de2de81-d4d9-4f02-88f0-94561130d90c";
-				PROVISIONING_PROFILE_SPECIFIER = leyidiancustomerdeveloper;
+				PROVISIONING_PROFILE = "d19a6b24-c220-4cba-bb08-a3ec96693117";
+				PROVISIONING_PROFILE_SPECIFIER = leyidianCustomerNew;
 				SWIFT_OBJC_BRIDGING_HEADER = "LeyidianCustomer/LeyidianCustomer-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;

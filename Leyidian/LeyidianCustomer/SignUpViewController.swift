@@ -11,6 +11,8 @@ import UIKit
 class SignUpViewController: UIViewController,UITextFieldDelegate {
 
     var method = Methods()
+    var forceVC:LoginAppViewController!
+    var isbuyCarCome:Bool = false
     var isAgree:Bool = false
     var second:Int=60{
         didSet{
@@ -25,7 +27,7 @@ class SignUpViewController: UIViewController,UITextFieldDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setTitleView(title: "注册", canBack: true)
+        self.setTitleView(title: "注册", canBack: false)
         self.view.backgroundColor = MyGlobalColor()
         creatView()
         // Do any additional setup after loading the view.
@@ -38,9 +40,17 @@ class SignUpViewController: UIViewController,UITextFieldDelegate {
     let get_vercode = UIButton()
     let submit = UIButton()//确认按钮
     var titleArr = ["手机号","验证码","密码","邀请码"]
+    let readAndAgree = UIButton()
     func creatView(){
+        let backBtn = UIButton()
+        backBtn.frame = CGRect(x: 15, y: 30, width: 25, height: 25)
+        backBtn.setImage(UIImage(named:"fanhui"), for: .normal)
+        backBtn.addTarget(self, action: #selector(bactoForceView), for: .touchUpInside)
+        self.view.addSubview(backBtn)
+//        fanhui
         creatItem(y: 0+nav_height, defaultTitle:"请输入有效手机号", title: titleArr[0], input: phoneNumber)
         phoneNumber.keyboardType = .phonePad
+        
         creatItem(y: 50+nav_height, defaultTitle:"6位数字", title: titleArr[1], input: ver_code)
         ver_code.keyboardType = .numberPad
         
@@ -58,7 +68,7 @@ class SignUpViewController: UIViewController,UITextFieldDelegate {
         creatItem(y: 150+nav_height, defaultTitle:"请输入6位邀请码(选填)", title: titleArr[3], input: invite_code)
         
         
-        let readAndAgree = UIButton()
+        
         method.creatButton(btn: readAndAgree, x: 15, y: invite_code.bottomPosition() + 10, wid: 120, hei: 20, title: "我已阅读并同意", titlecolor: UIColor.black, titleFont: 12, bgColor: UIColor.clear, superView: self.view)
         readAndAgree.setImage(UIImage(named:"butongyi"), for: .normal)
         readAndAgree.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: readAndAgree.titleLabel!.frame.width)
@@ -69,7 +79,7 @@ class SignUpViewController: UIViewController,UITextFieldDelegate {
         method.creatButton(btn: customerProtocol, x: readAndAgree.rightPosition(), y: readAndAgree.frame.origin.y, wid: 120, hei: 20, title: "《乐易点用户协议》", titlecolor: MyAppColor(), titleFont: 12, bgColor: UIColor.clear, superView: self.view)
         customerProtocol.addTarget(self, action: #selector(customerDetail), for: .touchUpInside)
         
-        method.creatButton(btn: submit, x: 15, y: invite_code.bottomPosition() + 80, wid: app_width - 30, hei: 40, title: "注册并登录", titlecolor: UIColor.white, titleFont: 16, bgColor: UIColor.clear, superView: self.view)
+        method.creatButton(btn: submit, x: 15, y: invite_code.bottomPosition() + 80, wid: app_width - 30, hei: (app_width - 30)/7.73, title: "注册并登录", titlecolor: UIColor.white, titleFont: 16, bgColor: UIColor.clear, superView: self.view)
         submit.setBackgroundImage(UIImage(named:"anniu"), for: .normal)
         submit.addTarget(self, action: #selector(submitBtn), for: .touchUpInside)
     
@@ -120,7 +130,10 @@ class SignUpViewController: UIViewController,UITextFieldDelegate {
     }
     //查看用户协议的方法
     func customerDetail(){
-        print("223r3f3efer")
+        let vc = LYDWebViewController()
+        vc.loadUrl = shareHeaderUrl + "/appmanager/getPlatform?type=1"
+        vc.nav_title = "用户协议"
+        self.pushToNext(vc: vc)
     }
     func submitBtn(){
         
@@ -152,11 +165,41 @@ class SignUpViewController: UIViewController,UITextFieldDelegate {
         HttpTool.shareHttpTool.Http_Register(phone: phoneNumber.text!, validCode: ver_code.text!, password: password.text!, inviteCode: invite_code.text!) { (data) -> (Void) in
             print(data)
             if data["code"].stringValue == "SUCCESS"{
+                let userid = data["resultData"]["userID"].stringValue
+                UMessage.removeAlias(userid, type: "iOS", response: nil)
+                UMessage.addAlias(userid, type: "iOS", response: nil)
+                MyUserInfo.setValue(userid, forKey: userInfoKey.userID.rawValue)
+                MyUserInfo.setValue(data["resultData"]["headUrl"].stringValue, forKey: userInfoKey.headUrl.rawValue)
+                MyUserInfo.setValue(data["resultData"]["nickName"].stringValue, forKey: userInfoKey.nickName.rawValue)
+                MyUserInfo.setValue(data["resultData"]["phone"].stringValue, forKey: userInfoKey.phone.rawValue)
+                MyUserInfo.setValue(data["resultData"]["integral"].stringValue, forKey: userInfoKey.integral.rawValue)
+                MyUserInfo.setValue(data["resultData"]["signature"].stringValue, forKey: userInfoKey.signature.rawValue)
+                MyUserInfo.setValue(data["resultData"]["sex"].string ?? "1", forKey: userInfoKey.sex.rawValue)
+                MyUserInfo.synchronize()
                 self.myNoticeSuccess(title: "注册成功")
-                self.backPage()
+                self.bactoMianView()
             }else{
                 self.myNoticeError(title: data["msg"].stringValue)
             }
+        }
+    }
+    
+    func bactoMianView(){
+        if isbuyCarCome{
+            self.dismiss(animated: false, completion: { 
+                self.forceVC.backtopage()
+            })
+        }else{
+            self.backToRootPage()
+        }
+    }
+    func bactoForceView(){
+        if isbuyCarCome{
+            self.dismiss(animated: true, completion: {
+//                self.forceVC.backtopage()
+            })
+        }else{
+            self.backPage()
         }
     }
     func updateTime(){
@@ -187,11 +230,28 @@ class SignUpViewController: UIViewController,UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
+//    let NUM = "0123456789"
+//    let ALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+    let ALPHANUM = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        let cs = NSCharacterSet(charactersIn: ALPHANUM).inverted
+        let filtered = string.components(separatedBy: cs).joined(separator: "")
+        return string == filtered
+    }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         phoneNumber.resignFirstResponder()
         password.resignFirstResponder()
         ver_code.resignFirstResponder()
         invite_code.resignFirstResponder()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        //测试说默认应该选中
+        agreeCustomerProtocol(btn: self.readAndAgree)
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        timer?.invalidate()
+        timer = nil
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
